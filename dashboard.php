@@ -2,7 +2,7 @@
 <html lang="en">
 
 
-<!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
+<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,169 +40,142 @@
     </div>
     <!-- End of menu-->
 
-    <main class="main">
+        <main class="main">
         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">My Cart</li>
+                        <li class="breadcrumb-item active" aria-current="page">My Account</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
             <div class="page-header text-center" style="background-image: url('assets/images/demos/demo-4/bg-7.jpg')">
         		<div class="container">
-        			<h1 class="page-title text-white">Shooping Cart</h1>
+        			<h1 class="page-title text-white">My Account</h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
 
             <div class="mb-5"></div><!-- End .mb-4 -->
 
             <div class="page-content">
-            	<div class="cart">
+            	<div class="dashboard">
 	                <div class="container">
 	                	<div class="row">
-	                		<div class="col-lg-9">
-	                			<table class="table table-cart table-mobile">
-									<thead>
-										<tr>
-											<th>Product</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
-											<th></th>
-										</tr>
-									</thead>
-
-									<tbody>
-										<tr>
-											<td class="product-col">
-												<div class="product">
-													<figure class="product-media">
-														<a href="#">
-															<img src="assets/images/products/table/product-1.jpg" alt="Product image">
-														</a>
-													</figure>
-
-													<h3 class="product-title">
-														<a href="#">Beige knitted elastic runner shoes</a>
-													</h3><!-- End .product-title -->
-												</div><!-- End .product -->
-											</td>
-											<td class="price-col">$84.00</td>
-											<td class="quantity-col">
-                                                <div class="cart-product-quantity">
-                                                    <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                                </div><!-- End .cart-product-quantity -->
-                                            </td>
-											<td class="total-col">$84.00</td>
-											<td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
-										</tr>
-										<tr>
-											<td class="product-col">
-												<div class="product">
-													<figure class="product-media">
-														<a href="#">
-															<img src="assets/images/products/table/product-2.jpg" alt="Product image">
-														</a>
-													</figure>
-
-													<h3 class="product-title">
-														<a href="#">Blue utility pinafore denim dress</a>
-													</h3><!-- End .product-title -->
-												</div><!-- End .product -->
-											</td>
-											<td class="price-col">$76.00</td>
-											<td class="quantity-col">
-                                                <div class="cart-product-quantity">
-                                                    <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                                </div><!-- End .cart-product-quantity -->                                 
-                                            </td>
-											<td class="total-col">$76.00</td>
-											<td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
-										</tr>
-									</tbody>
-								</table><!-- End .table table-wishlist -->
-
-	                			<div class="cart-bottom">
-			            			<div class="cart-discount">
-			            				<form action="#">
-			            					<div class="input-group">
-				        						<input type="text" class="form-control" required placeholder="coupon code">
-				        						<div class="input-group-append">
-													<button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
-												</div><!-- .End .input-group-append -->
-			        						</div><!-- End .input-group -->
-			            				</form>
-			            			</div><!-- End .cart-discount -->
-
-			            			<a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
-		            			</div><!-- End .cart-bottom -->
-	                		</div><!-- End .col-lg-9 -->
-	                		<aside class="col-lg-3">
-	                			<div class="summary summary-cart">
-	                				<h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
-
-	                				<table class="table table-summary">
-	                					<tbody>
-	                						<tr class="summary-subtotal">
-	                							<td>Subtotal:</td>
-	                							<td>$160.00</td>
-	                						</tr><!-- End .summary-subtotal -->
-	                						<tr class="summary-shipping">
-	                							<td>Shipping:</td>
-	                							<td>&nbsp;</td>
-	                						</tr>
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-													<div class="custom-control custom-radio">
-														<input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="free-shipping">Free Shipping</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>$0.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="standart-shipping">Standart:</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>$10.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="express-shipping">Express:</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>$20.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
-
-	                						<tr class="summary-shipping-estimate">
-	                							<td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
-	                							<td>&nbsp;</td>
-	                						</tr><!-- End .summary-shipping-estimate -->
-
-	                						<tr class="summary-total">
-	                							<td>Total:</td>
-	                							<td>$160.00</td>
-	                						</tr><!-- End .summary-total -->
-	                					</tbody>
-	                				</table><!-- End .table table-summary -->
-
-	                				<a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
-	                			</div><!-- End .summary -->
-
-		            			<a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+	                		<aside class="col-md-4 col-lg-3">
+	                			<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+								    <li class="nav-item">
+								        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link" href="#">Sign Out</a>
+								    </li>
+								</ul>
 	                		</aside><!-- End .col-lg-3 -->
+
+	                		<div class="col-md-8 col-lg-9">
+	                			<div class="tab-content">
+								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+								    	<p>Hello <span class="font-weight-normal text-dark">User</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>) 
+								    	<br>
+								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
+								    </div><!-- .End .tab-pane -->
+
+								    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+								    	<p>No order has been made yet.</p>
+								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+								    </div><!-- .End .tab-pane -->
+
+								    <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
+								    	<p>No downloads available yet.</p>
+								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+								    </div><!-- .End .tab-pane -->
+
+								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+								    	<p>The following addresses will be used on the checkout page by default.</p>
+
+								    	<div class="row">
+								    		<div class="col-lg-6">
+								    			<div class="card card-dashboard">
+								    				<div class="card-body">
+								    					<h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+
+														<p>User Name<br>
+														User Company<br>
+														John str<br>
+														New York, NY 10001<br>
+														1-234-987-6543<br>
+														yourmail@mail.com<br>
+														<a href="#">Edit <i class="icon-edit"></i></a></p>
+								    				</div><!-- End .card-body -->
+								    			</div><!-- End .card-dashboard -->
+								    		</div><!-- End .col-lg-6 -->
+
+								    		<div class="col-lg-6">
+								    			<div class="card card-dashboard">
+								    				<div class="card-body">
+								    					<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
+
+														<p>You have not set up this type of address yet.<br>
+														<a href="#">Edit <i class="icon-edit"></i></a></p>
+								    				</div><!-- End .card-body -->
+								    			</div><!-- End .card-dashboard -->
+								    		</div><!-- End .col-lg-6 -->
+								    	</div><!-- End .row -->
+								    </div><!-- .End .tab-pane -->
+
+								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+								    	<form action="#">
+			                				<div class="row">
+			                					<div class="col-sm-6">
+			                						<label>First Name *</label>
+			                						<input type="text" class="form-control" required>
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>Last Name *</label>
+			                						<input type="text" class="form-control" required>
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		            						<label>Display Name *</label>
+		            						<input type="text" class="form-control" required>
+		            						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+
+		                					<label>Email address *</label>
+		        							<input type="email" class="form-control" required>
+
+		            						<label>Current password (leave blank to leave unchanged)</label>
+		            						<input type="password" class="form-control">
+
+		            						<label>New password (leave blank to leave unchanged)</label>
+		            						<input type="password" class="form-control">
+
+		            						<label>Confirm new password</label>
+		            						<input type="password" class="form-control mb-2">
+
+		                					<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>SAVE CHANGES</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+			                			</form>
+								    </div><!-- .End .tab-pane -->
+								</div>
+	                		</div><!-- End .col-lg-9 -->
 	                	</div><!-- End .row -->
 	                </div><!-- End .container -->
-                </div><!-- End .cart -->
+                </div><!-- End .dashboard -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
 
@@ -339,11 +312,10 @@
     <script src="assets/js/jquery.waypoints.min.js"></script>
     <script src="assets/js/superfish.min.js"></script>
     <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/bootstrap-input-spinner.js"></script>
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
 </body>
 
 
-<!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
+<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
 </html>
