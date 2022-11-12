@@ -21,7 +21,7 @@
                                 <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
                                     <form action="#">
                                         <div class="form-group">
-                                            <label for="singin-email">Username or email address *</label>
+                                            <label for="singin-email">Username or email address*</label>
                                             <input type="text" class="form-control" id="singin-email" name="singin-email" required>
                                         </div><!-- End .form-group -->
 
@@ -44,6 +44,16 @@
                                             <a href="#" class="forgot-link">Forgot Your Password?</a>
                                         </div><!-- End .form-footer -->
                                     </form>
+                                    <div class="form-choice">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="admin/index.php" class="btn btn-login btn-g">
+                                                    Login as Admin
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="form-choice">
                                         <p class="text-center">or sign in with</p>
                                         <div class="row">

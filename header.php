@@ -1,4 +1,6 @@
 <!--header code-->
+<?php include 'signin-up-modal.php';?>
+
 <div class="page-wrapper">
         <header class="header header-intro-clearance header-4">
             <div class="header-top">
@@ -92,18 +94,18 @@
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
-                                                <a href="product.php">Beige knitted elastic runner shoes</a>
+                                                <a href="product.php">NEC VersaPro VH Intel Core i5-7Y54 1.20GHz (7th gen)</a>
                                             </h4>
 
                                             <span class="cart-product-info">
                                                 <span class="cart-product-qty">1</span>
-                                                x $84.00
+                                                x 10,500.00
                                             </span>
                                         </div><!-- End .product-cart-details -->
 
                                         <figure class="product-image-container">
                                             <a href="product.php" class="product-image">
-                                                <img src="assets/images/products/cart/product-1.jpg" alt="product">
+                                                <img src="assets/images/products/single/p1.jpg" alt="product">
                                             </a>
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
@@ -112,18 +114,18 @@
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
-                                                <a href="product.php">Blue utility pinafore denim dress</a>
+                                                <a href="product.php">HP Intel Corei5 5300U 8GB RAM/120GB SSD</a>
                                             </h4>
 
                                             <span class="cart-product-info">
                                                 <span class="cart-product-qty">1</span>
-                                                x $76.00
+                                                x 13,600.00
                                             </span>
                                         </div><!-- End .product-cart-details -->
 
                                         <figure class="product-image-container">
                                             <a href="product.php" class="product-image">
-                                                <img src="assets/images/products/cart/product-2.jpg" alt="product">
+                                                <img src="assets/images/products/product3.jpg" alt="product">
                                             </a>
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
