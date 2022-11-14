@@ -1,5 +1,14 @@
 <!-- Sign in / Register Modal -->
-<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="js/jquery2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -19,19 +28,19 @@
                             </ul>
                             <div class="tab-content" id="tab-content-5">
                                 <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                    <form action="#">
+                                    <form onsubmit="return false" id="login">
                                         <div class="form-group">
-                                            <label for="singin-email">Username or email address*</label>
-                                            <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                            <label for="email">Email</label>
+							                <input type="email" class="form-control" name="email" id="email" required/>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
-                                            <label for="singin-password">Password *</label>
-                                            <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                            <label for="email">Password</label>
+							                <input type="password" class="form-control" name="password" id="password" required/>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
-                                            <button type="submit" class="btn btn-outline-primary-2">
+                                            <button type="submit" class="btn btn-outline-primary-2" Value="Login">
                                                 <span>LOG IN</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </button>
@@ -121,3 +130,6 @@
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
+
+    </body>
+</html>

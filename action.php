@@ -226,12 +226,26 @@ if (isset($_POST["Common"])) {
 				$cart_item_id = $row["id"];
 				$qty = $row["qty"];
 				echo '
-					<div class="row">
-						<div class="col-md-3">'.$n.'</div>
-						<div class="col-md-3"><img class="img-responsive" src="product_images/'.$product_image.'" /></div>
-						<div class="col-md-3">'.$product_title.'</div>
-						<div class="col-md-3">'.CURRENCY.''.$product_price.'</div>
-					</div>';
+					<div class="product">
+						<div class="product-cart-details">
+							<h4 class="product-title">
+								<a href="product.php">'.$product_title.'</a>
+							</h4>
+
+							<span class="cart-product-info">
+								<span class="cart-product-qty">1</span>
+								'.$product_price.'
+							</span>
+						</div><!-- End .product-cart-details -->
+
+						<figure class="product-image-container">
+							<a href="product.php" class="product-image">
+								<img src="product_images/'.$product_image.'" alt="product">
+							</a>
+						</figure>
+						<a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+					</div>
+					';
 				
 			}
 			?>
