@@ -121,7 +121,7 @@ $(document).ready(function(){
 				if(data == "login_success"){
 					window.location.href = "profile.php";
 				}else if(data == "cart_login"){
-					window.location.href = "cart.php";
+					window.location.href = "index.php";
 				}else{
 					$("#e_msg").html(data);
 					$(".overlay").hide();
@@ -142,7 +142,7 @@ $(document).ready(function(){
 			success : function(data){
 				$(".overlay").hide();
 				if (data == "register_success") {
-					window.location.href = "cart.php";
+					window.location.href = "index.php";
 				}else{
 					$("#signup_msg").html(data);
 				}
@@ -301,7 +301,7 @@ $(document).ready(function(){
 		$('.total').each(function(){
 			net_total += ($(this).val()-0);
 		})
-		$('.net_total').html("Total : "+ CURRENCY+ " " +net_total);
+		//$('.net_total').html("Total : "+ CURRENCY+ " " +net_total);
 	}
 
 	//remove product from cart
