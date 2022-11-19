@@ -1,5 +1,39 @@
 <?php
-    require "config/constants.php";
+
+    //connect and check connection to database
+    try{
+        $pdo = new PDO('mysql:host=localhost;port=3306;dbname=ecommerceapp', 'root', '');
+        // Set the PDO error mode to exception
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e){
+        die("ERROR: Could not connect to database. " . $e->getMessage());
+    }
+  //Data validation
+  $name = $_POST['name'] ?? null;
+  $email = $_POST['email'] ?? null;
+  $phone_number = $_POST['phone_number'] ?? null;
+  $subject = $_POST['subject'] ?? null;
+  $message = $_POST['message'] ?? null;
+  $error = 0;
+  $error_message = '';
+
+  if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $data = "INSERT INTO contact_form (name, email, phone_number, subject, message)VALUES ( :name, :email , :phone_number , :subject, :message )";
+      if($statement = $pdo->prepare($data)){
+
+      $statement->bindValue(':name', $name);
+      $statement->bindValue(':email', $email);
+      $statement->bindValue(':phone_number', $phone_number);
+      $statement->bindValue(':subject', $subject);
+      $statement->bindValue(':message', $message);
+      $statement->execute();
+
+      header("Location: contact.php");
+      }
+    }
+
+  require "config/constants.php";
     session_start();
 ?>
 
@@ -147,39 +181,40 @@
                                 <div class="col-lg-6">
                             <h2 class="title mb-1">Got Any Questions?</h2><!-- End .title mb-2 -->
                             <p class="mb-2">Use the form below to get in touch with the sales team.</p>
-
-                            <form action="#" class="contact-form mb-3">
+                            
+                            <form method="post" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                            <div class="contact-form mb-3">
                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <label for="cname" class="sr-only">Name</label>
-                                        <input type="text" class="form-control" id="cname" placeholder="Name *" required>
+                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $name) ) == 0 ? 'has_error' : ''  ); ?>">
+                                        <label for="nname" class="sr-only">Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Name *" value="<?php echo $name; ?>" required>
                                     </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6">
-                                        <label for="cemail" class="sr-only">Email</label>
-                                        <input type="email" class="form-control" id="cemail" placeholder="Email *" required>
+                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $email) ) == 0 ? 'has_error' : ''  ); ?>">
+                                        <label for="email" class="sr-only">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Email *" value="<?php echo $email; ?>" required>
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <label for="cphone" class="sr-only">Phone</label>
-                                        <input type="tel" class="form-control" id="cphone" placeholder="Phone">
+                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $phone_number) ) == 0 ? 'has_error' : ''  ); ?>">
+                                        <label for="phone_number" class="sr-only">Phone</label>
+                                        <input type="tel" class="form-control" id="phone_number" placeholder="Phone" value="<?php echo $phone_number; ?>">
                                     </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6">
-                                        <label for="csubject" class="sr-only">Subject</label>
-                                        <input type="text" class="form-control" id="csubject" placeholder="Subject">
+                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $subject) ) == 0 ? 'has_error' : ''  ); ?>">
+                                        <label for="subject" class="sr-only">Subject</label>
+                                        <input type="text" class="form-control" id="subject" placeholder="Subject" value="<?php echo $subject; ?>">
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
-                                <label for="cmessage" class="sr-only">Message</label>
-                                <textarea class="form-control" cols="30" rows="4" id="cmessage" required placeholder="Message *"></textarea>
-
-                                <button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
-                                    <span>SUBMIT</span>
-                                    <i class="icon-long-arrow-right"></i>
-                                </button>
+                                <div class="<?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $message) ) == 0 ? 'has_error' : ''  ); ?>">
+                                    <label for="message" class="sr-only">Message</label>
+                                    <textarea class="form-control" cols="30" rows="4" id="message" required placeholder="Message *" value="<?php echo $message; ?>"></textarea>
+                                </div>
+                                <div>
+                                    <input type="submit" value="SUBMIT" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                                </div>
                             </form><!-- End .contact-form -->
                         </div><!-- End .col-lg-6 -->
 	                		</div><!-- End .col-lg-6 -->
