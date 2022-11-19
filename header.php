@@ -25,7 +25,14 @@
                                             </div><!-- End .header-menu -->
                                         </div>
                                     </li>
-                                    <li><a href="#signin-modal" data-toggle="modal">Login / Sign up</a></li>
+                                    <?php 
+                                        if (!isset($_SESSION["uid"]))
+                                        {
+                                            echo '
+                                                <li><a href="#signin-modal" data-toggle="modal">Login / Sign up</a></li>
+                                            ';
+                                        }
+                                    ?>
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
@@ -62,13 +69,13 @@
 
                     <div class="header-right">
                         <div class="account">
-                                <a href="dashboard.php" title="My account">
-                                    <div class="icon">
-                                        <i class="icon-user"></i>
-                                    </div>
-                                    <p>Account</p>
-                                </a>
-                            </div><!-- End .compare-dropdown -->
+                            <?php echo (isset($_SESSION["uid"])) ? '<a href="dashboard.php" title="My account">': '<a href="#signin-modal" data-toggle="modal">';?>
+                                <div class="icon">
+                                    <i class="icon-user"></i>
+                                </div>
+                                <p>Account</p>
+                            </a>
+                        </div><!-- End .compare-dropdown -->
 
                         <div class="wishlist">
                             <a href="wishlist.php" title="Wishlist">
@@ -90,27 +97,8 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products">
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.php">NEC VersaPro VH Intel Core i5-7Y54 1.20GHz (7th gen)</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x 10,500.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.php" class="product-image">
-                                                <img src="assets/images/products/single/p1.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-
+                                <div class="dropdown-cart-products"  id="cart_product">
+                                    <!-- 
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
@@ -121,7 +109,7 @@
                                                 <span class="cart-product-qty">1</span>
                                                 x 13,600.00
                                             </span>
-                                        </div><!-- End .product-cart-details -->
+                                        </div>
 
                                         <figure class="product-image-container">
                                             <a href="product.php" class="product-image">
@@ -129,9 +117,8 @@
                                             </a>
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-                                </div><!-- End .cart-product -->
-
+                                    </div>-->
+                                </div>
                                 <div class="dropdown-cart-total">
                                     <span>Total</span>
 
