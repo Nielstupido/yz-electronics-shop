@@ -241,6 +241,10 @@ $(document).ready(function(){
 			data	:	{removeItemFromCart:1,rid:remove_id},
 			success	:	function(data){
 				$("#cart_msg").html(data);
+				count_item();
+				getCartItem();
+				$('#product_msg').html(data);
+				$('.overlay').hide();
 				checkOutDetails();
 			}
 		})

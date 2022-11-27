@@ -68,17 +68,44 @@ if(isset($_POST["getProduct"])){
 			$pro_price = $row['product_price'];
 			$pro_image = $row['product_image'];
 			echo "
-				<div class='col-md-4'>
-							<div class='panel panel-info'>
-								<div class='panel-heading'>$pro_title</div>
-								<div class='panel-body'>
-									<img src='product_images/$pro_image' style='width:220px; height:250px;'/>
-								</div>
-								<div class='panel-heading'>".CURRENCY.". $pro_price.00/-
-									<button pid='$pro_id' style='float:right;' id='product' class='btn btn-danger btn-xs'>Add To Cart</button>
-								</div>
+				<div class='col-6 col-md-4 col-lg-4 col-xl-3'>
+					<div class='product product-2 just-action-icons-sm'>
+						<figure class='product-media'>
+							<span class='product-label label-new'>New</span>
+							<a href='product.php'>
+								<img src='assets/images/products/$pro_image' alt='Product image' class='product-image'>
+							</a>
+
+							<div class='product-action-vertical'>
+								<a href='#' class='btn-product-icon btn-wishlist btn-expandable'><span>add to wishlist</span></a>
+								<a href='popup/quickView.html' class='btn-product-icon btn-quickview' title='Quick view'><span>Quick view</span></a>
+								<a href='#' class='btn-product-icon btn-compare' title='Compare'><span>Compare</span></a>
 							</div>
-						</div>	
+
+							<div class='product-action'>
+								<a href='#' pid='$pro_id' id='product' title='Add to cart' class='btn-product btn-cart' title='Add to cart'><span>add to cart</span></a>
+								<a href='popup/quickView.html' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+							</div>
+						</figure>
+
+						<div class='product-body'>
+							<div class='product-cat'>
+								<a href='#'>Celeron</a>
+							</div>
+							<h3 class='product-title'><a href='product.php'>$pro_title</a></h3>
+							<div class='product-price'>
+							&#8369;$pro_price
+							</div>
+							<div class='ratings-container'>
+								<div class='ratings'>
+									<div class='ratings-val' style='width: 100%;'></div>
+								</div>
+								<span class='ratings-text'>( 4 Reviews )</span>
+							</div>
+
+						</div>
+					</div>
+				</div>
 			";
 		}
 	}
@@ -240,10 +267,10 @@ if (isset($_POST["Common"])) {
 
 						<figure class="product-image-container">
 							<a href="product.php" class="product-image">
-								<img src="product_images/'.$product_image.'" alt="product">
+								<img src="assets/images/products/'.$product_image.'" alt="product">
 							</a>
 						</figure>
-						<a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+						<a href="#" remove_id="'.$product_id.'" class="btn-remove remove" title="Remove Product"><i class="icon-close"></i></a>
 					</div>
 					';
 				
