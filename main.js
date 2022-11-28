@@ -35,6 +35,7 @@ $(document).ready(function(){
 				$("#get_product").html(data);
 			}
 		})
+
 	}
 	/*	when page is load successfully then there is a list of categories when user click on category we will get category id and 
 		according to id we will show products
@@ -328,6 +329,7 @@ $(document).ready(function(){
 			}
 		})
 	})
+
 })
 
 

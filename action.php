@@ -38,6 +38,7 @@ if(isset($_POST["brand"])){
 		echo "</div>";
 	}
 }
+
 if(isset($_POST["page"])){
 	$sql = "SELECT * FROM products";
 	$run_query = mysqli_query($con,$sql);
@@ -49,8 +50,10 @@ if(isset($_POST["page"])){
 		";
 	}
 }
+
+
 if(isset($_POST["getProduct"])){
-	$limit = 9;
+	$limit = 12;
 	if(isset($_POST["setPage"])){
 		$pageno = $_POST["pageNumber"];
 		$start = ($pageno * $limit) - $limit;
@@ -68,21 +71,50 @@ if(isset($_POST["getProduct"])){
 			$pro_price = $row['product_price'];
 			$pro_image = $row['product_image'];
 			echo "
-				<div class='col-md-4'>
-							<div class='panel panel-info'>
-								<div class='panel-heading'>$pro_title</div>
-								<div class='panel-body'>
-									<img src='product_images/$pro_image' style='width:220px; height:250px;'/>
-								</div>
-								<div class='panel-heading'>".CURRENCY.". $pro_price.00/-
-									<button pid='$pro_id' style='float:right;' id='product' class='btn btn-danger btn-xs'>Add To Cart</button>
-								</div>
-							</div>
-						</div>	
+				<div class='col-6 col-md-4 col-lg-4 col-xl-3'>
+					<div class='product product-7 text-center'>
+						<figure class='product-media'>
+							<span class='product-label label-new'>New</span>
+							<a href='product.php'>
+								<img src='assets/images/products/$pro_image' alt='Product image' class='product-image'>
+							</a>
+
+							<div class='product-action-vertical'>
+								<a href='#' class='btn-product-icon btn-wishlist btn-expandable'><span>add to wishlist</span></a>
+								<a href='popup/quickView.html' class='btn-product-icon btn-quickview' title='Quick view'><span>Quick view</span></a>
+								<a href='#' class='btn-product-icon btn-compare' title='Compare'><span>Compare</span></a>
+							</div><!-- End .product-action-vertical -->
+
+							<div class='product-action'>
+								<a href='#' class='btn-product btn-cart'><span>add to cart</span></a>
+							</div><!-- End .product-action -->
+						</figure><!-- End .product-media -->
+
+						<div class='product-body'>
+							<div class='product-cat'>
+								<a href='#'>Celeron</a>
+							</div><!-- End .product-cat -->
+							<h3 class='product-title'><a href='product.php'>$pro_title</a></h3><!-- End .product-title -->
+							<div class='product-price'>
+							&#8369;$pro_price
+							</div><!-- End .product-price -->
+							<div class='ratings-container'>
+								<div class='rating'>
+									<div class='ratings-val' style='width: 100%;'></div><!-- End .ratings-val -->
+								</div><!-- End .ratings -->
+								<span class='ratings-text'>( 4 Reviews )</span>
+							</div><!-- End .rating-container -->
+
+						</div><!-- End .product-body -->
+					</div><!-- End .product -->
+				</div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
 			";
 		}
 	}
 }
+
+
+
 if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isset($_POST["search"])){
 	if(isset($_POST["get_seleted_Category"])){
 		$id = $_POST["cat_id"];

@@ -56,7 +56,7 @@
                                     <div class="form-choice">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <a href="admin/index.php" class="btn btn-login btn-g">
+                                                <a href="backend/index.php" class="btn btn-login btn-g">
                                                     Login as Admin
                                                 </a>
                                             </div>
