@@ -170,37 +170,7 @@
                                     <a href="about.php">About</a>
                                 </li>
                                 <li>
-                                    <a href="category.php" class="sf-with-ul">Products</a>
-
-                                    <div class="megamenu megamenu-sm">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-6">
-                                                <div class="menu-col">
-                                                    <div class="menu-title">Product Details</div><!-- End .menu-title -->
-                                                    <ul>
-                                                        <li><a href="product.php"><span>NEC VersaPro VH<span class="tip tip-new">New</span></span></a></li>
-                                                        <li><a href="product.php">NEC Intel Core</a></li>
-                                                        <li><a href="product.php">NEC Intel Celeron</a></li>
-                                                        <li><a href="product.php">Toshiba R732</a></li>
-                                                        <li><a href="product.php">HP</a></li>
-                                                        <li><a href="product.php">Fujitso</a></li>
-                                                    </ul>
-                                                </div><!-- End .menu-col -->
-                                            </div><!-- End .col-md-6 -->
-
-                                            <div class="col-md-6">
-                                                <div class="banner banner-overlay">
-                                                    <a href="category.php">
-                                                        <img src="assets/images/menu/nec-banner3.jpg" alt="Banner">
-
-                                                        <div class="banner-content banner-content-bottom">
-                                                            <div class="banner-title text-white">Albay Laptops 2022<br><span><strong>Buy Now!</strong></span></div><!-- End .banner-title -->
-                                                        </div><!-- End .banner-content -->
-                                                    </a>
-                                                </div><!-- End .banner -->
-                                            </div><!-- End .col-md-6 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .megamenu megamenu-sm -->
+                                    <a href="category.php">Products</a>
                                 </li>
                                 <li>
                                     <a href="#" class="sf-with-ul">Other Services</a>
@@ -217,6 +187,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <!--
                                 <li>
                                     <a href="review.php" class="sf-with-ul">Reviews</a>
 
@@ -228,7 +199,7 @@
                                         <li><a href="review.php">Masbate</a></li>
                                         <li><a href="review.php">Sorsogon</a></li>
                                     </ul>
-                                </li>
+                                </li>-->
                                 <li>
                                     <a href="contact.php">Contact</a>
                                 </li>

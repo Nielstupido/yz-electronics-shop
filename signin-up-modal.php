@@ -53,15 +53,6 @@
                                             <a href="#" class="forgot-link">Forgot Your Password?</a>
                                         </div><!-- End .form-footer -->
                                     </form>
-                                    <div class="form-choice">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <a href="admin/index.php" class="btn btn-login btn-g">
-                                                    Login as Admin
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div><!-- .End .tab-pane -->
                                 <div class="row">
                                     <div class="col-md-2"><br></div>
