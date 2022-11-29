@@ -46,6 +46,10 @@
                                 Messages
                             </a>
 
+                            <a class="nav-link" href="admins.php" ><div class="nav-link-icon"><i data-feather="tool"></i></div>
+                                Admins
+                            </a>
+
                             <a class="nav-link" href="profile.php" ><div class="nav-link-icon"><i data-feather="user"></i></div>
                                 Profile
                             </a>

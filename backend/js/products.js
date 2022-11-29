@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	function getProducts(){
 		$.ajax({
-			url : '../admin/classes/Products.php',
+			url : './classes/Products.php',
 			method : 'POST',
 			data : {GET_PRODUCT:1},
 			success : function(response){
@@ -22,14 +22,13 @@ $(document).ready(function(){
 							productHTML += '<tr>'+
 								              '<td>'+ value.product_id +'</td>'+
 								              '<td>'+ value.product_title +'</td>'+
-								              '<td><img width="60" height="60" src="../product_images/'+value.product_image+'"></td>'+
+								              '<td><img width="60" height="60" src="../assets/images/products/'+value.product_image+'"></td>'+
 								              '<td>'+ value.product_price +'</td>'+
 								              '<td>'+ value.product_qty +'</td>'+
 								              '<td>'+ value.cat_title +'</td>'+
 								              '<td>'+ value.brand_title +'</td>'+
-											  '<td><a class="btn btn-info btn-blue btn-icon edit-category"><span style="display:none;">'+JSON.stringify(value)+'</span><i class="fas fa-pencil-alt" style="color: #fff;"></i></a></td>'+
-											  '<td><a cid="'+value.cat_id+'" class="btn btn-danger btn-red btn-icon delete-category"><i class="fas fa-trash-alt" style="color: #fff;"></i></a></td>'+
-								              //'<td><a class="btn btn-sm btn-info edit-product" style="color:#fff;"><span style="display:none;">'+JSON.stringify(value)+'</span><i class="fas fa-pencil-alt"></i></a>&nbsp;<a pid="'+value.product_id+'" class="btn btn-sm btn-danger delete-product" style="color:#fff;"><i class="fas fa-trash-alt"></i></a></td>'+
+											  '<td><a class="btn btn-info btn-blue btn-icon edit-product"><span style="display:none;">'+JSON.stringify(value)+'</span><i class="fas fa-pencil-alt" style="color: #fff;"></i></a></td>'+
+											  '<td><a cid="'+value.cat_id+'" class="btn btn-danger btn-red btn-icon delete-product"><i class="fas fa-trash-alt" style="color: #fff;"></i></a></td>'+
 								            '</tr>';
 
 						});
@@ -70,7 +69,7 @@ $(document).ready(function(){
 
 		$.ajax({
 
-			url : '../admin/classes/Products.php',
+			url : './classes/Products.php',
 			method : 'POST',
 			data : new FormData($("#add-product-form")[0]),
 			contentType : false,
@@ -112,7 +111,7 @@ $(document).ready(function(){
 		$("input[name='e_product_qty']").val(product.product_qty);
 		$("input[name='e_product_price']").val(product.product_price);
 		$("input[name='e_product_keywords']").val(product.product_keywords);
-		$("input[name='e_product_image']").siblings("img").attr("src", "../product_images/"+product.product_image);
+		$("input[name='e_product_image']").siblings("img").attr("src", "../assets/images/products/"+product.product_image);
 		$("input[name='pid']").val(product.product_id);
 		$("#edit_product_modal").modal('show');
 
@@ -122,7 +121,7 @@ $(document).ready(function(){
 
 		$.ajax({
 
-			url : '../admin/classes/Products.php',
+			url : './classes/Products.php',
 			method : 'POST',
 			data : new FormData($("#edit-product-form")[0]),
 			contentType : false,
@@ -150,10 +149,10 @@ $(document).ready(function(){
 	$(document.body).on('click', '.delete-product', function(){
 
 		var pid = $(this).attr('pid');
-		if (confirm("Are you sure to delete this item ?")) {
+		if (confirm("Are you sure you want to delete this item ?")) {
 			$.ajax({
 
-				url : '../admin/classes/Products.php',
+				url : './classes/Products.php',
 				method : 'POST',
 				data : {DELETE_PRODUCT: 1, pid:pid},
 				success : function(response){

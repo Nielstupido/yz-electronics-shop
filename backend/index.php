@@ -89,10 +89,16 @@
                             <div class="card bg-danger text-white mb-4">
                                 <div class="card-body d-flex align-items-center justify-content-between">
                                     <p>Admins</p>
-                                    <p>2</p>
+                                    <?php 
+                                        $sql = "SELECT * FROM admin";
+                                        $stmt = $pdo->prepare($sql);
+                                        $stmt->execute();
+                                        $admin_count = $stmt->rowCount();
+                                    ?>
+                                    <p><?php echo $admin_count; ?></p>
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="admins.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
@@ -125,31 +131,31 @@
                                                 </td>
                                                 <td>Core</td>
                                                 <td>5</td>
-                                                <td>Photo</td>
+                                                <td><img width="60" height="60" src="../assets/images/products/product9.jpg"></td>
                                                 <td>17 Nov 20</td>
                                             </tr>     
                                             <tr>
                                                 <td>2</td>
                                                 <td>
                                                     <a href="#">
-                                                        HP Corei5
+                                                        HP Intel Corei5 8GB RAM/120GB SSD
                                                     </a>
                                                 </td>
                                                 <td>Core</td>
                                                 <td>3</td>
-                                                <td>Photo</td>
+                                                <td><img width="60" height="60" src="../assets/images/products/product7.jpg"></td>
                                                 <td>17 Nov 20</td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
                                                 <td>
                                                     <a href="#">
-                                                        NEC 5800U
+                                                        NEC Intel Celeron 3855U
                                                     </a>
                                                 </td>
                                                 <td>Core</td>
                                                 <td>2</td>
-                                                <td>Photo</td>
+                                                <td><img width="60" height="60" src="../assets/images/products/product1.jpg"></td>
                                                 <td>17 Nov 20</td>
                                             </tr>
                                         </tbody>

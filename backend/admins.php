@@ -25,45 +25,45 @@
                 <?php require_once ("./includes/left-sidebar.php"); ?>
             </div>
 
-
             <div id="layoutSidenav_content">
                 <main>
                     <div class="page-header pb-10 page-header-dark bg-dark">
                         <div class="container-fluid">
                             <div class="page-header-content d-flex align-items-center justify-content-between text-white">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="book-open"></i></div>
-                                    <span>Orders</span>
+                                    <div class="page-header-icon"><i data-feather="users"></i></div>
+                                    <span>Admins</span>
                                 </h1>
+                                <!--<a href="new-user.php" title="Add new category" class="btn btn-white">
+                                    <div class="page-header-icon"><i data-feather="plus"></i></div>
+                                </a>-->
                             </div>
                         </div>
                     </div>
-                    <!--Table-->
+                    <!--Start Table-->
                     <div class="container-fluid mt-n10">
-
                         <div class="card mb-4">
-                            <div class="card-header">All Orders</div>
+                            <div class="card-header">All Admins</div>
                             <div class="card-body">
                                 <div class="datatable table-responsive">
                                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Order #</th>
-                                                <th>Product ID</th>
-                                                <th>Product Name</th>
-                                                <th>Quantity</th>
-                                                <th>TRX ID</th>
-                                                <th>Payment Status</th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                                <!--<th>Delete</th>-->
                                             </tr>
                                         </thead>
-                                        <tbody id="customer_order_list">
+                                        <tbody id="admin_list"> 
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    
                     </div>
+                    <!--End Table-->
                 </main>
 
                 <?php require_once ("./includes/footer.php"); ?>
@@ -74,6 +74,6 @@
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/scripts.js"></script>
-        <script type="text/javascript" src="./js/customers.js"></script>
+        <script type="text/javascript" src="./js/admin.js"></script>
     </body>
 </html>

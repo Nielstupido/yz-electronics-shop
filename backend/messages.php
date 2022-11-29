@@ -71,7 +71,7 @@
                                                 <td>17 Nov 2022</td>
                                                 <td>
                                                     <div class="badge badge-success">
-                                                        Pending
+                                                        Replied
                                                     </div>
                                                 </td>
                                                 <td>
@@ -95,7 +95,7 @@
                                                 <td>Meron pa po kayong Toshiba?</td>
                                                 <td>17 Nov 2022</td>
                                                 <td>
-                                                    <div class="badge badge-success">Pending
+                                                    <div class="badge badge-warning">Pending
                                                     </div>
                                                 </td>
                                                 <td>

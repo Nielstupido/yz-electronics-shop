@@ -16,11 +16,11 @@ $(document).ready(function(){
 
 					$.each(resp.message, function(index, value){
 						adminHTML += '<tr>'+
-										'<td>#</td>'+
+										'<td>'+ value.id +'</td>'+
 										'<td>'+ value.name +'</td>'+
 										'<td>'+ value.email +'</td>'+
 										'<td>'+ value.is_active +'</td>'+
-										'<td><a class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a></td>'+
+										//'<td><a class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a></td>'+
 									'</tr>';
 					});
 

@@ -49,8 +49,8 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>User Name</th>
-                                                <th>User Email</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
                                                 <th>In response to</th>
                                                 <th>Details</th>
                                                 <th>Date</th>
@@ -64,17 +64,17 @@
                                             <tr>
                                                 <td>1</td>
                                                 <td>
-                                                    Md. A. Barik
+                                                    Gairus
                                                 </td>
                                                 <td>
-                                                    mdabarik19@gmail.com
+                                                    niel@gmail.com
                                                 </td>
                                                 <td>
                                                     <a href="#">
-                                                        Post Title
+                                                        NEC Intel Celeron 3855U
                                                     </a>
                                                 </td>
-                                                <td>Details</td>
+                                                <td>Good quality laptops</td>
                                                 <td>17 Nov 2020</td>
                                                 <td>
                                                     <div class="badge badge-success">
@@ -94,17 +94,17 @@
                                             <tr>
                                                 <td>2</td>
                                                 <td>
-                                                    Md. A. Barik
+                                                    Marife
                                                 </td>
                                                 <td>
-                                                    mdabarik19@gmail.com
+                                                    dianebnrs09@gmail.com
                                                 </td>
                                                 <td>
                                                     <a href="#">
-                                                        Post Title
+                                                        NEC VersaPro VH
                                                     </a>
                                                 </td>
-                                                <td>Details</td>
+                                                <td>Parang brand new lang yung laptop. Thank you seller!</td>
                                                 <td>17 Nov 2020</td>
                                                 <td>
                                                     <div class="badge badge-success">Approved
