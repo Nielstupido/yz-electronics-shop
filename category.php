@@ -6,22 +6,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- molla/category-4cols.html  22 Nov 2019 10:02:52 GMT -->
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>YZ Electronics - Albay Laptops</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Molla - Bootstrap eCommerce Template | YZ Electronics">
-    <meta name="author" content="p-themes">
+    <meta name="keywords" content="YZ Electronics">
+    <meta name="description" content="YZ Electronics">
+    <meta name="author" content="marifebanares-gairuslegaspi">
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="180x180" href="assets/images/logo/yz-logo.ico">
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
-    <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
     <!-- Plugins CSS File -->
@@ -41,7 +35,7 @@
 <body>
     <!--menu-->
         <div class="menu1">
-            <?php include 'header.php';?>
+            <?php include 'includes/header.php';?>
         </div>
     <!-- End of menu-->
 
@@ -339,13 +333,13 @@
 
     <!--Footer-->
     <div class="footer">
-    <?php include 'footer.php';?>
+    <?php include 'includes/footer.php';?>
     </div>
     <!------------------------------------------------------------------->
 
     <!-------- Mobile Menu ------->
     <div class="mobile-menu">
-        <?php include 'mobile-nav.php';?>
+        <?php include 'includes/mobile-nav.php';?>
     </div>
     <!----------------------------------------------------------->
 

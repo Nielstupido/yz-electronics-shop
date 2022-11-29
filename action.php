@@ -38,6 +38,7 @@ if(isset($_POST["brand"])){
 		echo "</div>";
 	}
 }
+
 if(isset($_POST["page"])){
 	$sql = "SELECT * FROM products";
 	$run_query = mysqli_query($con,$sql);
@@ -49,8 +50,10 @@ if(isset($_POST["page"])){
 		";
 	}
 }
+
+
 if(isset($_POST["getProduct"])){
-	$limit = 9;
+	$limit = 12;
 	if(isset($_POST["setPage"])){
 		$pageno = $_POST["pageNumber"];
 		$start = ($pageno * $limit) - $limit;
@@ -110,6 +113,9 @@ if(isset($_POST["getProduct"])){
 		}
 	}
 }
+
+
+
 if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isset($_POST["search"])){
 	if(isset($_POST["get_seleted_Category"])){
 		$id = $_POST["cat_id"];

@@ -16,7 +16,7 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th>#</th>
+              <th>ID</th>
               <th>Name</th>
               <th>Email</th>
               <th>Mobile</th>

@@ -1,7 +1,7 @@
 <?php
 
 //connection to database
-require_once "conn.php";
+require_once "includes/conn.php";
 
 //session
 require "config/constants.php";
@@ -18,13 +18,9 @@ session_start();
     <title>YZ Electronics - Albay Laptops</title>
     <meta name="keywords" content="YZ Electronics">
     <meta name="description" content="YZ Electronics">
-    <meta name="author" content="banares-legaspi">
+    <meta name="author" content="marifebanares-gairuslegaspi">
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="180x180" href="assets/images/logo/yz-logo.ico">
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
-    <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
     <!-- Plugins CSS File -->
@@ -44,7 +40,7 @@ session_start();
 <body>
     <!--menu-->
     <div class="menu1">
-        <?php include 'header.php';?>
+        <?php include 'includes/header.php';?>
     </div>
     <!-- End of menu-->
 
@@ -789,13 +785,13 @@ session_start();
 
     <!--Footer-->
     <div class="footer">
-        <?php include 'footer.php';?>
+        <?php include 'includes/footer.php';?>
     </div>
     <!------------------------------------------------------------------->
     
     <!-------- Mobile Menu ------->
     <div class="mobile-menu">
-        <?php include 'mobile-nav.php';?>
+        <?php include 'includes/mobile-nav.php';?>
     </div>
     <!----------------------------------------------------------->
 
