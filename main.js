@@ -2,6 +2,8 @@ $(document).ready(function(){
 	cat();
 	brand();
 	product();
+	showProduct();
+
 	//cat() is a funtion fetching category record from database whenever page is load
 	function cat(){
 		$.ajax({
@@ -26,7 +28,7 @@ $(document).ready(function(){
 		})
 	}
 	//product() is a funtion fetching product record from database whenever page is load
-		function product(){
+	function product(){
 		$.ajax({
 			url	:	"action.php",
 			method:	"POST",
@@ -36,6 +38,17 @@ $(document).ready(function(){
 			}
 		})
 
+	}
+
+	function showProduct(){
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {showProduct:1},
+			success : function(data){
+				$("#product-dets").html(data);
+			}
+		})
 	}
 	/*	when page is load successfully then there is a list of categories when user click on category we will get category id and 
 		according to id we will show products
@@ -152,6 +165,23 @@ $(document).ready(function(){
 		})
 	})
 	//Get User Information before checkout end here
+
+
+	//Go to product page
+	$("body").delegate("#show_product","click",function(event){
+		var pid = $(this).attr("pid");
+		event.preventDefault();
+		$(".overlay").show();
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {gotoProduct:1,proId:pid},
+			success : function(data){
+				window.location.href = "product.php";
+			}
+		})
+	})
+
 
 	//Add Product into Cart
 	$("body").delegate("#product","click",function(event){

@@ -179,6 +179,7 @@ session_start();
                                     ':tag' => 'Featured-ALL'
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
                                     $product_images = 'assets/images/products/'.$posts['product_image'];
@@ -187,7 +188,11 @@ session_start();
                                         <figure class="product-media">
                                             <!--<span class="product-label label-circle label-top">Top</span>-->
                                             <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                                <?php echo "
+                                                <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                    <img src='$product_images' alt='Product image' class='product-image'>
+                                                </a>";
+                                                ?>
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -195,7 +200,7 @@ session_start();
                                             </div><!-- End .product-action -->
 
                                             <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
                                                 <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
@@ -204,7 +209,7 @@ session_start();
                                             <div class="product-cat">
                                                 <a href="#"><?php echo $product_category; ?></a>
                                             </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <h3 class="product-title"><?php echo"<a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title";?></a></h3><!-- End .product-title -->
                                             <div class="product-price">
                                             &#8369;<?php echo $product_price; ?>
                                             </div><!-- End .product-price -->
@@ -725,6 +730,7 @@ session_start();
                        ':tag' => 'Recommended'
                    ]);
                    while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        $product_id = $posts['product_id'];
                        $product_title = $posts['product_title'];
                        $product_price = $posts['product_price'];
                        $product_images = 'assets/images/products/'.$posts['product_image'];
@@ -733,9 +739,13 @@ session_start();
                         <div class="col-6 col-md-4 col-lg-3">
                             <div class="product product-2">
                                 <figure class="product-media">
-                                    <!--<span class="product-label label-circle label-sale">Sale</span>-->
+                                    <!--<span class="product-label label-circle label-top">Top</span>-->
                                     <a href="product.php">
-                                        <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                        <?php echo "
+                                        <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                            <img src='$product_images' alt='Product image' class='product-image'>
+                                        </a>";
+                                        ?>
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -743,16 +753,16 @@ session_start();
                                     </div><!-- End .product-action -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                        <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
                                         <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#"><?php echo $product_brand; ?></a>
+                                        <a href="#"><?php echo $product_category; ?></a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><?php echo"<a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title";?></a></h3><!-- End .product-title -->
                                     <div class="product-price">
                                     &#8369;<?php echo $product_price; ?>
                                         <!--<span class="new-price">$279.99</span>

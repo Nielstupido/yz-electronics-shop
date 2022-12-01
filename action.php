@@ -75,7 +75,7 @@ if(isset($_POST["getProduct"])){
 					<div class='product product-2 just-action-icons-sm'>
 						<figure class='product-media'>
 							<span class='product-label label-new'>New</span>
-							<a href='product.php'>
+							<a href='#' pid='$pro_id' id='show_product' title='Show product'>
 								<img src='assets/images/products/$pro_image' alt='Product image' class='product-image'>
 							</a>
 
@@ -86,7 +86,7 @@ if(isset($_POST["getProduct"])){
 							</div>
 
 							<div class='product-action'>
-								<a href='#' pid='$pro_id' id='product' title='Add to cart' class='btn-product btn-cart' title='Add to cart'><span>add to cart</span></a>
+								<a href='#' pid='$pro_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
 								<a href='popup/quickView.html' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
 							</div>
 						</figure>
@@ -95,7 +95,7 @@ if(isset($_POST["getProduct"])){
 							<div class='product-cat'>
 								<a href='#'>Celeron</a>
 							</div>
-							<h3 class='product-title'><a href='product.php'>$pro_title</a></h3>
+							<h3 class='product-title'><a href='#' pid='$pro_id' id='show_product' title='Show product'>$pro_title</a></h3>
 							<div class='product-price'>
 							&#8369;$pro_price
 							</div>
@@ -151,7 +151,217 @@ if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isse
 			";
 		}
 	}
+
+
+if(isset($_POST["showProduct"])){
+
+	//$_SESSION["product_id"]
+	$sql = "SELECT * FROM products WHERE product_id = '$_SESSION[product_id]'";
+	$query = mysqli_query($con,$sql);
+	$row = mysqli_fetch_array($query);
 	
+	$str = <<<PRINT
+		<div class="product-details-top">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="product-gallery product-gallery-vertical">
+						<div class="row">
+							<figure class="product-main-image">
+								<img id="product-zoom" src="assets/images/products/$row[7]" data-zoom-image="assets/images/products/single/p1-big.jpg" alt="product image">
+
+								<a href="#" id="btn-product-gallery" class="btn-product-gallery">
+									<i class="icon-arrows"></i>
+								</a>
+							</figure><!-- End .product-main-image -->
+
+							<div id="product-zoom-gallery" class="product-image-gallery">
+								<a class="product-gallery-item active" href="#" data-image="assets/images/products/single/p1.jpg" data-zoom-image="assets/images/products/single/p1-big.jpg">
+									<img src="assets/images/products/single/p1-small.jpg" alt="product side">
+								</a>
+
+								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p2.jpg" data-zoom-image="assets/images/products/single/p2-big.jpg">
+									<img src="assets/images/products/single/p2-small.jpg" alt="product cross">
+								</a>
+
+								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p3.jpg" data-zoom-image="assets/images/products/single/p3-big.jpg">
+									<img src="assets/images/products/single/p3-small.jpg" alt="product with model">
+								</a>
+
+								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p4.jpg" data-zoom-image="assets/images/products/single/p4-big.jpg">
+									<img src="assets/images/products/single/p4-small.jpg" alt="product back">
+								</a>
+							</div><!-- End .product-image-gallery -->
+						</div><!-- End .row -->
+					</div><!-- End .product-gallery -->
+				</div><!-- End .col-md-6 -->
+
+				<div class="col-md-6">
+					<div class="product-details">
+						<h1 class="product-title">$row[3]</h1><!-- End .product-title -->
+
+						<div class="ratings-container">
+							<div class="ratings">
+								<div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+							</div><!-- End .ratings -->
+							<a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+						</div><!-- End .rating-container -->
+
+						<div class="product-price">
+						&#8369;$row[4]
+						</div><!-- End .product-price -->
+
+						<div class="product-content">
+							<p>2nd hand Company-used Laptops. PRESENTABLE UNITS.</p>
+						</div><!-- End .product-content -->
+
+						<div class="details-filter-row details-row-size">
+							<label for="qty">Qty:</label>
+							<div class="product-details-quantity">
+								<input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+							</div><!-- End .product-details-quantity -->
+						</div><!-- End .details-filter-row -->
+
+						<div class="product-details-action">
+							<a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+
+							<div class="details-action-wrapper">
+								<a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+								<a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+							</div><!-- End .details-action-wrapper -->
+						</div><!-- End .product-details-action -->
+
+						<div class="product-details-footer">
+							<div class="product-cat">
+								<span>Category:</span>
+								<a href="#">NEC</a>,
+								<a href="#">Core i5</a>,
+								<a href="#">Students</a>
+							</div><!-- End .product-cat -->
+
+							<div class="social-icons social-icons-sm">
+								<span class="social-label">Share:</span>
+								<a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+								<a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+								<a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+								<a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+							</div>
+						</div><!-- End .product-details-footer -->
+					</div><!-- End .product-details -->
+				</div><!-- End .col-md-6 -->
+			</div><!-- End .row -->
+		</div><!-- End .product-details-top -->
+
+		<div class="product-details-tab">
+			<ul class="nav nav-pills justify-content-center" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
+					<div class="product-desc-content">
+						<h3>Product Information</h3>
+						<ul>
+							<li>CPU: Intel (R) Core (TM) Core i5-7Y54 1.20GHz (7th gen)
+							<li>Memory: 4GB</li>
+							<li>Storage: 128GB SSD</li>
+							<li>Wireless: Yes</li>
+							<li>Display: 12.5</li>
+							<li>Resolution: FULL HD (1920 x 1080)</li>
+							<li>With builtin Bluetooth</li>
+							<li>Graphics:  Intel HD Graphics 615</li>
+						</ul>
+					</div><!-- End .product-desc-content -->
+				</div><!-- .End .tab-pane -->
+				<div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
+					<div class="product-desc-content">
+						<h3>Information</h3>
+						<p>No additional information.</p>
+					</div><!-- End .product-desc-content -->
+				</div><!-- .End .tab-pane -->
+				<div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
+					<div class="product-desc-content">
+						<h3>Delivery & returns</h3>
+						<p>We deliver to all places within Bicol Region. We accept cash on delivery and payment via GCash or bank transfer through BDO. There is an additional charge for meet-ups. If you have questions, please contact us through this <a href="contact.php">form</a> or you can message us through our <a href="https://www.facebook.com/YzElectronics"> YZ Electronics</a> page.<br>
+						<br>We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+					</div><!-- End .product-desc-content -->
+				</div><!-- .End .tab-pane -->
+				<div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+					<div class="reviews">
+						<h3>Reviews (2)</h3>
+						<div class="review">
+							<div class="row no-gutters">
+								<div class="col-auto">
+									<h4><a href="#">Riah Calingacion</a></h4>
+									<div class="ratings-container">
+										<div class="ratings">
+											<div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+										</div><!-- End .ratings -->
+									</div><!-- End .rating-container -->
+									<span class="review-date">6 days ago</span>
+								</div><!-- End .col -->
+								<div class="col">
+									<h4>Good quality</h4>
+
+									<div class="review-content">
+										<p>Good quality laptops and Very accommodating seller. Thank you! 😊</p>
+									</div><!-- End .review-content -->
+
+									<div class="review-action">
+										<a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
+										<a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
+									</div><!-- End .review-action -->
+								</div><!-- End .col-auto -->
+							</div><!-- End .row -->
+						</div><!-- End .review -->
+
+						<div class="review">
+							<div class="row no-gutters">
+								<div class="col-auto">
+									<h4><a href="#">Roshelle Orlain</a></h4>
+									<div class="ratings-container">
+										<div class="ratings">
+											<div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+										</div><!-- End .ratings -->
+									</div><!-- End .rating-container -->
+									<span class="review-date">5 days ago</span>
+								</div><!-- End .col -->
+								<div class="col">
+									<h4>Good</h4>
+
+									<div class="review-content">
+										<p>item is good 👍 very accommodating seller, salute!</p>
+									</div><!-- End .review-content -->
+
+									<div class="review-action">
+										<a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
+										<a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
+									</div><!-- End .review-action -->
+								</div><!-- End .col-auto -->
+							</div><!-- End .row -->
+						</div><!-- End .review -->
+					</div><!-- End .reviews -->
+				</div><!-- .End .tab-pane -->
+			</div><!-- End .tab-content -->
+		</div><!-- End .product-details-tab -->
+		PRINT;
+
+	echo $str;
+}
+
+if(isset($_POST["gotoProduct"]))
+{
+	$_SESSION["product_id"] = $_POST["proId"];
+}
 
 
 	if(isset($_POST["addToCart"])){
@@ -212,10 +422,6 @@ if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isse
 			}
 			
 		}
-		
-		
-		
-		
 	}
 
 //Count User cart item
