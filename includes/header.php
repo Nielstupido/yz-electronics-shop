@@ -167,41 +167,7 @@
                                     <a href="about.php">About</a>
                                 </li>
                                 <li>
-<<<<<<< Updated upstream
                                     <a href="category.php">Products</a>
-=======
-                                    <a href="category.php" class="sf-with-ul">Products</a>
-
-                                    <div class="megamenu megamenu-sm">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-6">
-                                                <div class="menu-col">
-                                                    <div class="menu-title">Product Categories</div><!-- End .menu-title -->
-                                                    <ul>
-                                                        <li><a href="category.php"><span>NEC</span></a></li>
-                                                        <li><a href="category.php">Toshiba</a></li>
-                                                        <li><a href="category.php">HP</a></li>
-                                                        <li><a href="category.php">Fujitso</a></a></li>
-                                                        <li><a href="category.php">Core</a></li>
-                                                        <li><a href="category.php">Celeron</a></li>
-                                                    </ul>
-                                                </div><!-- End .menu-col -->
-                                            </div><!-- End .col-md-6 -->
-
-                                            <div class="col-md-6">
-                                                <div class="banner banner-overlay">
-                                                    <a href="category.php">
-                                                        <img src="assets/images/menu/nec-banner3.jpg" alt="Banner">
-
-                                                        <div class="banner-content banner-content-bottom">
-                                                            <div class="banner-title text-white">Albay Laptops 2022<br><span><strong>Buy Now!</strong></span></div><!-- End .banner-title -->
-                                                        </div><!-- End .banner-content -->
-                                                    </a>
-                                                </div><!-- End .banner -->
-                                            </div><!-- End .col-md-6 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .megamenu megamenu-sm -->
->>>>>>> Stashed changes
                                 </li>
                                 <li>
                                     <a href="#" class="sf-with-ul">Other Services</a>
@@ -218,23 +184,6 @@
                                         </li>
                                     </ul>
                                 </li>
-<<<<<<< Updated upstream
-                                <!--
-                                <li>
-=======
-                                <!--<li>
->>>>>>> Stashed changes
-                                    <a href="review.php" class="sf-with-ul">Reviews</a>
-
-                                    <ul>
-                                        <li><a href="review.php">Albay</a></li>
-                                        <li><a href="review.php">Camarines Sur</a></li>
-                                        <li><a href="review.php">Camarines Norte</a></li>
-                                        <li><a href="review.php">Catanduanes</a></li>
-                                        <li><a href="review.php">Masbate</a></li>
-                                        <li><a href="review.php">Sorsogon</a></li>
-                                    </ul>
-                                </li>-->
                                 <li>
                                     <a href="contact.php">Contact</a>
                                 </li>
