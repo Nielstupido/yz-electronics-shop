@@ -74,7 +74,7 @@
                             </a>
                         </div><!-- End .compare-dropdown -->
 
-                        <div class="wishlist">
+                        <!--<div class="wishlist">
                             <a href="wishlist.php" title="Wishlist">
                                 <div class="icon">
                                     <i class="icon-heart-o"></i>
@@ -82,7 +82,7 @@
                                 </div>
                                 <p>Wishlist</p>
                             </a>
-                        </div><!-- End .compare-dropdown -->
+                        </div>--><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown">
                             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -144,20 +144,20 @@
                                 <nav class="side-nav">
                                     <ul class="menu-vertical sf-arrows">
                                         <li class="item-lead"><a href="#">Promos</a></li>
-                                        <li class="item-lead"><a href="#">Rental units/laptops</a></li>
-                                        <li><a href="#">NEC</a></li>
-                                        <li><a href="#">Toshiba</a></li>
-                                        <li><a href="#">HP</a></li>
-                                        <li><a href="#">Fujitso</a></li>
-                                        <li><a href="#">Core i5</a></li>
-                                        <li><a href="#">Celeron</a></li>
+                                        <!--<li class="item-lead"><a href="#">Rental units/laptops</a></li>-->
+                                        <li><a href="category.php">NEC</a></li>
+                                        <li><a href="category.php">Toshiba</a></li>
+                                        <li><a href="category.php">HP</a></li>
+                                        <li><a href="category.php">Fujitso</a></li>
+                                        <li><a href="category.php">Core i5</a></li>
+                                        <li><a href="category.php">Celeron</a></li>
                                     </ul><!-- End .menu-vertical -->
                                 </nav><!-- End .side-nav -->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .category-dropdown -->
                     </div><!-- End .header-left -->
 
-                    <div class="header-center">
+                    <div class="header-center d-flex justify-content-center align-items-center">
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container"> <!--inalis ko active-->
@@ -167,7 +167,41 @@
                                     <a href="about.php">About</a>
                                 </li>
                                 <li>
+<<<<<<< Updated upstream
                                     <a href="category.php">Products</a>
+=======
+                                    <a href="category.php" class="sf-with-ul">Products</a>
+
+                                    <div class="megamenu megamenu-sm">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-6">
+                                                <div class="menu-col">
+                                                    <div class="menu-title">Product Categories</div><!-- End .menu-title -->
+                                                    <ul>
+                                                        <li><a href="category.php"><span>NEC</span></a></li>
+                                                        <li><a href="category.php">Toshiba</a></li>
+                                                        <li><a href="category.php">HP</a></li>
+                                                        <li><a href="category.php">Fujitso</a></a></li>
+                                                        <li><a href="category.php">Core</a></li>
+                                                        <li><a href="category.php">Celeron</a></li>
+                                                    </ul>
+                                                </div><!-- End .menu-col -->
+                                            </div><!-- End .col-md-6 -->
+
+                                            <div class="col-md-6">
+                                                <div class="banner banner-overlay">
+                                                    <a href="category.php">
+                                                        <img src="assets/images/menu/nec-banner3.jpg" alt="Banner">
+
+                                                        <div class="banner-content banner-content-bottom">
+                                                            <div class="banner-title text-white">Albay Laptops 2022<br><span><strong>Buy Now!</strong></span></div><!-- End .banner-title -->
+                                                        </div><!-- End .banner-content -->
+                                                    </a>
+                                                </div><!-- End .banner -->
+                                            </div><!-- End .col-md-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .megamenu megamenu-sm -->
+>>>>>>> Stashed changes
                                 </li>
                                 <li>
                                     <a href="#" class="sf-with-ul">Other Services</a>
@@ -184,8 +218,12 @@
                                         </li>
                                     </ul>
                                 </li>
+<<<<<<< Updated upstream
                                 <!--
                                 <li>
+=======
+                                <!--<li>
+>>>>>>> Stashed changes
                                     <a href="review.php" class="sf-with-ul">Reviews</a>
 
                                     <ul>
