@@ -73,7 +73,7 @@ session_start();
                                     </div><!-- End .intro-price -->
 
                                     <a href="category.php" class="btn btn-primary btn-round">
-                                        <span>Shop More</span>
+                                        <span>Shop Now!</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
                                 </div><!-- End .col-lg-11 offset-lg-1 -->
@@ -96,7 +96,7 @@ session_start();
                                     </div><!-- End .intro-price -->
 
                                     <a href="category.php" class="btn btn-primary btn-round">
-                                        <span>Shop More</span>
+                                        <span>Shop Now!</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
                                 </div><!-- End .col-md-6 offset-md-6 -->
@@ -195,9 +195,9 @@ session_start();
                                                 ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
@@ -272,9 +272,9 @@ session_start();
                                                 <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
@@ -349,9 +349,9 @@ session_start();
                                                 <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
@@ -426,9 +426,9 @@ session_start();
                                                 <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
@@ -503,9 +503,9 @@ session_start();
                                                 <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
@@ -580,9 +580,9 @@ session_start();
                                                 <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
@@ -656,9 +656,9 @@ session_start();
                                                 <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
                                             </a>
 
-                                            <div class="product-action-vertical">
+                                            <!--<div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div><!-- End .product-action -->
+                                            </div>--><!-- End .product-action -->
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
@@ -716,7 +716,7 @@ session_start();
                     </div><!-- End .heading-left -->
 
                    <div class="heading-right">
-                        <a href="#" class="title-link">View All Recommendations <i class="icon-long-arrow-right"></i></a>
+                        <a href="category.php" class="title-link">View All Recommendations <i class="icon-long-arrow-right"></i></a>
                    </div><!-- End .heading-right -->
                 </div><!-- End .heading -->
 
@@ -748,9 +748,9 @@ session_start();
                                         ?>
                                     </a>
 
-                                    <div class="product-action-vertical">
+                                    <!--<div class="product-action-vertical">
                                         <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                    </div>--><!-- End .product-action -->
 
                                     <div class="product-action">
                                         <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
@@ -788,8 +788,11 @@ session_start();
                 <hr class="mb-0">
             </div><!-- End .container -->
             <!--------------------------------------------------------->
-            
 
+            <!--<div>
+                <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FYzElectronics%2Fvideos%2F787974805820191%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>-->
+            
         </main><!-- End .main -->
         <!--------------------------------------------->
 
