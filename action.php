@@ -79,12 +79,6 @@ if(isset($_POST["getProduct"])){
 								<img src='assets/images/products/$pro_image' alt='Product image' class='product-image'>
 							</a>
 
-							<div class='product-action-vertical'>
-								<a href='#' class='btn-product-icon btn-wishlist btn-expandable'><span>add to wishlist</span></a>
-								<a href='popup/quickView.html' class='btn-product-icon btn-quickview' title='Quick view'><span>Quick view</span></a>
-								<a href='#' class='btn-product-icon btn-compare' title='Compare'><span>Compare</span></a>
-							</div>
-
 							<div class='product-action'>
 								<a href='#' pid='$pro_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
 								<a href='popup/quickView.html' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
@@ -222,12 +216,7 @@ if(isset($_POST["showProduct"])){
 						</div><!-- End .details-filter-row -->
 
 						<div class="product-details-action">
-							<a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-
-							<div class="details-action-wrapper">
-								<a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-								<a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
-							</div><!-- End .details-action-wrapper -->
+							<a href='#' pid='$_SESSION[product_id]' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
 						</div><!-- End .product-details-action -->
 
 						<div class="product-details-footer">
@@ -270,16 +259,10 @@ if(isset($_POST["showProduct"])){
 				<div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
 					<div class="product-desc-content">
 						<h3>Product Information</h3>
-						<ul>
-							<li>CPU: Intel (R) Core (TM) Core i5-7Y54 1.20GHz (7th gen)
-							<li>Memory: 4GB</li>
-							<li>Storage: 128GB SSD</li>
-							<li>Wireless: Yes</li>
-							<li>Display: 12.5</li>
-							<li>Resolution: FULL HD (1920 x 1080)</li>
-							<li>With builtin Bluetooth</li>
-							<li>Graphics:  Intel HD Graphics 615</li>
-						</ul>
+						<pre style="color: #777; font-family: sans-serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0;">
+						$row[6]
+						</pre>
+						
 					</div><!-- End .product-desc-content -->
 				</div><!-- .End .tab-pane -->
 				<div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
