@@ -3,6 +3,7 @@ $(document).ready(function(){
 	brand();
 	product();
 	showProduct();
+	//net_total();
 
 	//cat() is a funtion fetching category record from database whenever page is load
 	function cat(){
@@ -318,7 +319,7 @@ $(document).ready(function(){
 			success : function(data){
 				$('.overlay').hide();
 				$("#cart_checkout").html(data);
-					net_total();
+				net_total();
 			}
 		})
 	}
@@ -327,16 +328,27 @@ $(document).ready(function(){
 	*/
 	function net_total(){
 		var net_total = 0;
+		var i = 0;
 		$('.qty').each(function(){
-			var row = $(this).parent().parent();
-			var price  = row.find('.price').val();
-			var total = price * $(this).val()-0;
-			row.find('.total').val(total);
+			var row = $(this).parent().parent().parent();
+			var price  = parseInt(document.getElementsByClassName("price")[i].getAttribute("value"));
+			//row.find('.price').val();
+			var total = parseInt(price * $(this).val()-0);
+			document.getElementsByClassName("total")[i].innerText = total;
+			//row.find('.total').val(total);
+			i++;
 		})
+		i = 0;
 		$('.total').each(function(){
-			net_total += ($(this).val()-0);
+			net_total += (parseInt(document.getElementsByClassName("total")[i].innerText));
+			i++;
 		})
-		$('.net_total').html("Total : "+ CURRENCY+ " " +net_total);
+		if (document.getElementsByClassName("net_total")[0])
+		{
+			document.getElementsByClassName("net_total")[0].innerText = net_total;
+			document.getElementsByClassName("net_total")[1].innerText = net_total;
+		}
+		//$('.net_total').html(net_total);
 	}
 
 	//remove product from cart
