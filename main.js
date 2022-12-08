@@ -134,7 +134,7 @@ $(document).ready(function(){
 			data	:$("#login").serialize(),
 			success	:function(data){
 				if(data == "login_success"){
-					window.location.href = "profile.php";
+					window.location.href = "index.php";
 				}else if(data == "cart_login"){
 					window.location.href = "cart.php";
 				}else{
@@ -239,6 +239,7 @@ $(document).ready(function(){
 		and then show the result into class .net_total
 	*/
 	$("body").delegate(".qty","keyup",function(event){
+		/*
 		event.preventDefault();
 		var row = $(this).parent().parent();
 		var price = row.find('.price').val();
@@ -255,8 +256,9 @@ $(document).ready(function(){
 		$('.total').each(function(){
 			net_total += ($(this).val()-0);
 		})
-		$('.net_total').html("Total : $ " +net_total);
+		$('.net_total').html("Total : $ " +net_total); */
 
+		net_total();
 	})
 	//Change Quantity end here 
 
@@ -328,37 +330,44 @@ $(document).ready(function(){
 	*/
 	function net_total(){
 		var net_total = 0;
+		var temp = "null";
 		var i = 0;
 		$('.qty').each(function(){
 			var row = $(this).parent().parent().parent();
-			var price  = parseInt(document.getElementsByClassName("price")[i].getAttribute("value"));
+			temp = document.getElementsByClassName("price")[i].getAttribute("value").replace("₱", '');
+			var price  = parseFloat(temp.replace(/,/g, ''));
 			//row.find('.price').val();
-			var total = parseInt(price * $(this).val()-0);
-			document.getElementsByClassName("total")[i].innerText = total;
+			var total = parseFloat(price * $(this).val()-0);
+			document.getElementsByClassName("total")[i].innerText = "₱" + total.toLocaleString('en-US', {maximumFractionDigits:2});
 			//row.find('.total').val(total);
 			i++;
 		})
 		i = 0;
 		$('.total').each(function(){
-			net_total += (parseInt(document.getElementsByClassName("total")[i].innerText));
+			temp = document.getElementsByClassName("price")[i].innerText.replace("₱", '');
+			net_total += (parseFloat(temp.replace(/,/g, '')));
 			i++;
 		})
 		if (document.getElementsByClassName("net_total")[0])
 		{
-			document.getElementsByClassName("net_total")[0].innerText = net_total;
-			document.getElementsByClassName("net_total")[1].innerText = net_total;
+			document.getElementsByClassName("net_total")[0].innerText = "₱" + net_total.toLocaleString('en-US', {maximumFractionDigits:2});
+			document.getElementsByClassName("net_total")[1].innerText = "₱" + net_total.toLocaleString('en-US', {maximumFractionDigits:2});
 		}
 		//$('.net_total').html(net_total);
 	}
 
 	//remove product from cart
-
 	page();
-	function page(){
+	function page(pn){
+		var pageno = 1;
+		if(pn)
+		{
+			pageno = pn;
+		}
 		$.ajax({
 			url	:	"action.php",
 			method	:	"POST",
-			data	:	{page:1},
+			data	:	{page:1,pageNumber:pageno},
 			success	:	function(data){
 				$("#pageno").html(data);
 			}
@@ -372,6 +381,7 @@ $(document).ready(function(){
 			data	:	{getProduct:1,setPage:1,pageNumber:pn},
 			success	:	function(data){
 				$("#get_product").html(data);
+				page(pn);
 			}
 		})
 	})

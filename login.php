@@ -48,7 +48,13 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 			echo "login_success";
 			exit();
 		}else{
-			echo "<span style='color:red;'>Please register before login..!</span>";
+			echo "			
+				<div class='alert alert-danger'>
+					<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+					<span style='color:white;'>Please register before login..!</span>
+				</div>
+				";
+			//echo "<span style='color:red;'>Please register before login..!</span>";
 			exit();
 		}
 	

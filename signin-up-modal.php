@@ -28,6 +28,13 @@
                             </ul>
                             <div class="tab-content" id="tab-content-5">
                                 <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                    <div class="row">
+                                        <div class="col-md-2"><br></div>
+                                        <div class="col-md-8" id="e_msg">
+                                            <!--Alert from signup form-->
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
                                     <form onsubmit="return false" id="login">
                                         <div class="form-group">
                                             <label for="email">Email</label>

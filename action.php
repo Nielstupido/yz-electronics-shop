@@ -1,7 +1,8 @@
 <?php
-session_start();
-$ip_add = getenv("REMOTE_ADDR");
-include "db.php";
+	session_start();
+	$ip_add = getenv("REMOTE_ADDR");
+	include "db.php";
+	
 if(isset($_POST["category"])){
 	$category_query = "SELECT * FROM categories";
 	$run_query = mysqli_query($con,$category_query) or die(mysqli_error($con));
@@ -44,10 +45,20 @@ if(isset($_POST["page"])){
 	$run_query = mysqli_query($con,$sql);
 	$count = mysqli_num_rows($run_query);
 	$pageno = ceil($count/9);
+	$current = $_POST["pageNumber"];
 	for($i=1;$i<=$pageno;$i++){
-		echo "
-			<li><a href='#' page='$i' id='page'>$i</a></li>
-		";
+		if($i == $current)
+		{
+			echo "
+			<li class='page-item active'><a class='page-link page_number' current='0' href='#' page='$i' id='page'>$i</a></li>
+			";
+		}
+		else
+		{
+			echo "
+			<li class='page-item'><a class='page-link page_number' current='1' href='#' page='$i' id='page'>$i</a></li>
+			";
+		}
 	}
 }
 
@@ -81,7 +92,7 @@ if(isset($_POST["getProduct"])){
 
 							<div class='product-action'>
 								<a href='#' pid='$pro_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-								<a href='popup/quickView.html' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+								<a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
 							</div>
 						</figure>
 
@@ -471,7 +482,7 @@ if (isset($_POST["Common"])) {
 				
 			}
 			?>
-				<a style="float:right;" href="cart.php" class="btn btn-warning">Edit&nbsp;&nbsp;<span class="glyphicon glyphicon-edit"></span></a>
+				<!--<a style="float:right;" href="cart.php" class="btn btn-warning">Edit&nbsp;&nbsp;<span class="glyphicon glyphicon-edit"></span></a>-->
 			<?php
 			exit();
 		}
@@ -517,18 +528,18 @@ if (isset($_POST["Common"])) {
 										</figure>
 
 										<h3 class="product-title">
-											<a href="#">'.$product_title.'</a>
+											<a href="#" pid="'.$product_id.'" id="show_product" title="Show product">'.$product_title.'</a>
 										</h3><!-- End .product-title -->
 									</div><!-- End .product -->
 								</td>
-								<td class="price-col price" value="'.$product_price.'">'.$product_price.'</td>
+								<td class="price-col price" value="'.$product_price.'">&#8369;'.$product_price.'</td>
 								<td class="quantity-col">
 									<div class="cart-product-quantity">
-										<input type="number" class="form-control qty" value="'.$qty.'" min="1" max="10" step="1" data-decimals="0" required>
+										<input type="number" update_id="'.$product_id.'" class="form-control qty update" value="'.$qty.'" min="1" max="10" step="1" data-decimals="0" required>
 									</div><!-- End .cart-product-quantity -->                                 
 								</td>
 								<td class="total"></td>
-								<td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+								<td class="remove-col"><a href="#" remove_id="'.$product_id.'" class="btn-remove remove" title="Remove Product"><i class="icon-close"></i></a></td>
 							</tr>';
 				}
 
@@ -536,20 +547,6 @@ if (isset($_POST["Common"])) {
 				</tbody>
 								</table><!-- End .table table-wishlist -->
 
-	                			<div class="cart-bottom">
-			            			<div class="cart-discount">
-			            				<form action="#">
-			            					<div class="input-group">
-				        						<input type="text" class="form-control" required placeholder="coupon code">
-				        						<div class="input-group-append">
-													<button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
-												</div><!-- .End .input-group-append -->
-			        						</div><!-- End .input-group -->
-			            				</form>
-			            			</div><!-- End .cart-discount -->
-
-			            			<a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
-		            			</div><!-- End .cart-bottom -->
 	                		</div><!-- End .col-lg-9 -->
 	                		<aside class="col-lg-3">
 	                			<div class="summary summary-cart">
@@ -596,11 +593,6 @@ if (isset($_POST["Common"])) {
 	                							<td>00.00</td>
 	                						</tr><!-- End .summary-shipping-row -->
 
-	                						<tr class="summary-shipping-estimate">
-	                							<td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
-	                							<td>&nbsp;</td>
-	                						</tr><!-- End .summary-shipping-estimate -->
-
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
 	                							<td class="net_total"></td>
@@ -611,7 +603,7 @@ if (isset($_POST["Common"])) {
 	                				<a href="checkout.php" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
 	                			</div><!-- End .summary -->
 
-		            			<a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+		            			<a href="category.php" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
 	                		</aside><!-- End .col-lg-3 -->
 				';
 /*
