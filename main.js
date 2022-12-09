@@ -304,7 +304,7 @@ $(document).ready(function(){
 
 	})
 	checkOutDetails();
-	net_total();
+	//net_total();
 	/*
 		checkOutDetails() function work for two purposes
 		First it will enable php isset($_POST["Common"]) in action.php page and inside that
@@ -344,7 +344,7 @@ $(document).ready(function(){
 		})
 		i = 0;
 		$('.total').each(function(){
-			temp = document.getElementsByClassName("price")[i].innerText.replace("₱", '');
+			temp = document.getElementsByClassName("total")[i].innerText.replace("₱", '');
 			net_total += (parseFloat(temp.replace(/,/g, '')));
 			i++;
 		})
@@ -385,6 +385,19 @@ $(document).ready(function(){
 			}
 		})
 	})
+
+	$("body").delegate(".confirmOrder","click",function(event){
+		$.ajax({
+			url	:	"action.php",
+			method	:	"POST",
+			data	:	{confirmOrder:1},
+			success	:	function(data){
+				//$(".response").html(data);
+			}
+		})
+	})
+
+	
 
 })
 

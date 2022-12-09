@@ -2,6 +2,7 @@
 	session_start();
 	$ip_add = getenv("REMOTE_ADDR");
 	include "db.php";
+	require_once('vendor/autoload.php');
 	
 if(isset($_POST["category"])){
 	$category_query = "SELECT * FROM categories";
@@ -686,6 +687,23 @@ if (isset($_POST["updateCartItem"])) {
 }
 
 
+if (isset($_POST["confirmOrder"])) {
+	$amount = preg_replace('/[.,]/', '', $_POST["total_amount"]);
+	$amount = (int)$amount;
+	$client = new \GuzzleHttp\Client();
+
+	$response = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
+	  'body' => '{"data":{"attributes":{"amount":'.$amount.',"redirect":{"success":"http://localhost/yz-electronics-shop/dashboard.php","failed":"http://localhost/yz-electronics-shop/index.php"},"type":"gcash","currency":"PHP"}}}',
+	  'headers' => [
+		'accept' => 'application/json',
+		'authorization' => 'Basic cGtfdGVzdF92Q1VQZWpuNnZ1WnRMS0ROeUNOTEN2SGI6c2tfdGVzdF9HZXhWZjdXMVlzZkdvODVmTkVBRXhMU0g=',
+		'content-type' => 'application/json',
+	  ],
+	]);
+	$data = json_decode($response->getBody(),true);
+	$key_value = $data['data']['attributes']['redirect']['checkout_url'];
+	header("Refresh:2; url=".$key_value);
+}
 
 
 ?>
