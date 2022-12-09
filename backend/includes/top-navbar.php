@@ -50,11 +50,22 @@
                 </li>
                 <!--User Registration + New Comment Notification-->
 
+                <?php 
+                    $sql = "SELECT * FROM messages WHERE ms_state = :state";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([':state'=>0]);
+                    $count = $stmt->rowCount();
+                ?>
+
                 <!--Message Notification-->
                 <li class="nav-item dropdown no-caret mr-3 dropdown-notifications">
                     <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i data-feather="mail"></i>
-                        <span class="badge badge-red">1</span>
+                        <?php 
+                            if($count != 0) { ?>
+                                <span class="badge badge-red"><?php echo $count; ?></span>
+                        <?php } 
+                        ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownMessages">
                         <h6 class="dropdown-header dropdown-notifications-header">
@@ -62,17 +73,23 @@
                             Message Notification
                         </h6>
 
-                        <a class="dropdown-item dropdown-notifications-item" href="#"
-                            ><img class="dropdown-notifications-item-img" src="./assets/img/default.jpg" />
-                            <div class="dropdown-notifications-item-content">
-                                <div class="dropdown-notifications-item-content-text">
-                                    Meron pa po kayo yung a 11,500?
-                                </div>
-                                <div class="dropdown-notifications-item-content-details">
-                                    Marife &#xB7; 58m
-                                </div>
-                            </div>
-                        </a>
+                        <?php 
+                            while($messages = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                $ms_detail = $messages['ms_detail'];
+                                $ms_username = $messages['ms_username'];
+                                $ms_date = $messages['ms_date']; ?>
+                                    <a class="dropdown-item dropdown-notifications-item" href="messages.php">
+                                        <div class="dropdown-notifications-item-content">
+                                            <div class="dropdown-notifications-item-content-text">
+                                                <?php echo $ms_detail; ?>
+                                            </div>
+                                            <div class="dropdown-notifications-item-content-details">
+                                                <?php echo $ms_username; ?> &#xB7; <?php echo $ms_date; ?>
+                                            </div>
+                                        </div>
+                                    </a>
+                            <?php }
+                        ?>
 
                         <a class="dropdown-item dropdown-notifications-footer" href="messages.php">
                             Read All Messages
@@ -97,14 +114,15 @@
                                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                 $name = $user['name'];
                                 $email = $user['email'];
+                                $photo = $user['photo'];
                             ?>
 
         <li class="nav-item dropdown no-caret mr-3 dropdown-user">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="./assets/img/admin.png"/></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="./assets/img/<?php echo $photo; ?>" alt="<?php echo $name; ?>" /></a>
             <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 
                 <h6 class="dropdown-header d-flex align-items-center">
-                    <img class="dropdown-user-img" src="./assets/img/admin.png" />
+                    <img class="dropdown-user-img" src="./assets/img/<?php echo $photo; ?>" alt="<?php echo $name; ?>" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">
                             <?php echo $name; ?>

@@ -1,40 +1,10 @@
 <?php
+//session
+require "config/constants.php";
+session_start();
 
-    //connect and check connection to database
-    try{
-        $pdo = new PDO('mysql:host=localhost;port=3306;dbname=ecommerceapp', 'root', '');
-        // Set the PDO error mode to exception
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch(PDOException $e){
-        die("ERROR: Could not connect to database. " . $e->getMessage());
-    }
-  //Data validation
-  $name = $_POST['name'] ?? null;
-  $email = $_POST['email'] ?? null;
-  $phone_number = $_POST['phone_number'] ?? null;
-  $subject = $_POST['subject'] ?? null;
-  $message = $_POST['message'] ?? null;
-  $error = 0;
-  $error_message = '';
-
-  if($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    $data = "INSERT INTO contact_form (name, email, phone_number, subject, message)VALUES ( :name, :email , :phone_number , :subject, :message )";
-      if($statement = $pdo->prepare($data)){
-
-      $statement->bindValue(':name', $name);
-      $statement->bindValue(':email', $email);
-      $statement->bindValue(':phone_number', $phone_number);
-      $statement->bindValue(':subject', $subject);
-      $statement->bindValue(':message', $message);
-      $statement->execute();
-
-      header("Location: contact.php");
-      }
-    }
-
-  require "config/constants.php";
-    session_start();
+require "includes/conn.php";
+include 'signin-up-modal.php';
 ?>
 
 <!DOCTYPE html>
@@ -174,40 +144,93 @@
                             <h2 class="title mb-1">Got Any Questions?</h2><!-- End .title mb-2 -->
                             <p class="mb-2">Use the form below to get in touch with the sales team.</p>
                             
-                            <form method="post" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                            <?php 
+                                if(isset($_COOKIE['uid']) || isset($_COOKIE['_uiid_']) || isset($_SESSION['uid'])) { ?>
+                                <form action="contact.php" method="POST">
+                                    <?php 
+                                        if(isset($_COOKIE['uid'])) {
+                                            $user_id = base64_decode($_COOKIE['uid']);
+                                        } else if(isset($_SESSION['uid'])) {
+                                            $user_id = $_SESSION['uid'];
+                                        } else {
+                                            $user_id = -1;
+                                        }
+                                        $sql = "SELECT * FROM user_info WHERE user_id = :id";
+                                        $stmt = $pdo->prepare($sql);
+                                        $stmt->execute([
+                                            ':id' => $user_id
+                                        ]);
+                                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                                        $user_name = $user['first_name'];
+                                        $user_email = $user['email'];
+
+                                        if(isset($_POST['send'])) {
+                                            $message = trim($_POST['message']);
+                                            $sql = "INSERT INTO messages SET ms_username = :username, ms_useremail = :email, ms_detail = :detail, ms_date = :date";
+                                            $stmt = $pdo->prepare($sql);
+                                            $stmt->execute([
+                                                ':username' => $user_name,
+                                                ':email' => $user_email,
+                                                ':detail' => $message,
+                                                ':date' => date("M n, Y") . ' at ' . date("h:i A")
+                                            ]);
+                                            echo "<p class='p-4 alert alert-success'>Message has been send successfully!</p><br>";
+                                        }
+                                    ?>
                             <div class="contact-form mb-3">
-                                <div class="row">
-                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $name) ) == 0 ? 'has_error' : ''  ); ?>">
-                                        <label for="nname" class="sr-only">Name</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Name *" value="<?php echo $name; ?>" required>
+                                <div class="form-row">
+                                    <div class="form group col-sm-6">
+                                        <label for="inputName" class="text-dark">First Name</label>
+                                        <input value="<?php echo $user_name; ?>" readonly="true" class="form-control" id="inputName" type="text" placeholder="Name" />
                                     </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $email) ) == 0 ? 'has_error' : ''  ); ?>">
-                                        <label for="email" class="sr-only">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Email *" value="<?php echo $email; ?>" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
-
-                                <div class="row">
-                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $phone_number) ) == 0 ? 'has_error' : ''  ); ?>">
-                                        <label for="phone_number" class="sr-only">Phone</label>
-                                        <input type="tel" class="form-control" id="phone_number" placeholder="Phone" value="<?php echo $phone_number; ?>">
-                                    </div><!-- End .col-sm-6 -->
-
-                                    <div class="col-sm-6 <?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $subject) ) == 0 ? 'has_error' : ''  ); ?>">
-                                        <label for="subject" class="sr-only">Subject</label>
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject" value="<?php echo $subject; ?>">
+                                    <div class="form group col-sm-6">
+                                        <label for="inputEmail" class="text-dark">Email</label>
+                                        <input value="<?php echo $user_email; ?>" readonly="true" class="form-control" id="inputEmail" type="email" placeholder="name@gmail.com" />
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
-                                <div class="<?php echo ( $_SERVER['REQUEST_METHOD'] == 'POST' && strlen(trim( $message) ) == 0 ? 'has_error' : ''  ); ?>">
-                                    <label for="message" class="sr-only">Message</label>
-                                    <textarea class="form-control" cols="30" rows="4" id="message" required placeholder="Message *" value="<?php echo $message; ?>"></textarea>
+                                <div class="form group">
+                                    <label for="inputMessage" class="sr-only">Message</label>
+                                    <textarea class="form-control" name="message" cols="30" rows="4" id="inputMessage" placeholder="Enter your message..."></textarea>
                                 </div>
-                                <div>
-                                    <input type="submit" value="SUBMIT" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                                <div class="text-center">
+                                    <!--<input type="submit" value="SUBMIT" class="btn btn-outline-primary-2 btn-minwidth-sm">-->
+                                    <button name="send" class="btn btn-primary btn-marketing mt-2" type="submit">Submit</button>
                                 </div>
                             </form><!-- End .contact-form -->
+                            <!--<table class="table table-bordered table-hover mt-5" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Your messages:</th>
+                                                <th>Answers:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>-->
+                                            <?php 
+                                                /*$sql1 = "SELECT * FROM messages WHERE ms_useremail = :email";
+                                                $stmt1 = $pdo->prepare($sql1);
+                                                $stmt1->execute([
+                                                    ':email' => $user_email
+                                                ]);
+                                                while($ms = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+                                                    $ms_detail = $ms['ms_detail'];
+                                                    $reply = $ms['reply']; ?>
+                                                    <tr>
+                                                      <td><?php echo $ms_detail; ?></td>
+                                                      <td><?php echo $reply; ?></td>
+                                                  </tr>
+                                                <?php }*/                                                  
+                                            ?>
+                                        <!--</tbody>
+                                    </table>-->
+
+
+                               <?php } else { ?>
+                                    <a href="signin-up-modal.php">Log in to contact us!</a>
+                               <?php }
+                            ?>
+
                         </div><!-- End .col-lg-6 -->
 	                		</div><!-- End .col-lg-6 -->
 	                	</div><!-- End .row -->
