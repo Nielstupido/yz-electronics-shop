@@ -49,141 +49,77 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>User Name</th>
-                                                <th>User Email</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
                                                 <th>In response to</th>
                                                 <th>Details</th>
                                                 <th>Date</th>
                                                 <th>Status</th>
                                                 <th>Approve</th>
-                                                <th>Unapprove</th>
+                                                <th>Decline</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <?php 
-                                                $sql = "SELECT * FROM reviews";
-                                                $stmt = $pdo->prepare($sql);
-                                                $stmt->execute();
-                                                while($reviews = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                    // com_id, com_detail, com_date, com_status, 
-                                                    // com_user_id, user_name, user_email, com_post_id, post_title
-                                                    $com_id = $reviews['review_id'];
-                                                    $com_detail = $reviews['review_detail'];
-                                                    $com_date = $reviews['review_date'];
-                                                    $com_status = $reviews['review_status'];
-                                                    $com_user_id = $reviews['review_user_id'];
-                                                    // getting user_name and user_email from users table
-                                                    $sql1 = "SELECT * FROM user_info WHERE user_id = :id";
-                                                    $stmt1 = $pdo->prepare($sql1);
-                                                    $stmt1->execute([
-                                                        ':id' => $com_user_id
-                                                    ]);
-                                                    $user = $stmt1->fetch(PDO::FETCH_ASSOC);
-                                                    $user_name = $user['first_name'];
-                                                    $user_email = $user['email'];
-
-                                                    $review_prod_id = $reviews['review_prod_id'];
-                                                    // product_id and product_title from products table
-                                                    $sql2 = "SELECT * FROM products WHERE product_id = :id";
-                                                    $stmt2 = $pdo->prepare($sql2);
-                                                    $stmt2->execute([
-                                                        ':id' => $review_prod_id
-                                                    ]);
-                                                    $product = $stmt2->fetch(PDO::FETCH_ASSOC);
-                                                    $product_id = $product['product_id'];
-                                                    $product_title = $product['product_title']; ?>
-                                                        <tr>
-                                                            <td><?php echo $com_id; ?></td>
-                                                            <td>
-                                                                <?php echo $user_name; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $user_email; ?>
-                                                            </td>
-                                                            <td>
-                                                                <a href="../single.php?post_id=<?php echo $product_id; ?>" target="_blank">
-                                                                    <?php echo $product_title; ?>
-                                                                </a>
-                                                            </td>
-                                                            <td><?php echo $com_detail; ?></td>
-                                                            <td><?php echo $com_date; ?></td>
-                                                            <td>
-                                                                <div class="badge badge-<?php echo $com_status=="approved"?"success":"danger"; ?>">
-                                                                    <?php echo $com_status; ?>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <?php 
-                                                                    if(isset($_POST['approve'])) {
-                                                                        $review_id = $_POST['review_id'];
-                                                                        $sql = "UPDATE reviews SET review_status = :status, review_state = :state WHERE review_id = :id";
-                                                                        $stmt = $pdo->prepare($sql);
-                                                                        $stmt->execute([
-                                                                            ':status' => 'approved',
-                                                                            ':state' => 1,
-                                                                            ':id' => $review_id
-                                                                        ]);
-                                                                        header("Location: comments.php");
-                                                                    }
-                                                                ?>
-                                                                <?php 
-                                                                    if($com_status == 'approved') { ?>
-                                                                        <button title="Sorry, the status was already approved!" class="btn btn-success btn-icon"><i data-feather="check"></i></button>
-                                                                    <?php } else { ?>
-                                                                        <form action="comments.php" method="POST">
-                                                                            <input type="hidden" name="com_id" value="<?php echo $com_id; ?>" />
-                                                                            <button name="approve" type="submit" class="btn btn-success btn-icon"><i data-feather="check"></i></button>
-                                                                        </form>
-                                                                    <?php }
-                                                                ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php 
-                                                                    if(isset($_POST['unapprove'])) {
-                                                                        $review_id = $_POST['com_id'];
-                                                                        $sql = "UPDATE reviews SET review_status = :status, review_state = :state WHERE review_id = :id";
-                                                                        $stmt = $pdo->prepare($sql);
-                                                                        $stmt->execute([
-                                                                            ':status' => 'unapproved',
-                                                                            ':state' => 0,
-                                                                            ':id' => $review_id
-                                                                        ]);
-                                                                        header("Location: comments.php");
-                                                                    }
-                                                                ?>
-                                                                <?php 
-                                                                    if($com_status == 'unapproved') { ?>
-                                                                        <button title="Sorry, it's already unapproved!" name="unapprove" class="btn btn-red btn-icon"><i data-feather="delete"></i></button>
-                                                                    <?php } else { ?>
-                                                                        <form action="comments.php" method="POST">
-                                                                            <input type="hidden" name="com_id" value="<?php echo $com_id; ?>" />
-                                                                            <button name="unapprove" class="btn btn-red btn-icon"><i data-feather="delete"></i></button>
-                                                                        </form>
-                                                                   <?php }
-                                                                ?>
-                                                                
-                                                            </td>
-                                                            <td>
-                                                                <?php 
-                                                                    if(isset($_POST['delete'])) {
-                                                                        $review_id = $_POST['review_id'];
-                                                                        $sql = "DELETE FROM reviews WHERE review_id = :id";
-                                                                        $stmt = $pdo->prepare($sql);
-                                                                        $stmt->execute([
-                                                                            ':id' => $review_id
-                                                                        ]);
-                                                                        header("Location: comments.php");
-                                                                    }
-                                                                ?>
-                                                                <form action="comments.php" method="POST" >
-                                                                    <input type="hidden" name="com_id" value="<?php echo $com_id; ?>" />
-                                                                    <button name="delete" type="submit" class="btn btn-red btn-icon"><i data-feather="trash-2"></i></button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>    
-                                                <?php }
-                                            ?>                     
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    Gairus
+                                                </td>
+                                                <td>
+                                                    niel@gmail.com
+                                                </td>
+                                                <td>
+                                                    <a href="#">
+                                                        NEC Intel Celeron 3855U
+                                                    </a>
+                                                </td>
+                                                <td>Good quality laptops</td>
+                                                <td>17 Nov 2020</td>
+                                                <td>
+                                                    <div class="badge badge-success">
+                                                        Approved
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-success btn-icon"><i data-feather="check"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-red btn-icon"><i data-feather="delete"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-red btn-icon"><i data-feather="trash-2"></i></button>
+                                                </td>
+                                            </tr>  
+                                            <tr>
+                                                <td>2</td>
+                                                <td>
+                                                    Marife
+                                                </td>
+                                                <td>
+                                                    dianebnrs09@gmail.com
+                                                </td>
+                                                <td>
+                                                    <a href="#">
+                                                        NEC VersaPro VH
+                                                    </a>
+                                                </td>
+                                                <td>Parang brand new lang yung laptop. Thank you seller!</td>
+                                                <td>17 Nov 2020</td>
+                                                <td>
+                                                    <div class="badge badge-success">Approved
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-success btn-icon"><i data-feather="check"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-red btn-icon"><i data-feather="delete"></i></button>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-red btn-icon"><i data-feather="trash-2"></i></button>
+                                                </td>
+                                            </tr>                     
                                         </tbody>
                                     </table>
                                 </div>

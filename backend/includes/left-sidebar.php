@@ -38,9 +38,9 @@
                                 Customers
                             </a>
 
-                            <!--<a class="nav-link" href="comments.php" ><div class="nav-link-icon"><i data-feather="star"></i></div>
+                            <a class="nav-link" href="comments.php" ><div class="nav-link-icon"><i data-feather="star"></i></div>
                                 Reviews
-                            </a>-->
+                            </a>
 
                             <a class="nav-link" href="messages.php" ><div class="nav-link-icon"><i data-feather="mail"></i></div>
                                 Messages
