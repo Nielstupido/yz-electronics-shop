@@ -157,7 +157,10 @@
 										{
 											echo '<div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">';
 										}
-									?>
+									?>   
+										<div class="col-md-8" id="review_msg">
+											<!--Alert from signup form-->
+										</div>
 										<div class="table-responsive">
 											<table class="table table-sm">
 											<thead>

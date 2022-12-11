@@ -82,11 +82,27 @@ if(isset($_POST["getProduct"])){
 			$pro_title = $row['product_title'];
 			$pro_price = $row['product_price'];
 			$pro_image = $row['product_image'];
+
+
+			$sql = "SELECT * FROM reviews WHERE product_id = '$pro_id'";
+			$query = mysqli_query($con,$sql);
+			$num_reviews = 0;
+			$stars = 0;
+			while($row=mysqli_fetch_array($query)){
+					$num_reviews++;
+					$stars += $row['stars_number'];
+			}
+
+			$avg = $stars;
+			if($num_reviews>1)
+			{
+				$avg = intval($stars/5);
+			}
+
 			echo "
 				<div class='col-6 col-md-4 col-lg-4 col-xl-3'>
 					<div class='product product-2 just-action-icons-sm'>
 						<figure class='product-media'>
-							<span class='product-label label-new'>New</span>
 							<a href='#' pid='$pro_id' id='show_product' title='Show product'>
 								<img src='assets/images/products/$pro_image' alt='Product image' class='product-image'>
 							</a>
@@ -105,11 +121,21 @@ if(isset($_POST["getProduct"])){
 							<div class='product-price'>
 							&#8369;$pro_price
 							</div>
-							<div class='ratings-container'>
-								<div class='ratings'>
-									<div class='ratings-val' style='width: 100%;'></div>
-								</div>
-								<span class='ratings-text'>( 4 Reviews )</span>
+							<div class='ratings-container'>";
+
+			for($i=0;$i<$avg;$i++)
+			{
+				echo '<span class="fa fa-star checked"></span>';
+			}
+	
+			$unchecked = 5-$avg;
+	
+			for($i=0;$i<$unchecked;$i++)
+			{
+				echo '<span class="fa fa-star"></span>';
+			}
+							echo "
+								<span class='ratings-text'>( $num_reviews Reviews )</span>
 							</div>
 
 						</div>
@@ -160,20 +186,25 @@ if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isse
 
 
 if(isset($_POST["showProduct"])){
-
+	$num_reviews = 0;
+	$sql = "SELECT * FROM reviews WHERE product_id = '$_SESSION[product_id]'";
+	$query = mysqli_query($con,$sql);
+	while($row=mysqli_fetch_array($query)){
+		$num_reviews++;
+	}
 	//$_SESSION["product_id"]
 	$sql = "SELECT * FROM products WHERE product_id = '$_SESSION[product_id]'";
 	$query = mysqli_query($con,$sql);
 	$row = mysqli_fetch_array($query);
 	
-	$str = <<<PRINT
+	echo '
 		<div class="product-details-top">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="product-gallery product-gallery-vertical">
 						<div class="row">
 							<figure class="product-main-image">
-								<img id="product-zoom" src="assets/images/products/$row[7]" data-zoom-image="assets/images/products/single/p1-big.jpg" alt="product image">
+								<img id="product-zoom" src="assets/images/products/'.$row[7].'" data-zoom-image="assets/images/products/single/p1-big.jpg" alt="product image">
 
 								<a href="#" id="btn-product-gallery" class="btn-product-gallery">
 									<i class="icon-arrows"></i>
@@ -203,7 +234,7 @@ if(isset($_POST["showProduct"])){
 
 				<div class="col-md-6">
 					<div class="product-details">
-						<h1 class="product-title">$row[3]</h1><!-- End .product-title -->
+						<h1 class="product-title">'.$row[3].'</h1><!-- End .product-title -->
 
 						<div class="ratings-container">
 							<div class="ratings">
@@ -213,7 +244,7 @@ if(isset($_POST["showProduct"])){
 						</div><!-- End .rating-container -->
 
 						<div class="product-price">
-						&#8369;$row[4]
+						&#8369;'.$row[4].'
 						</div><!-- End .product-price -->
 
 						<div class="product-content">
@@ -228,7 +259,7 @@ if(isset($_POST["showProduct"])){
 						</div><!-- End .details-filter-row -->
 
 						<div class="product-details-action">
-							<a href='#' pid='$_SESSION[product_id]' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+							<a href="#" pid="'.$_SESSION["product_id"].'" id="product" title="Add to cart" class="btn-product btn-cart"><span>add to cart</span></a>
 						</div><!-- End .product-details-action -->
 
 						<div class="product-details-footer">
@@ -241,10 +272,7 @@ if(isset($_POST["showProduct"])){
 
 							<div class="social-icons social-icons-sm">
 								<span class="social-label">Share:</span>
-								<a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-								<a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-								<a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-								<a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+								<a href="https://www.facebook.com" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
 							</div>
 						</div><!-- End .product-details-footer -->
 					</div><!-- End .product-details -->
@@ -258,13 +286,10 @@ if(isset($_POST["showProduct"])){
 					<a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
+					<a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews ('.$num_reviews.')</a>
 				</li>
 			</ul>
 			<div class="tab-content">
@@ -272,85 +297,73 @@ if(isset($_POST["showProduct"])){
 					<div class="product-desc-content">
 						<h3>Product Information</h3>
 						<pre style="color: #777; font-family: sans-serif; font-size: 1.4rem; font-weight: 300; letter-spacing: 0;">
-						$row[6]
+						'.$row[6].'
 						</pre>
 						
-					</div><!-- End .product-desc-content -->
-				</div><!-- .End .tab-pane -->
-				<div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
-					<div class="product-desc-content">
-						<h3>Information</h3>
-						<p>No additional information.</p>
 					</div><!-- End .product-desc-content -->
 				</div><!-- .End .tab-pane -->
 				<div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
 					<div class="product-desc-content">
 						<h3>Delivery & returns</h3>
-						<p>We deliver to all places within Bicol Region. We accept cash on delivery and payment via GCash or bank transfer through BDO. There is an additional charge for meet-ups. If you have questions, please contact us through this <a href="contact.php">form</a> or you can message us through our <a href="https://www.facebook.com/YzElectronics"> YZ Electronics</a> page.<br>
-						<br>We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+						<p>We deliver to all places within Bicol Region. We accept cash on delivery and payment via GCash. There is an additional charge for meet-ups. If you have questions, please contact us through this <a href="contact.php">form</a> or you can message us through our <a href="https://www.facebook.com/YzElectronics" target="_blank"> YZ Electronics</a> page.<br>
+						<br>We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt.</p>
 					</div><!-- End .product-desc-content -->
 				</div><!-- .End .tab-pane -->
 				<div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
 					<div class="reviews">
-						<h3>Reviews (2)</h3>
-						<div class="review">
-							<div class="row no-gutters">
-								<div class="col-auto">
-									<h4><a href="#">Riah Calingacion</a></h4>
-									<div class="ratings-container">
-										<div class="ratings">
-											<div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-										</div><!-- End .ratings -->
-									</div><!-- End .rating-container -->
-									<span class="review-date">6 days ago</span>
-								</div><!-- End .col -->
-								<div class="col">
-									<h4>Good quality</h4>
+						<h3>Reviews ('.$num_reviews.')</h3>
+						';
 
-									<div class="review-content">
-										<p>Good quality laptops and Very accommodating seller. Thank you! 😊</p>
-									</div><!-- End .review-content -->
 
-									<div class="review-action">
-										<a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-										<a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-									</div><!-- End .review-action -->
-								</div><!-- End .col-auto -->
-							</div><!-- End .row -->
-						</div><!-- End .review -->
+	$sql = "SELECT * FROM reviews WHERE product_id = '$_SESSION[product_id]'";
+	$query = mysqli_query($con,$sql);
+	while($row=mysqli_fetch_array($query)){
+			$stars    = $row['stars_number'];
+			$date    = $row['date_review'];
+			$comment   = $row['comments'];
+			$username = $row['username'];
+			$pro_title = $row['product_name'];
 
-						<div class="review">
-							<div class="row no-gutters">
-								<div class="col-auto">
-									<h4><a href="#">Roshelle Orlain</a></h4>
-									<div class="ratings-container">
-										<div class="ratings">
-											<div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-										</div><!-- End .ratings -->
-									</div><!-- End .rating-container -->
-									<span class="review-date">5 days ago</span>
-								</div><!-- End .col -->
-								<div class="col">
-									<h4>Good</h4>
+			echo '
+				<div class="review">
+					<div class="row no-gutters">
+						<div class="col-auto">
+							<h4>'.$username.'</h4>
+							<div class="ratings-container">';
+	
+		for($i=0;$i<$stars;$i++)
+		{
+			echo '<span class="fa fa-star checked"></span>';
+		}
 
-									<div class="review-content">
-										<p>item is good 👍 very accommodating seller, salute!</p>
-									</div><!-- End .review-content -->
+		$unchecked = 5-$stars;
 
-									<div class="review-action">
-										<a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-										<a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-									</div><!-- End .review-action -->
-								</div><!-- End .col-auto -->
-							</div><!-- End .row -->
-						</div><!-- End .review -->
+		for($i=0;$i<$unchecked;$i++)
+		{
+			echo '<span class="fa fa-star"></span>';
+		}
+
+		
+			echo'
+							</div><!-- End .rating-container -->
+							<span class="review-date">'.$date.'</span>
+						</div><!-- End .col -->
+						<div class="col">
+							<div class="review-content">
+								<p>'.$comment.'</p>
+							</div><!-- End .review-content -->
+						</div><!-- End .col-auto -->
+					</div><!-- End .row -->
+				</div><!-- End .review -->
+			';
+	}
+
+	echo '		
 					</div><!-- End .reviews -->
 				</div><!-- .End .tab-pane -->
 			</div><!-- End .tab-content -->
 		</div><!-- End .product-details-tab -->
-		PRINT;
-
-	echo $str;
+		';
 }
 
 if(isset($_POST["gotoProduct"]))
@@ -742,6 +755,7 @@ if(isset($_POST["showOrders"]))
 	if (mysqli_num_rows($query) > 0) {
 		# code...
 		while ($row=mysqli_fetch_array($query)) {
+			$order_id[] = $row["order_id"];
 			$prod_price[] = $row["product_price"];
 			$product_id[] = $row["product_id"];
 			$product_title[] = $row["product_title"];
@@ -766,17 +780,17 @@ if(isset($_POST["showOrders"]))
 					<td>'.$product_title[$i].'</td>
 					<td>₱'.$total.'.00</td>';
 
-			if($status[$i]=="Pending")
+			if($status[$i]=="Delivered")
 			{
-				echo '<td>'.$status[$i].'</td>
+				echo '<td>
+				<a id="reviewBtn" href="#review-modal" data-toggle="modal" pid="'.$product_id[$i].'" pname="'.$product_title[$i].'" orderID="'.$order_id[$i].'" class="btn btn-primary">
+					Received
+				</a>
 				</tr>';
 			}
 			else
 			{
-				echo '<td>
-				<a href="#review-modal" data-toggle="modal" pid="'.$product_id[$i].'" class="btn btn-primary">
-					Received
-				</a>
+				echo '<td>'.$status[$i].'</td>
 				</tr>';
 			}
 		}
@@ -787,6 +801,29 @@ if(isset($_POST["showOrders"]))
 		<a href="category.php" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
 		';
 	}
+}
+
+
+if(isset($_POST["submitRev"]))
+{
+	$numStars = $_POST["numberStars"];
+	$orderID = $_POST["orderId"];
+	$proID = $_POST["productId"];
+	$proName = $_POST["productName"];
+	$review = $_POST["reviewDets"];
+	$date = date("m.d.y");  
+
+	$user_id = $_SESSION["uid"];
+	$user_name = $_SESSION["name"];
+
+	$sql = "UPDATE orders SET p_status = 'Completed' WHERE order_id = '$orderID'";
+
+	$result = mysqli_query($con,$sql);
+
+	$sql = "INSERT INTO `reviews`
+	(`product_id`, `stars_number`, `date_review`, `comments`, `username`, `product_name`) 
+	VALUES ('$proID','$numStars','$date','$review','$user_name','$proName')";
+	$result = mysqli_query($con,$sql);
 }
 
 

@@ -342,6 +342,47 @@ $(document).ready(function(){
 		})
 	})
 
+	$("body").delegate("#reviewBtn","click",function(event){
+		var orderID = $(this).attr("orderID");
+		var prodID = $(this).attr("pid");
+		var prodName = $(this).attr("pname");
+		document.getElementById('orderID').value = orderID; 
+		document.getElementById('prodName').value = prodName; 
+		document.getElementById('prodID').value = prodID; 
+	})
+	
+
+	$("body").delegate("#submitReview","click",function(event){
+		var numStars = $("#numStars").val();
+		var prodID = $("#prodID").val();
+		var orderID = $("#orderID").val();
+		var prodName = $("#prodName").val();
+		var review = $("#reviewText").val();
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {submitRev:1,orderId:orderID,productId:prodID,numberStars:numStars,productName:prodName,reviewDets:review},
+			success : function(data){
+				getCustomerOrders();
+			}
+		})
+	})
+
+	// $("#review").on("submit",function(event){
+	// 	console.log("dsfsd");
+	// 	if(document.getElementById('1').checked)
+	// 	{
+	// 		event.preventDefault();
+	// 		var comment = $("#reviewText").val();
+	// 		$.ajax({
+	// 			url	:	"action.php",
+	// 			method:	"POST",
+	// 			data	:{newReview:1,commentReview:comment},
+	// 			success	:function(data){
+	// 			}
+	// 		})
+	// 	}
+	// })
 
 
 	checkOutDetails();

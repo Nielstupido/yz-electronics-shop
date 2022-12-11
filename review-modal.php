@@ -4,7 +4,6 @@
 <head>
     <script src="js/jquery2.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="main.js"></script>
 
     <style>
         .rating {
@@ -74,17 +73,41 @@
                                                 <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
                                                 <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
                                             </div>
+                                            <script>
+                                                $(document).ready(function() {
+                                                $("#1").click(function() {
+                                                    document.getElementById('numStars').value = 1;
+                                                });
+                                                $("#2").click(function() {
+                                                    document.getElementById('numStars').value = 2;
+                                                });
+                                                $("#3").click(function() {
+                                                    document.getElementById('numStars').value = 3;
+                                                });
+                                                $("#4").click(function() {
+                                                    document.getElementById('numStars').value = 4;
+                                                });
+                                                $("#5").click(function() {
+                                                    document.getElementById('numStars').value = 5;
+                                                });
+                                                });
+                                            </script>
                                         </div><!-- End .form-group -->
+
+                                        <input id="prodID" type="hidden"> </input>
+                                        <input id="orderID" type="hidden"> </input>
+                                        <input id="prodName" type="hidden"> </input>
+                                        <input id="numStars" type="hidden" value="0"> </input>
 
                                         <div class="form-group">
                                             <label for="reviewText">Product Review:</label>
                                             <textarea id="reviewText" name="reviewText" rows="10" class="form-control">
-                                            Share your thoughts on the product to help other buyers.
+                                                Share your thoughts on the product to help other buyers.
                                             </textarea>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
-                                            <button type="submit" class="btn btn-outline-primary-2" Value="Review">
+                                            <button id="submitReview" class="btn btn-outline-primary-2" Value="Review" data-dismiss="modal" aria-label="Close">
                                                 <span>Submit</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </button>
