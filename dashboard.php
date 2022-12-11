@@ -65,12 +65,45 @@
 	                	<div class="row">
 	                		<aside class="col-md-4 col-lg-3">
 	                			<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-								    <li class="nav-item">
-								        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
-								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
-								    </li>
+									<?php
+										if(isset($_SESSION["ordered"]))
+										{
+											if($_SESSION["ordered"])
+											{
+												echo '								    
+												<li class="nav-item">
+													<a class="nav-link" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="false">Dashboard</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link active" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="true">Orders</a>
+												</li>
+												';
+											}
+											else
+											{
+												echo '								    
+												<li class="nav-item">
+													<a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+												</li>
+												';
+											}
+										}
+										else
+										{
+											echo '								    
+												<li class="nav-item">
+													<a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+												</li>
+												';
+										}
+									?>
+
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
 								    </li>
@@ -85,15 +118,64 @@
 
 	                		<div class="col-md-8 col-lg-9">
 	                			<div class="tab-content">
-								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+									<?php
+										if(isset($_SESSION["ordered"]))
+										{
+											if($_SESSION["ordered"])
+											{
+												echo '<div class="tab-pane fade" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">';
+											}
+											else
+											{
+												echo '<div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">';
+											}
+										}
+										else
+										{
+											echo '<div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">';
+										}
+									?>
+								    
 								    	<p>Hi, <strong><?php echo $_SESSION["name"]; ?></strong>
 								    	<br>
 								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
 								    </div><!-- .End .tab-pane -->
+									<?php
+										if(isset($_SESSION["ordered"]))
+										{
+											if($_SESSION["ordered"])
+											{
+												echo '<div class="tab-pane fade show active" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">';
+											}
+											else
+											{
+												echo '<div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">';
+											}
+											unset($_SESSION['ordered']);
+										}
+										else
+										{
+											echo '<div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">';
+										}
+									?>
+										<div class="table-responsive">
+											<table class="table table-sm">
+											<thead>
+												<tr>
+												<th>Order Qty</th>
+												<th>Order Image</th>
+												<th>Order Title</th>
+												<th>Order Total</th>
+												<th>Order Status</th>
+												</tr>
+											</thead>
+											<?php include 'review-modal.php';?>
+											<tbody id="customer_order_list">
+											
+											</tbody>
+											</table>
+										</div>
 
-								    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-								    	<p>No order has been made yet.</p>
-								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
 								    </div><!-- .End .tab-pane -->
 
 								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">

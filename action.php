@@ -463,18 +463,18 @@ if (isset($_POST["Common"])) {
 					<div class="product">
 						<div class="product-cart-details">
 							<h4 class="product-title">
-								<a href="product.php">'.$product_title.'</a>
+							<a href="#" pid="'.$product_id.'" id="show_product" title="Show product">'.$product_title.'</a>
 							</h4>
 
 							<span class="cart-product-info">
-								<span class="cart-product-qty">1</span>
+								<span class="cart-product-qty">'.$qty.' x</span>
 								'.$product_price.'
 							</span>
 						</div><!-- End .product-cart-details -->
 
 						<figure class="product-image-container">
-							<a href="product.php" class="product-image">
-								<img src="assets/images/products/'.$product_image.'" alt="product">
+							<a href="#" class="product-image" pid="'.$product_id.'" id="show_product" title="Show product">
+								<img src="assets/images/products/'.$product_image.'" alt="Product image">
 							</a>
 						</figure>
 						<a href="#" remove_id="'.$product_id.'" class="btn-remove remove" title="Remove Product"><i class="icon-close"></i></a>
@@ -555,53 +555,15 @@ if (isset($_POST["Common"])) {
 
 	                				<table class="table table-summary">
 	                					<tbody>
-	                						<tr class="summary-subtotal">
-	                							<td>Subtotal:</td>
-	                							<td class="net_total"></td>
-	                						</tr><!-- End .summary-subtotal -->
-	                						<tr class="summary-shipping">
-	                							<td>Shipping:</td>
-	                							<td>&nbsp;</td>
-	                						</tr>
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-													<div class="custom-control custom-radio">
-														<input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="free-shipping">Free Shipping</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>$0.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="standart-shipping">Standart:</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>00.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
-
-	                						<tr class="summary-shipping-row">
-	                							<td>
-	                								<div class="custom-control custom-radio">
-														<input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
-														<label class="custom-control-label" for="express-shipping">Express:</label>
-													</div><!-- End .custom-control -->
-	                							</td>
-	                							<td>00.00</td>
-	                						</tr><!-- End .summary-shipping-row -->
-
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
 	                							<td class="net_total"></td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>
-	                				</table><!-- End .table table-summary -->
+	                				</table><!-- End .table table-summary -->';
 
-	                				<a href="checkout.php" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+				echo (isset($_SESSION["uid"])) ? '<a href="checkout.php" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>': '<a href="#signin-modal" data-toggle="modal" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>';
+	            echo '
 	                			</div><!-- End .summary -->
 
 		            			<a href="category.php" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
@@ -687,13 +649,13 @@ if (isset($_POST["updateCartItem"])) {
 }
 
 
-if (isset($_POST["confirmOrder"])) {
-	$amount = preg_replace('/[.,]/', '', $_POST["total_amount"]);
+if (isset($_POST["finishCheckoutGcash"])) {
+	$amount = preg_replace('/[.]/', '', $_POST["total_amount"]);
 	$amount = (int)$amount;
 	$client = new \GuzzleHttp\Client();
 
 	$response = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
-	  'body' => '{"data":{"attributes":{"amount":'.$amount.',"redirect":{"success":"http://localhost/yz-electronics-shop/dashboard.php","failed":"http://localhost/yz-electronics-shop/index.php"},"type":"gcash","currency":"PHP"}}}',
+	  'body' => '{"data":{"attributes":{"amount":'.$amount.',"redirect":{"success":"http://localhost/yz-electronics-shop/success.php","failed":"http://localhost/yz-electronics-shop/fail.php"},"type":"gcash","currency":"PHP"}}}',
 	  'headers' => [
 		'accept' => 'application/json',
 		'authorization' => 'Basic cGtfdGVzdF92Q1VQZWpuNnZ1WnRMS0ROeUNOTEN2SGI6c2tfdGVzdF9HZXhWZjdXMVlzZkdvODVmTkVBRXhMU0g=',
@@ -701,8 +663,130 @@ if (isset($_POST["confirmOrder"])) {
 	  ],
 	]);
 	$data = json_decode($response->getBody(),true);
+	$_SESSION["tx"] = $data['data']['id'];
 	$key_value = $data['data']['attributes']['redirect']['checkout_url'];
-	header("Refresh:2; url=".$key_value);
+	//header("Refresh:2; url=".$key_value);
+	echo $key_value;
+}
+
+
+if(isset($_POST["shippingAdd"]))
+{
+	$sql = "SELECT address1 FROM user_info WHERE user_id = '$_SESSION[uid]'";
+	$run_query = mysqli_query($con,$sql);
+	$result = mysqli_fetch_assoc($run_query);
+	echo $result["address1"]; 
+}
+
+
+if(isset($_POST["netTotal"]))
+{
+	$_SESSION["totalCart"] = $_POST["total"];
+}
+
+
+if(isset($_POST["checkOutCart"]))
+{
+	if (isset($_SESSION["uid"])) {
+		//When user is logged in this query will execute
+		$sql = "SELECT a.product_id,a.product_title,a.product_price,a.product_image,b.id,b.qty FROM products a,cart b WHERE a.product_id=b.p_id AND b.user_id='$_SESSION[uid]'";
+	}else{
+		//When user is not logged in this query will execute
+		$sql = "SELECT a.product_id,a.product_title,a.product_price,a.product_image,b.id,b.qty FROM products a,cart b WHERE a.product_id=b.p_id AND b.ip_add='$ip_add' AND b.user_id < 0";
+	}
+
+	$query = mysqli_query($con,$sql);
+	if (mysqli_num_rows($query) > 0) {
+		//display user cart item with "Ready to checkout" button if user is not login
+			$n=0;
+			while ($row=mysqli_fetch_array($query)) {
+				$n++;
+				$product_id = $row["product_id"];
+				$product_title = $row["product_title"];
+				$product_price = $row["product_price"];
+				$product_image = $row["product_image"];
+				$cart_item_id = $row["id"];
+				$qty = $row["qty"];
+
+
+				echo 
+					'<tr>
+					<td>'.$product_title.'</td>
+					<td>₱'.$product_price.' x '.$qty.'</td>
+					</tr>
+					';
+			}
+
+			echo '
+				<tr class="summary-subtotal">
+					<td>Subtotal:</td>
+					<td>₱'.$_SESSION["totalCart"].'.00</td>
+				</tr><!-- End .summary-subtotal -->
+				<tr>
+					<td>Shipping:</td>
+					<td>Free shipping</td>
+				</tr>
+				<tr class="summary-total">
+					<td>Total: ₱</td>
+					<td><input type="text" id="total_amount" name="total_amount" value="'.$_SESSION["totalCart"].'.00" readonly></td>
+				</tr><!-- End .summary-total -->
+			';
+	}
+}
+
+
+if(isset($_POST["showOrders"]))
+{
+    $sql = "SELECT o.order_id, o.product_id, o.qty, o.trx_id, o.p_status, p.product_title, p.product_image, p.product_price FROM orders o JOIN products p ON o.product_id = p.product_id WHERE user_id = '$_SESSION[uid]'";
+	$query = mysqli_query($con,$sql);
+	if (mysqli_num_rows($query) > 0) {
+		# code...
+		while ($row=mysqli_fetch_array($query)) {
+			$prod_price[] = $row["product_price"];
+			$product_id[] = $row["product_id"];
+			$product_title[] = $row["product_title"];
+			$product_image[] = $row["product_image"];
+			$status[] = $row["p_status"];
+			$qty[] = $row["qty"];
+		}
+
+		for ($i=0; $i < count($prod_price); $i++) { 
+			$price = preg_replace('/[,"₱"]/', '', $prod_price[$i]);
+			$total = (int)$price * $qty[$i];
+			$total = number_format($total);
+			echo 
+				'<tr>
+					<td>x'.$qty[$i].'</td>
+					<td><figure">
+							<a href="#">
+								<img src="assets/images/products/'.$product_image[$i].'" width="100px" alt="product">
+							</a>
+						</figure>
+					</td>
+					<td>'.$product_title[$i].'</td>
+					<td>₱'.$total.'.00</td>';
+
+			if($status[$i]=="Pending")
+			{
+				echo '<td>'.$status[$i].'</td>
+				</tr>';
+			}
+			else
+			{
+				echo '<td>
+				<a href="#review-modal" data-toggle="modal" pid="'.$product_id[$i].'" class="btn btn-primary">
+					Received
+				</a>
+				</tr>';
+			}
+		}
+	}
+	else{
+		echo '
+		<p>No order has been made yet.</p>
+		<a href="category.php" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+		';
+	}
 }
 
 

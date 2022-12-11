@@ -31,7 +31,7 @@
                                 <a href="about.php">About</a>
                             </li>
                             <li>
-                                <a href="product.php" class="sf-with-ul">Products</a>
+                                <a href="category.php" class="sf-with-ul">Products</a>
                                 <ul>
                                     <li><a href="product.php"><span>NEC VersaPro VH<span class="tip tip-new">New</span></span></a></li>
                                     <li><a href="product.php">NEC Intel Core</a></li>
@@ -54,17 +54,6 @@
                                             <a href="#">Laptop Repair</a>
                                         </li>
                                     </ul>
-                            </li>
-                            <li>
-                                <a href="#">Reviews</a>
-                                <ul>
-                                        <li><a href="#">Albay</a></li>
-                                        <li><a href="#">Camarines Sur</a></li>
-                                        <li><a href="#">Camarines Norte</a></li>
-                                        <li><a href="#">Catanduanes</a></li>
-                                        <li><a href="#">Masbate</a></li>
-                                        <li><a href="#">Sorsogon</a></li>
-                                </ul>
                             </li>
                             <li>
                                 <a href="contact.php">Contact</a>

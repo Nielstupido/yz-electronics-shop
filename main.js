@@ -303,7 +303,88 @@ $(document).ready(function(){
 
 
 	})
+
+
+
+	$("body").delegate(".confirmOrder","click",function(event){
+		if(document.getElementById('cod').checked || document.getElementById('gcash').checked)
+		{
+			var temp = document.getElementById("total_amount").value;
+			var amount  = temp.replace(/,/g, '');
+			if(document.getElementById('gcash').checked)
+			{
+				$.ajax({
+					url	:	"action.php",
+					method	:	"POST",
+					data	:	{finishCheckoutGcash:1, total_amount:amount},
+					success	:	function(data){
+						window.location.href = data;
+					}
+				})
+			}
+		}
+		else{
+			document.getElementsByClassName("error")[0].innerText ="Kindly select 1 payment method";
+		}
+	})
+
+	$("body").delegate("#received_product","click",function(event){
+		var pid = $(this).attr("pid");
+		event.preventDefault();
+		$(".overlay").show();
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {gotoProduct:1,proId:pid},
+			success : function(data){
+				window.location.href = "product.php";
+			}
+		})
+	})
+
+
+
 	checkOutDetails();
+	checkOutCart();
+	shippingAdd();
+	getCustomerOrders();
+
+	function getCustomerOrders(){
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {showOrders:1},
+			success : function(data){
+				$("#customer_order_list").html(data);
+			}
+		})
+	}
+
+
+	function shippingAdd(){
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {shippingAdd:1},
+			success : function(data){
+				$("#shipping_add").html(data);
+			}
+		})
+	}
+
+	function checkOutCart(){
+		//$('.overlay').show();
+		$.ajax({
+			url : "action.php",
+			method : "POST",
+			data : {checkOutCart:1},
+			success : function(data){
+				//$('.overlay').hide();
+				$("#checkout_products").html(data);
+			}
+		})
+	}
+
 	//net_total();
 	/*
 		checkOutDetails() function work for two purposes
@@ -338,7 +419,7 @@ $(document).ready(function(){
 			var price  = parseFloat(temp.replace(/,/g, ''));
 			//row.find('.price').val();
 			var total = parseFloat(price * $(this).val()-0);
-			document.getElementsByClassName("total")[i].innerText = "₱" + total.toLocaleString('en-US', {maximumFractionDigits:2});
+			document.getElementsByClassName("total")[i].innerText = "₱" + total.toLocaleString('en-US', {maximumFractionDigits:2}) + ".00";
 			//row.find('.total').val(total);
 			i++;
 		})
@@ -350,9 +431,16 @@ $(document).ready(function(){
 		})
 		if (document.getElementsByClassName("net_total")[0])
 		{
-			document.getElementsByClassName("net_total")[0].innerText = "₱" + net_total.toLocaleString('en-US', {maximumFractionDigits:2});
-			document.getElementsByClassName("net_total")[1].innerText = "₱" + net_total.toLocaleString('en-US', {maximumFractionDigits:2});
+			document.getElementsByClassName("net_total")[0].innerText = "₱" + net_total.toLocaleString('en-US', {maximumFractionDigits:2}) + ".00";
+			$.ajax({
+				url : "action.php",
+				method : "POST",
+				data : {netTotal:1,total:net_total.toLocaleString('en-US', {maximumFractionDigits:2})},
+				success : function(data){
+				}
+			})
 		}
+		
 		//$('.net_total').html(net_total);
 	}
 

@@ -59,100 +59,49 @@
             <div class="page-content">
             	<div class="checkout">
 	                <div class="container">
-            			<div class="checkout-discount">
-            				<form action="#">
-        						<input type="text" class="form-control" required id="checkout-discount-input">
-            					<label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
-            				</form>
-            			</div><!-- End .checkout-discount -->
-            			<form action="action.php" enctype="multipart/form-data"  method="post">
 		                	<div class="row">
 		                		<div class="col-lg-9">
 									<div class="response">
 									</div>
-		                			<h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
-
-
-	        							<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-											<label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-										</div><!-- End .custom-checkbox -->
-
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-											<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-										</div><!-- End .custom-checkbox -->
-
-	                					<label>Order notes (optional)</label>
-	        							<textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+		                			<h2 class="checkout-title">Shipping Details</h2><!-- End .checkout-title -->
+									<div id="shipping_add">
+									</div>
+									<a href="cart.php" class="btn btn-primary">Change Address</a>
 		                		</div><!-- End .col-lg-9 -->
 		                		<aside class="col-lg-3">
 		                			<div class="summary">
 		                				<h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+										<table class="table table-summary" style="width:100%">
+											<thead>
+												<tr>
+													<th>Product</th>
+													<th>Total</th>
+												</tr>
+											</thead>
 
-		                				<table class="table table-summary">
-		                					<thead>
-		                						<tr>
-		                							<th>Product</th>
-		                							<th>Total</th>
-		                						</tr>
-		                					</thead>
+											<tbody id="checkout_products">
 
-		                					<tbody>
-		                						<tr>
-		                							<td><a href="#">NEC VersaPro VH Intel Core i5-7Y54 1.20GHz (7th gen)</a></td>
-		                							<td>10,500.00</td>
-		                						</tr>
 
-		                						<tr>
-		                							<td><a href="#">HP Intel Corei5 5300U 8GB RAM/120GB SSD</a></td>
-		                							<td>13,600.00</td>
-		                						</tr>
-		                						<tr class="summary-subtotal">
-		                							<td>Subtotal:</td>
-		                							<td>24,100.00</td>
-		                						</tr><!-- End .summary-subtotal -->
-		                						<tr>
-		                							<td>Shipping:</td>
-		                							<td>Free shipping</td>
-		                						</tr>
-		                						<tr class="summary-total">
-		                							<td>Total:</td>
-		                							<td><input type="text" id="total_amount" name="total_amount" value="24,100.00" readonly></td>
-		                						</tr><!-- End .summary-total -->
-		                					</tbody>
-		                				</table><!-- End .table table-summary -->
-
+											</tbody>
+										</table><!-- End .table table-summary -->
 		                				<div class="accordion-summary" id="accordion-payment">
-										    <div class="card">
-										        <div class="card-header" id="heading-3">
-										            <h2 class="card-title">
-										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
-										                    Cash on delivery
-										                </a>
-										            </h2>
-										        </div><!-- End .card-header -->
-										        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-										            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
-										            </div><!-- End .card-body -->
-										        </div><!-- End .collapse -->
-										    </div><!-- End .card -->
 
-										    <div class="card">
+											<div class="card">
 										        <div class="card-header" id="heading-4">
 										            <h2 class="card-title">
-										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-										                    GCash <small class="float-right paypal-link">What is GCash?</small>
-										                </a>
+														<input type="radio" name="myradiogroup" id="cod"><label for="myrad1">&nbsp;&nbsp;Cash on Delivery</label>
 										            </h2>
 										        </div><!-- End .card-header -->
-										        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
-										            <div class="card-body">
-										                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-										            </div><!-- End .card-body -->
-										        </div><!-- End .collapse -->
 										    </div><!-- End .card -->
-
+											<div class="card">
+										        <div class="card-header" id="heading-4">
+										            <h2 class="card-title">
+														<input type="radio" name="myradiogroup" id="gcash"><label for="myrad2">&nbsp;&nbsp;GCash</label>
+										            </h2>
+										        </div><!-- End .card-header -->
+										    </div><!-- End .card -->
+											<div class="card error" style="color: #c12020; font-weight: bold;">
+											</div>
 										    <!--<div class="card">
 										        <div class="card-header" id="heading-5">
 										            <h2 class="card-title">
@@ -169,14 +118,13 @@
 										    </div>-->
 										</div><!-- End .accordion -->
 
-		                				<button type="submit" name="confirmOrder" class="btn btn-outline-primary-2 btn-order btn-block">
+		                				<button name="confirmOrder" id="confirmOrder" class="btn btn-outline-primary-2 btn-order btn-block confirmOrder">
 		                					<span class="btn-text">Place Order</span>
 		                					<span class="btn-hover-text">Proceed to Checkout</span>
 		                				</button>
 		                			</div><!-- End .summary -->
 		                		</aside><!-- End .col-lg-3 -->
 		                	</div><!-- End .row -->
-            			</form>
 	                </div><!-- End .container -->
                 </div><!-- End .checkout -->
             </div><!-- End .page-content -->
