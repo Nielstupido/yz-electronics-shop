@@ -76,6 +76,9 @@
 								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
+									</li>
+									<li class="nav-item">
+								        <a class="nav-link" href="messages.php">Messages</a>
 								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link" href="logout.php">Sign Out</a>
@@ -181,7 +184,7 @@
     
     <!-------- Mobile Menu ------->
     <div class="mobile-menu">
-        <?php include 'mobile-nav.php';?>
+        <?php include 'includes/mobile-nav.php';?>
     </div>
     <!----------------------------------------------------------->
 

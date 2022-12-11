@@ -66,7 +66,7 @@
                                                     $ms_id = $ms['ms_id'];
                                                     $ms_username = $ms['ms_username'];
                                                     $ms_useremail = $ms['ms_useremail'];
-                                                    $ms_detail = substr($ms['ms_detail'], 0, 20);
+                                                    $ms_detail = substr($ms['ms_detail'], 0, 250);
                                                     $ms_status = $ms['ms_status']; 
                                                     $ms_date = $ms['ms_date'];
                                                     $ms_state = $ms['ms_state']; ?>

@@ -4,11 +4,24 @@
             <a class="navbar-brand d-none d-sm-block" href="index.php"><span style="color: #07BAE9;">YZ Electronics</span> Admin Panel</a><button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#"><i data-feather="menu"></i></button>
             <ul class="navbar-nav align-items-center ml-auto">
                 
+                <?php 
+                    $sql = "SELECT * FROM orders WHERE p_status = :state";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([
+                        ':state' => 0
+                    ]);
+                    $count_order = $stmt->rowCount();
+                ?>
+            
                 <!--User Registration + New Comment Notification-->
                 <li class="nav-item dropdown no-caret mr-3 dropdown-notifications">
                     <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i data-feather="bell"></i>
-                        <span class="badge badge-red">2</span>
+                        <?php 
+                            if($count_order != 0) { ?>
+                                <span class="badge badge-red"><?php echo $count_order; ?></span>
+                            <?php }
+                        ?>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
@@ -17,7 +30,31 @@
                             Notification
                         </h6>
 
-                        <a class="dropdown-item dropdown-notifications-item" href="#!">
+                        <?php 
+                            $sql = "SELECT * FROM orders WHERE p_state = :state";
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute([
+                                ':state' => 0
+                            ]);
+                            while($com = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                $com_date = $com['order_date'];
+                                $com_detail = substr($com['p_status'],0, 35); ?>
+                                    <a class="dropdown-item dropdown-notifications-item" href="orders.php">
+                                        <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
+                                        <div class="dropdown-notifications-item-content">
+
+                                            <div class="dropdown-notifications-item-content-details">
+                                                <?php echo $com_date; ?>
+                                            </div>
+                                            <div class="dropdown-notifications-item-content-text">
+                                                You received an order from <?php echo $com_detail; ?>
+                                            </div>
+                                        </div>
+                                    </a>
+                        <?php }
+                        ?>
+
+                        <!--<a class="dropdown-item dropdown-notifications-item" href="#!">
                             <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
                             <div class="dropdown-notifications-item-content">
 
@@ -41,10 +78,10 @@
                                     You received an order from user02.
                                 </div>
                             </div>
-                        </a>
+                        </a>-->
 
-                        <a class="dropdown-item dropdown-notifications-footer" href="#">
-                            View All Alerts
+                        <a class="dropdown-item dropdown-notifications-footer" href="orders.php">
+                            View All Orders
                         </a>
                     </div>
                 </li>
