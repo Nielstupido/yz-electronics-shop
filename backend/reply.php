@@ -35,8 +35,8 @@ session_start();
             <?php 
                 if(isset($_POST['response'])) {
                     $id = $_POST['id'];
-                    $url = "http://localhost/yz-electronics-shop/backend/reply.php?".$id;
-                    header("Location: {$url}");
+                    /*$url = "http://localhost/yz-electronics-shop/backend/reply.php?id=".$id;
+                    header("Location: {$url}");*/
                 }
             ?>
 
@@ -77,7 +77,9 @@ session_start();
                                 <?php 
                                     $sql = "SELECT * FROM messages WHERE ms_id = :id";
                                     $stmt = $pdo->prepare($sql);
-                                    $stmt->execute([':id'=>$_GET['id']]);
+                                    $stmt->execute([
+                                        ':id'=>$id
+                                    ]);
                                     $ms = $stmt->fetch(PDO::FETCH_ASSOC);
                                     $ms_detail = $ms['ms_detail'];
                                 ?>
@@ -97,7 +99,7 @@ session_start();
                                     $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                     $user_name = $user['first_name'];
                                 ?>
-                                <form action="reply.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                <form action="reply.php?id=<?php echo $id; ?>" method="POST">
                                     <div class="form-group">
                                         <label for="post-content">Message:</label>
                                         <textarea class="form-control" placeholder="Type here..." id="post-content" rows="9" readonly="true"><?php echo $ms_detail; ?></textarea>
