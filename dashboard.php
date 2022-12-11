@@ -1,4 +1,6 @@
 <?php
+	require_once "includes/conn.php";
+
     require "config/constants.php";
     session_start();
 	if(!isset($_SESSION["uid"])){
@@ -109,7 +111,10 @@
 								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
-								    </li>
+									</li>
+									<li class="nav-item">
+								        <a class="nav-link" id="tab-message-link" data-toggle="tab" href="#tab-message" role="tab" aria-controls="tab-message" aria-selected="false">Messages</a>
+									</li>
 								    <li class="nav-item">
 								        <a class="nav-link" href="logout.php">Sign Out</a>
 								    </li>
@@ -214,6 +219,57 @@
 								    	</div><!-- End .row -->
 								    </div><!-- .End .tab-pane -->
 
+									<div class="tab-pane fade show" id="tab-message" role="tabpanel" aria-labelledby="tab-message-link">
+								    	<p>Hi, <strong><?php echo $_SESSION["name"]; ?></strong>
+								    	<br>
+								    	You can view your sent messages and replies here.
+                                        <?php
+
+											if(isset($_COOKIE['uid']) || isset($_COOKIE['_uiid_']) || isset($_SESSION['uid'])) { 
+												if(isset($_COOKIE['uid'])) {
+													$user_id = base64_decode($_COOKIE['uid']);
+												} else if(isset($_SESSION['uid'])) {
+													$user_id = $_SESSION['uid'];
+												} else {
+													$user_id = -1;
+												}
+												$sql = "SELECT * FROM user_info WHERE user_id = :id";
+												$stmt = $pdo->prepare($sql);
+												$stmt->execute([
+													':id' => $user_id
+												]);
+												$user = $stmt->fetch(PDO::FETCH_ASSOC);
+												$user_name = $user['first_name'];
+												$user_email = $user['email'];
+											}
+                                        ?>
+                                    <table class="table table-bordered table-hover mt-5" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr >
+                                                <th class="p-4">Your messages:</th>
+                                                <th class="p-4">Answers:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                                $sql1 = "SELECT * FROM messages WHERE ms_useremail = :email";
+                                                $stmt1 = $pdo->prepare($sql1);
+                                                $stmt1->execute([
+                                                    ':email' => $user_email
+                                                ]);
+                                                while($ms = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+                                                    $ms_detail = $ms['ms_detail'];
+                                                    $reply = $ms['reply']; ?>
+                                                    <tr>
+                                                      <td class="p-4"><?php echo $ms_detail; ?></td>
+                                                      <td class="p-4"><?php echo $reply; ?></td>
+                                                  	</tr>
+                                                <?php }                                                  
+                                            ?>
+                                        </tbody>
+                                    </table>
+								    </div><!-- .End .tab-pane -->
+
 								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
 								    	<form action="#">
 			                				<div class="row">
@@ -266,7 +322,7 @@
     
     <!-------- Mobile Menu ------->
     <div class="mobile-menu">
-        <?php include 'mobile-nav.php';?>
+        <?php include 'includes/mobile-nav.php';?>
     </div>
     <!----------------------------------------------------------->
 

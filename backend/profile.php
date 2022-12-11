@@ -38,27 +38,75 @@
                         </div>
                     </div>
 
+                    <?php 
+                        if(isset($_COOKIE['admin_id'])) {
+                            $user_id = base64_decode($_COOKIE['admin_id']);
+                        } else if(isset($_SESSION['admin_id'])) {
+                            $user_id = $_SESSION['admin_id'];
+                        } else {
+                            $user_id = -1;
+                        }
+                        $sql = "SELECT * FROM admin WHERE id = :id";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([
+                            ':id' => $user_id
+                        ]);
+                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $user_name = $user['name'];
+                        $user_email = $user['email'];
+                        $user_photo = $user['photo'];
+                    ?>
+
+                    <?php 
+                        if(isset($_POST['submit'])) {
+                            $user_name = $_POST['user-name'];
+                            $user_email = $_POST['user-email'];
+                            $user_photo = $_FILES['user-photo']['name'];
+                            $user_photo_tmp = $_FILES['user-photo']['tmp_name'];
+                            move_uploaded_file("{$user_photo_tmp}", "./assets/img/{$user_photo}");
+                            if(empty($user_photo)) {
+                                $sql = "SELECT * FROM admin WHERE id = :id";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':id' => $user_id
+                                ]);
+                                $u = $stmt->fetch(PDO::FETCH_ASSOC);
+                                $user_photo = $u['photo'];
+                            }
+                            $sql = "UPDATE admin SET name = :name, email = :email, photo = :photo WHERE id = :id";
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute([
+                                ':name' => $user_name,
+                                ':email' => $user_email,
+                                ':photo' => $user_photo,
+                                ':id' => $user_id
+                            ]);
+                            header("Location: profile.php");
+                        }
+                    ?>
+
                     <!--Start Table-->
                     <div class="container-fluid mt-n10">
                         <div class="card mb-4">
                             <div class="card-header">Profile</div>
                             <div class="card-body">
-                                <form>
+                                <form action="profile.php" method="POST" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="user-name">User Name:</label>
-                                        <input class="form-control" id="user-name" type="text" placeholder="User Name..." />
+                                        <input class="form-control" name="user-name" id="user-name" value="<?php echo $user_name; ?>" type="text" placeholder="User Name..." />
                                     </div>
                                     <div class="form-group">
                                         <label for="user-email">User Email:</label>
-                                        <input class="form-control" id="user-email" type="email" placeholder="User Email..." />
+                                        <input class="form-control" name="user-email" id="user-email" type="email" value="<?php echo $user_email; ?>" placeholder="User Email..." />
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group">
                                         <label for="post-title">Choose photo:</label>
-                                        <input class="form-control" id="post-title" type="file" />
+                                        <input class="form-control" name="user-photo" id="post-title" type="file" />
+                                        <img src="./assets/img/<?php echo $user_photo; ?>" width="50" height="50" />
                                     </div>
                                     </div>
-                                    <button class="btn btn-primary mr-2 my-1" type="button">Update now!</button>
+                                    <button class="btn btn-primary mr-2 my-1" name="submit" type="submit">Update now!</button>
                                 </form>
                             </div>
                         </div>
