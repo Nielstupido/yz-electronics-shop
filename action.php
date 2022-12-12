@@ -84,7 +84,7 @@ if(isset($_POST["getProduct"])){
 			$pro_image = $row['product_image'];
 
 
-			$sql = "SELECT * FROM reviews WHERE product_id = '$pro_id'";
+			$sql = "SELECT * FROM reviews WHERE review_prod_id = '$pro_id'";
 			$query = mysqli_query($con,$sql);
 			$num_reviews = 0;
 			$stars = 0;
@@ -821,7 +821,7 @@ if(isset($_POST["submitRev"]))
 	$result = mysqli_query($con,$sql);
 
 	$sql = "INSERT INTO `reviews`
-	(`product_id`, `stars_number`, `date_review`, `comments`, `username`, `product_name`) 
+	(`review_prod_id`, `stars_number`, `review_date`, `review_detail`, `review_user_name`, `review_product_name`) 
 	VALUES ('$proID','$numStars','$date','$review','$user_name','$proName')";
 	$result = mysqli_query($con,$sql);
 }
