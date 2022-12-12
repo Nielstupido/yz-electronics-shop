@@ -65,6 +65,11 @@ if(isset($_POST["page"])){
 
 
 if(isset($_POST["getProduct"])){
+	$product_query = "SELECT * FROM products WHERE 1";
+	$run_query = mysqli_query($con,$product_query);
+	$count = mysqli_num_rows($run_query);
+
+
 	$limit = 12;
 	if(isset($_POST["setPage"])){
 		$pageno = $_POST["pageNumber"];
@@ -74,8 +79,12 @@ if(isset($_POST["getProduct"])){
 	}
 	$product_query = "SELECT * FROM products LIMIT $start,$limit";
 	$run_query = mysqli_query($con,$product_query);
+
+	$numOfShowing = 0;
+	
 	if(mysqli_num_rows($run_query) > 0){
 		while($row = mysqli_fetch_array($run_query)){
+			$numOfShowing++;
 			$pro_id    = $row['product_id'];
 			$pro_cat   = $row['product_cat'];
 			$pro_brand = $row['product_brand'];
@@ -144,6 +153,15 @@ if(isset($_POST["getProduct"])){
 			";
 		}
 	}
+
+	$_SESSION['productCount'] = $count;
+	$_SESSION['showingProduct'] = $numOfShowing;
+}
+
+if(isset($_POST["getShowingProd"])){
+	echo '<div class="toolbox-info">
+			Showing <span>'.$_SESSION['showingProduct'].' of '.$_SESSION['productCount'].'</span> Products
+		</div>';
 }
 
 
@@ -462,8 +480,10 @@ if (isset($_POST["Common"])) {
 	$query = mysqli_query($con,$sql);
 	if (isset($_POST["getCartItem"])) {
 		//display cart item in dropdown menu
+
+		echo '<div class="dropdown-cart-products">';
+		$n=0;
 		if (mysqli_num_rows($query) > 0) {
-			$n=0;
 			while ($row=mysqli_fetch_array($query)) {
 				$n++;
 				$product_id = $row["product_id"];
@@ -500,6 +520,41 @@ if (isset($_POST["Common"])) {
 			<?php
 			exit();
 		}
+		else
+		{
+			echo '
+			<div class="product">
+				<div class="product-cart-details">
+					<h4 class="product-title">
+					<a href="#" id="show_product" title="Show product">Empty Cart</a>
+					</h4>
+
+					<span class="cart-product-info">
+						<span class="cart-product-qty"></span>
+						
+					</span>
+				</div><!-- End .product-cart-details -->
+
+				<figure class="product-image-container">
+				</figure>
+			</div>
+			';
+		}
+
+		echo '
+		</div>
+		<div class="dropdown-cart-action">';
+	
+		if($n>0)
+		{
+			echo '<a href="cart.php" class="btn btn-primary">View Cart</a>';
+		}
+		else
+		{
+			echo '<a href="category.php" class="btn btn-primary">Browse Products</a>';
+		}
+		echo '</div>';
+
 	}
 	if (isset($_POST["checkOutDetails"])) {
 		if (mysqli_num_rows($query) > 0) {

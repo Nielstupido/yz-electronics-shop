@@ -52,11 +52,11 @@
 
                     <div class="header-center">
                         <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
-                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <!-- <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a> -->
                             <form action="#" method="get">
                                 <div class="header-search-wrapper search-wrapper-wide">
                                     <label for="q" class="sr-only">Search</label>
-                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                                    <button id="searchProd" name="searchProd" class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
                                     <input type="search" class="form-control" name="q" id="q" placeholder="Search product ..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
@@ -93,9 +93,9 @@
                                 <p>Cart</p>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products"  id="cart_product">
-                                    <!-- 
+                            <div class="dropdown-menu dropdown-menu-right" id="cart_product">
+                                <!-- <div class="dropdown-cart-products">
+                                    
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
@@ -114,19 +114,11 @@
                                             </a>
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div>-->
+                                    </div>
                                 </div>
-                                <!--
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
-
-                                    <span class="cart-total-price">$160.00</span>
-                                </div>-->
-
                                 <div class="dropdown-cart-action">
                                     <a href="cart.php" class="btn btn-primary">View Cart</a>
-                                    <a href="checkout.php" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
+                                </div>-->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
                     </div><!-- End .header-right -->

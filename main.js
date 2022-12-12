@@ -35,11 +35,23 @@ $(document).ready(function(){
 			method:	"POST",
 			data	:	{getProduct:1},
 			success	:	function(data){
+				productShowingNum();
 				$("#get_product").html(data);
 			}
 		})
-
 	}
+
+	function productShowingNum(){
+		$.ajax({
+			url	:	"action.php",
+			method:	"POST",
+			data	:	{getShowingProd:1},
+			success	:	function(data){
+				$("#prodNumberShowing").html(data);
+			}
+		})
+	}
+
 
 	function showProduct(){
 		$.ajax({
@@ -499,6 +511,7 @@ $(document).ready(function(){
 			data	:	{page:1,pageNumber:pageno},
 			success	:	function(data){
 				$("#pageno").html(data);
+				productShowingNum();
 			}
 		})
 	}
