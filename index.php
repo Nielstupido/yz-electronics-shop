@@ -695,22 +695,12 @@ session_start();
                     </div><!-- .End .tab-pane -->
 
             <div class="mb-6"></div><!-- End .mb-6 -->
-            
-            <div class="container">
-                <div class="cta cta-border mb-5" style="background-image: url(assets/images/demos/demo-4/bg-4.jpg);">
-                    <img src="assets/images/demos/demo-4/laptop.png" alt="camera" class="cta-img">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="cta-content">
-                                <div class="cta-text text-right text-white">
-                                    <p>Need a laptop? <br><strong>YZ Electronics is here to serve you.</strong></p>
-                                </div><!-- End .cta-text -->
-                                <a href="category.php" class="btn btn-primary btn-round"><span>Get yours now for only &#8369; 8,500</span><i class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .cta-content -->
-                        </div><!-- End .col-md-12 -->
-                    </div><!-- End .row -->
-                </div><!-- End .cta -->
-            </div><!-- End .container -->
+
+            <div class="page-header text-center" style="background-image: url('assets/images/demos/demo-4/bg-7.jpg')">
+        		<div class="container">
+        			<h1 class="page-title"><p class="text-white" style="font-size: 18px;">Need a laptop? <br><strong>YZ Electronics is here to serve you.</strong></p></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
 
             <div class="mb-5"></div><!-- End .mb-5 -->
 
