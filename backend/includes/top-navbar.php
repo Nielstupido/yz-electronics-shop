@@ -5,7 +5,7 @@
             <ul class="navbar-nav align-items-center ml-auto">
                 
                 <?php 
-                    $sql = "SELECT * FROM orders WHERE p_status = :state";
+                    $sql = "SELECT * FROM orders WHERE p_state = :state";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([
                         ':state' => 0

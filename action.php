@@ -204,7 +204,7 @@ if(isset($_POST["showProduct"])){
 					<div class="product-gallery product-gallery-vertical">
 						<div class="row">
 							<figure class="product-main-image">
-								<img id="product-zoom" src="assets/images/products/'.$row[7].'" data-zoom-image="assets/images/products/single/p1-big.jpg" alt="product image">
+								<img id="product-zoom" src="assets/images/products/'.$row[7].'" data-zoom-image="assets/images/products/single/'.$row[7].'" alt="product image">
 
 								<a href="#" id="btn-product-gallery" class="btn-product-gallery">
 									<i class="icon-arrows"></i>
@@ -212,20 +212,20 @@ if(isset($_POST["showProduct"])){
 							</figure><!-- End .product-main-image -->
 
 							<div id="product-zoom-gallery" class="product-image-gallery">
-								<a class="product-gallery-item active" href="#" data-image="assets/images/products/single/p1.jpg" data-zoom-image="assets/images/products/single/p1-big.jpg">
-									<img src="assets/images/products/single/p1-small.jpg" alt="product side">
+								<a class="product-gallery-item active" href="#" data-image="assets/images/products/single/'.$row[8].'" data-zoom-image="assets/images/products/single/'.$row[8].'">
+									<img src="assets/images/products/single/'.$row[8].'" alt="product side">
 								</a>
 
-								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p2.jpg" data-zoom-image="assets/images/products/single/p2-big.jpg">
-									<img src="assets/images/products/single/p2-small.jpg" alt="product cross">
+								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/'.$row[9].'" data-zoom-image="assets/images/products/single/'.$row[9].'">
+									<img src="assets/images/products/single/'.$row[9].'" alt="product cross">
 								</a>
 
-								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p3.jpg" data-zoom-image="assets/images/products/single/p3-big.jpg">
-									<img src="assets/images/products/single/p3-small.jpg" alt="product with model">
+								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/'.$row[10].'" data-zoom-image="assets/images/products/single/'.$row[10].'">
+									<img src="assets/images/products/single/'.$row[10].'" alt="product with model">
 								</a>
 
-								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p4.jpg" data-zoom-image="assets/images/products/single/p4-big.jpg">
-									<img src="assets/images/products/single/p4-small.jpg" alt="product back">
+								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/'.$row[11].'" data-zoom-image="assets/images/products/single/'.$row[11].'">
+									<img src="assets/images/products/single/'.$row[11].'" alt="product back">
 								</a>
 							</div><!-- End .product-image-gallery -->
 						</div><!-- End .row -->

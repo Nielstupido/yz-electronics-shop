@@ -28,7 +28,7 @@ $(document).ready(function(){
 								              '<td>'+ value.cat_title +'</td>'+
 								              '<td>'+ value.brand_title +'</td>'+
 											  '<td><a class="btn btn-info btn-blue btn-icon edit-product"><span style="display:none;">'+JSON.stringify(value)+'</span><i class="fas fa-pencil-alt" style="color: #fff;"></i></a></td>'+
-											  '<td><a cid="'+value.cat_id+'" class="btn btn-danger btn-red btn-icon delete-product"><i class="fas fa-trash-alt" style="color: #fff;"></i></a></td>'+
+											  '<td><a cid="'+value.cat_id+'" pid="'+value.product_id+'" class="btn btn-danger btn-red btn-icon delete-product"><i class="fas fa-trash-alt" style="color: #fff;"></i></a></td>'+
 								            '</tr>';
 
 						});
