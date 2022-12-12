@@ -538,9 +538,20 @@ $(document).ready(function(){
 			}
 		})
 	})
-
 	
-
+	
+	$("#searchProd").on("click",function(event){
+		var keyword = $("#q").val();
+		$.ajax({
+			url	:	"action.php",
+			method	:	"POST",
+			data	:	{searchProd:1,searchKey:keyword},
+			success	:	function(data){
+				window.location.href = "category.php";
+			}
+		})
+	})
+	
 })
 
 

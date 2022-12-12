@@ -65,10 +65,20 @@ if(isset($_POST["page"])){
 
 
 if(isset($_POST["getProduct"])){
-	$product_query = "SELECT * FROM products WHERE 1";
-	$run_query = mysqli_query($con,$product_query);
-	$count = mysqli_num_rows($run_query);
 
+
+	if(isset($_SESSION['searchEntry']))
+	{
+		$product_query = "SELECT * FROM products WHERE product_title LIKE '%$_SESSION[searchEntry]%' OR product_title LIKE '%$_SESSION[searchEntry]%'";
+		$run_query = mysqli_query($con,$product_query);
+		$count = mysqli_num_rows($run_query);
+	}
+	else
+	{
+		$product_query = "SELECT * FROM products WHERE 1";
+		$run_query = mysqli_query($con,$product_query);
+		$count = mysqli_num_rows($run_query);
+	}
 
 	$limit = 12;
 	if(isset($_POST["setPage"])){
@@ -77,9 +87,18 @@ if(isset($_POST["getProduct"])){
 	}else{
 		$start = 0;
 	}
-	$product_query = "SELECT * FROM products LIMIT $start,$limit";
-	$run_query = mysqli_query($con,$product_query);
 
+	if(isset($_SESSION['searchEntry']))
+	{
+		$product_query = "SELECT * FROM products WHERE product_title LIKE '%$_SESSION[searchEntry]%' OR product_title LIKE '%$_SESSION[searchEntry]%' LIMIT $start,$limit";
+		unset($_SESSION['searchEntry']);
+	}
+	else
+	{
+		$product_query = "SELECT * FROM products LIMIT $start,$limit";
+	}
+	
+	$run_query = mysqli_query($con,$product_query);
 	$numOfShowing = 0;
 	
 	if(mysqli_num_rows($run_query) > 0){
@@ -152,6 +171,10 @@ if(isset($_POST["getProduct"])){
 				</div>
 			";
 		}
+	}
+	else
+	{
+		echo '<img src="assets/images/error.png" width="90%" alt="Error Image">';
 	}
 
 	$_SESSION['productCount'] = $count;
@@ -518,7 +541,6 @@ if (isset($_POST["Common"])) {
 			?>
 				<!--<a style="float:right;" href="cart.php" class="btn btn-warning">Edit&nbsp;&nbsp;<span class="glyphicon glyphicon-edit"></span></a>-->
 			<?php
-			exit();
 		}
 		else
 		{
@@ -879,6 +901,12 @@ if(isset($_POST["submitRev"]))
 	(`review_prod_id`, `stars_number`, `review_date`, `review_detail`, `review_user_name`, `review_product_name`) 
 	VALUES ('$proID','$numStars','$date','$review','$user_name','$proName')";
 	$result = mysqli_query($con,$sql);
+}
+
+
+if(isset($_POST["searchProd"]))
+{
+	$_SESSION['searchEntry'] = $_POST["searchKey"];
 }
 
 

@@ -2,9 +2,8 @@
 
 //connection to database
 require_once "includes/conn.php";
-
+include "db.php";
 //session
-require "config/constants.php";
 session_start();
 ?>
 
@@ -188,46 +187,66 @@ session_start();
                                     $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_category = $posts['product_cat'];?>
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "
-                                                <a href='#' pid='$product_id' id='show_product' title='Show product'>
-                                                    <img src='$product_images' alt='Product image' class='product-image'>
-                                                </a>";
-                                                ?>
-                                            </a>
+                                    $product_images = $posts['product_image'];
+                                    $product_category = $posts['product_cat'];
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
 
-                                            <div class="product-action">
-                                                <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><?php echo"<a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title";?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
+
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
+
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+                                }
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -268,43 +287,68 @@ session_start();
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_brand = $posts['product_brand'];?>
+                                    $product_images = $posts['product_image'];
+                                    $product_brand = $posts['product_brand'];
 
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
-                                            </a>
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
+                                    
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
+
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+
+                                } 
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -345,43 +389,66 @@ session_start();
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_brand = $posts['product_brand'];?>
+                                    $product_images = $posts['product_image'];
+                                    $product_brand = $posts['product_brand'];
 
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
-                                            </a>
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
+                                    
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
 
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+                                } 
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -422,43 +489,66 @@ session_start();
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_brand = $posts['product_brand'];?>
+                                    $product_images = $posts['product_image'];
+                                    $product_brand = $posts['product_brand'];
 
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
-                                            </a>
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
+                                    
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
 
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+                                } 
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -499,43 +589,66 @@ session_start();
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_brand = $posts['product_brand'];?>
+                                    $product_images = $posts['product_image'];
+                                    $product_brand = $posts['product_brand'];
 
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
-                                            </a>
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
+                                    
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
 
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+                                } 
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -576,43 +689,66 @@ session_start();
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_brand = $posts['product_brand'];?>
+                                    $product_images = $posts['product_image'];
+                                    $product_brand = $posts['product_brand'];
 
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
-                                            </a>
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
+                                    
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
 
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+                                } 
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -652,43 +788,66 @@ session_start();
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
-                                    $product_images = 'assets/images/products/'.$posts['product_image'];
-                                    $product_brand = $posts['product_brand'];?>
+                                    $product_images = $posts['product_image'];
+                                    $product_brand = $posts['product_brand'];
 
-                                    <div class="product product-2">
-                                        <figure class="product-media">
-                                            <!--<span class="product-label label-circle label-top">Top</span>-->
-                                            <a href="product.php">
-                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
-                                            </a>
+                                    $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                                    $query = mysqli_query($con,$sql);
+                                    $num_reviews = 0;
+                                    $stars = 0;
+                                    while($row=mysqli_fetch_array($query)){
+                                            $num_reviews++;
+                                            $stars += $row['stars_number'];
+                                    }
+                        
+                                    $avg = $stars;
+                                    if($num_reviews>1)
+                                    {
+                                        $avg = intval($stars/5);
+                                    }
+                                    
+                                    echo "
+                                            <div class='product product-2 just-action-icons-sm'>
+                                                <figure class='product-media'>
+                                                    <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                        <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                                    </a>
 
-                                            <!--<div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                            </div>--><!-- End .product-action -->
+                                                    <div class='product-action'>
+                                                        <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                                    </div>
+                                                </figure>
 
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
+                                                <div class='product-body'>
+                                                    <div class='product-cat'>
+                                                        <a href='#'>Celeron</a>
+                                                    </div>
+                                                    <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                                    <div class='product-price'>
+                                                    &#8369;$product_price
+                                                    </div>
+                                                    <div class='ratings-container'>";
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="#"><?php echo $product_category; ?></a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                            &#8369;<?php echo $product_price; ?>
-                                            </div><!-- End .product-price -->
-                                            <div class="ratings-container">
-                                                <div class="ratings">
-                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                </div><!-- End .ratings -->
-                                                <span class="ratings-text">( 4 Reviews )</span>
-                                            </div><!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div><!-- End .product -->
-                                <?php } 
+                                    for($i=0;$i<$avg;$i++)
+                                    {
+                                        echo '<span class="fa fa-star checked"></span>';
+                                    }
+                            
+                                    $unchecked = 5-$avg;
+                            
+                                    for($i=0;$i<$unchecked;$i++)
+                                    {
+                                        echo '<span class="fa fa-star"></span>';
+                                    }
+                                                    echo "
+                                                        <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                    ";
+                                } 
                                 ?>
 
                         </div><!-- End .owl-carousel -->
@@ -712,7 +871,7 @@ session_start();
                     </div><!-- End .heading-left -->
 
                    <div class="heading-right">
-                        <a href="category.php" class="title-link">View All Recommendations <i class="icon-long-arrow-right"></i></a>
+                        <a href="category.php" class="title-link">View All Products <i class="icon-long-arrow-right"></i></a>
                    </div><!-- End .heading-right -->
                 </div><!-- End .heading -->
 
@@ -729,51 +888,68 @@ session_start();
                         $product_id = $posts['product_id'];
                        $product_title = $posts['product_title'];
                        $product_price = $posts['product_price'];
-                       $product_images = 'assets/images/products/'.$posts['product_image'];
-                       $product_brand = $posts['product_brand'];?>
+                       $product_images = $posts['product_image'];
+                       $product_brand = $posts['product_brand'];
 
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <!--<span class="product-label label-circle label-top">Top</span>-->
-                                    <a href="product.php">
-                                        <?php echo "
+                        $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                        $query = mysqli_query($con,$sql);
+                        $num_reviews = 0;
+                        $stars = 0;
+                        while($row=mysqli_fetch_array($query)){
+                                $num_reviews++;
+                                $stars += $row['stars_number'];
+                        }
+            
+                        $avg = $stars;
+                        if($num_reviews>1)
+                        {
+                            $avg = intval($stars/5);
+                        }
+                        
+                        echo "
+                            <div class='col-6 col-md-4 col-lg-3'>
+                                <div class='product product-2 just-action-icons-sm'>
+                                    <figure class='product-media'>
                                         <a href='#' pid='$product_id' id='show_product' title='Show product'>
-                                            <img src='$product_images' alt='Product image' class='product-image'>
-                                        </a>";
-                                        ?>
-                                    </a>
+                                            <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                        </a>
 
-                                    <!--<div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div>--><!-- End .product-action -->
+                                        <div class='product-action'>
+                                            <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                            <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
+                                        </div>
+                                    </figure>
 
-                                    <div class="product-action">
-                                        <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                    <div class='product-body'>
+                                        <div class='product-cat'>
+                                            <a href='#'>Celeron</a>
+                                        </div>
+                                        <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                        <div class='product-price'>
+                                        &#8369;$product_price
+                                        </div>
+                                        <div class='ratings-container'>";
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#"><?php echo $product_category; ?></a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><?php echo"<a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title";?></a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;<?php echo $product_price; ?>
-                                        <!--<span class="new-price">$279.99</span>
-                                        <span class="old-price">Was $349.99</span>-->
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 5 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                         <?php }?>
+                        for($i=0;$i<$avg;$i++)
+                        {
+                            echo '<span class="fa fa-star checked"></span>';
+                        }
+                
+                        $unchecked = 5-$avg;
+                
+                        for($i=0;$i<$unchecked;$i++)
+                        {
+                            echo '<span class="fa fa-star"></span>';
+                        }
+                                        echo "
+                                            <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                        ";
+                        }?>
                     </div><!-- End .row -->
                 </div><!-- End .products -->
             </div><!-- End .container -->
