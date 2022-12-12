@@ -187,7 +187,7 @@ if(isset($_POST["get_seleted_Category"]) || isset($_POST["selectBrand"]) || isse
 
 if(isset($_POST["showProduct"])){
 	$num_reviews = 0;
-	$sql = "SELECT * FROM reviews WHERE product_id = '$_SESSION[product_id]'";
+	$sql = "SELECT * FROM reviews WHERE review_prod_id = '$_SESSION[product_id]'";
 	$query = mysqli_query($con,$sql);
 	while($row=mysqli_fetch_array($query)){
 		$num_reviews++;
@@ -315,14 +315,14 @@ if(isset($_POST["showProduct"])){
 						';
 
 
-	$sql = "SELECT * FROM reviews WHERE product_id = '$_SESSION[product_id]'";
+	$sql = "SELECT * FROM reviews WHERE review_prod_id = '$_SESSION[product_id]'";
 	$query = mysqli_query($con,$sql);
 	while($row=mysqli_fetch_array($query)){
 			$stars    = $row['stars_number'];
-			$date    = $row['date_review'];
-			$comment   = $row['comments'];
-			$username = $row['username'];
-			$pro_title = $row['product_name'];
+			$date    = $row['review_date'];
+			$comment   = $row['review_detail'];
+			$username = $row['review_user_name'];
+			$pro_title = $row['review_product_name'];
 
 			echo '
 				<div class="review">
