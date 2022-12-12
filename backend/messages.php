@@ -81,7 +81,7 @@
                                                             <td><?php echo $ms_detail; ?></td>
                                                             <td><?php echo $ms_date; ?></td>
                                                             <td>
-                                                                <div class="badge badge-<?php echo $ms_status=="pending"?"warning":"success"; ?>">
+                                                                <div class="badge badge-<?php echo $ms_status=="pending"?"warning":"success"; ?> p-1">
                                                                     <?php echo $ms_status; ?>
                                                                 </div>
                                                             </td>

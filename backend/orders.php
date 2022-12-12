@@ -54,9 +54,51 @@
                                                 <th>Quantity</th>
                                                 <th>TRX ID</th>
                                                 <th>Payment Status</th>
+                                                <th>Delivery Status</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="customer_order_list">
+                                        <!--<tbody id="customer_order_list">-->
+                                        <tbody>
+                                        <?php 
+                                        $sql = "SELECT o.order_id, o.product_id, o.qty, o.trx_id, o.p_status, o.p_state, p.product_title, p.product_image FROM orders o JOIN products p ON o.product_id = p.product_id";
+                                                $stmt = $pdo->prepare($sql);
+                                                $stmt->execute();
+                                                while($order = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $order_id = $order['order_id'];
+                                                    $prod_id = $order['product_id'];
+                                                    $prod_name = $order['product_title'];
+                                                    $qty = $order['qty'];
+                                                    $trx_id = $order['trx_id']; 
+                                                    $payment_status = $order['p_status'];
+                                                    $delivery_status = $order['p_state']; ?>
+                                                        <tr>
+                                                            <td><?php echo $order_id; ?></td>
+                                                            <td>
+                                                                <?php echo $prod_id; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $prod_name; ?>
+                                                            </td>
+                                                            <td><?php echo $qty; ?></td>
+                                                            <td><?php echo $trx_id; ?></td>
+                                                            <td>
+                                                                <div class="badge badge-success">
+                                                                    <?php echo $payment_status; ?>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <?php 
+                                                                    if($delivery_status == 0) { ?>
+                                                                            <input type="hidden" name="id" value="<?php echo $order_id; ?>" >
+                                                                            <button name="response" type="submit" class="btn btn-primary btn-icon"><i data-feather="clipboard"></i></button>
+                                                                   <?php } else { ?>
+                                                                        <button title="Already responded!" class="btn btn-success btn-icon"><i data-feather="check"></i></button>
+                                                                   <?php }
+                                                                ?>
+                                                            </td>
+                                                        </tr> 
+                                                <?php }
+                                            ?>             
                                         </tbody>
                                     </table>
                                 </div>
