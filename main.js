@@ -90,6 +90,19 @@ $(document).ready(function(){
 	/*	when page is load successfully then there is a list of categories when user click on category we will get category id and 
 		according to id we will show products
 	*/
+	
+	$("#clear_filter").on("click",function(event){
+		$.ajax({
+			url	:	"action.php",
+			method	:	"POST",
+			data	:	{filter_reset:1},
+			success	:	function(data){
+						product();
+						page();
+			}
+		})
+	})
+
 
 	$("body").delegate(".cat_filter","click",function(event){
 		var id = $(this).attr('cat_id');
@@ -100,7 +113,8 @@ $(document).ready(function(){
 			if(document.getElementsByClassName("brand_filter")[i].checked)
 			{
 				checked = true;
-				id2 = document.getElementsByClassName("brand_filter")[i].attr('brand_id');
+				var temp = document.getElementsByClassName("brand_filter")[i]; 
+				id2 = temp.getAttribute("brand_id"); 
 			}
 			i++;
 		})
@@ -112,7 +126,9 @@ $(document).ready(function(){
 				method	:	"POST",
 				data	:	{getProduct:1,prod_filter_brand_cat:1,cat_id:id,brand_id:id2},
 				success	:	function(data){
-					$("#get_product").html(data);
+						productShowingNum();
+						$("#get_product").html(data);
+						page();
 				}
 			})
 		}
@@ -123,7 +139,9 @@ $(document).ready(function(){
 				method	:	"POST",
 				data	:	{getProduct:1,prod_filter_cat_only:1,cat_id:id},
 				success	:	function(data){
+					productShowingNum();
 					$("#get_product").html(data);
+					page();
 				}
 			})
 		}
@@ -138,7 +156,8 @@ $(document).ready(function(){
 			if(document.getElementsByClassName("cat_filter")[i].checked)
 			{
 				checked = true;
-				id2 = document.getElementsByClassName("cat_filter")[i].attr('cat_id');
+				var temp = document.getElementsByClassName("cat_filter")[i]; 
+				id2 = temp.getAttribute("cat_id"); 
 			}
 			i++;
 		})
@@ -150,7 +169,9 @@ $(document).ready(function(){
 				method	:	"POST",
 				data	:	{getProduct:1,prod_filter_brand_cat:1,brand_id:id,cat_id:id2},
 				success	:	function(data){
+					productShowingNum();
 					$("#get_product").html(data);
+					page();
 				}
 			})
 		}
@@ -161,7 +182,9 @@ $(document).ready(function(){
 				method	:	"POST",
 				data	:	{getProduct:1,prod_filter_brand_only:1,brand_id:id},
 				success	:	function(data){
+					productShowingNum();
 					$("#get_product").html(data);
+					page();
 				}
 			})
 		}

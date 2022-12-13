@@ -42,10 +42,18 @@ if(isset($_POST["brand"])){
 }
 
 if(isset($_POST["page"])){
-	$sql = "SELECT * FROM products";
-	$run_query = mysqli_query($con,$sql);
-	$count = mysqli_num_rows($run_query);
-	$pageno = ceil($count/9);
+	$count = 0;
+	if(isset($_SESSION["count"]))
+	{
+		$count = $_SESSION["count"];
+	}
+	else
+	{
+		$sql = "SELECT * FROM products";
+		$run_query = mysqli_query($con,$sql);
+		$count = mysqli_num_rows($run_query);
+	}
+	$pageno = ceil($count/12);
 	$current = $_POST["pageNumber"];
 	for($i=1;$i<=$pageno;$i++){
 		if($i == $current)
@@ -62,6 +70,14 @@ if(isset($_POST["page"])){
 		}
 	}
 }
+
+if(isset($_POST["filter_reset"])){
+	if(isset($_SESSION["count"]))
+	{
+		unset($_SESSION["count"]);
+	}
+}
+
 
 // if(isset($_POST["prod_filter_brand_only"]))
 // {
@@ -117,24 +133,28 @@ if(isset($_POST["getProduct"])){
 		$product_query = "SELECT * FROM products WHERE product_title LIKE '%$_SESSION[searchEntry]%' OR product_title LIKE '%$_SESSION[searchEntry]%'";
 		$run_query = mysqli_query($con,$product_query);
 		$count = mysqli_num_rows($run_query);
+		$_SESSION["count"] = $count;
 	}
 	else if(isset($_POST["prod_filter_brand_only"]))
 	{
 		$product_query = "SELECT * FROM products WHERE product_brand = '$_POST[brand_id]'";
 		$run_query = mysqli_query($con,$product_query);
 		$count = mysqli_num_rows($run_query);
+		$_SESSION["count"] = $count;
 	}
 	else if(isset($_POST["prod_filter_cat_only"]))
 	{
 		$product_query = "SELECT * FROM products WHERE product_cat = '$_POST[cat_id]'";
 		$run_query = mysqli_query($con,$product_query);
 		$count = mysqli_num_rows($run_query);
+		$_SESSION["count"] = $count;
 	}
 	else if(isset($_POST["prod_filter_brand_cat"]))
 	{
 		$product_query = "SELECT * FROM products WHERE product_cat = '$_POST[cat_id]' AND product_brand = '$_POST[brand_id]'";
 		$run_query = mysqli_query($con,$product_query);
 		$count = mysqli_num_rows($run_query);
+		$_SESSION["count"] = $count;
 	}
 	else
 	{
