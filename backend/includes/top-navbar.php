@@ -5,10 +5,10 @@
             <ul class="navbar-nav align-items-center ml-auto">
                 
                 <?php 
-                    $sql = "SELECT * FROM orders WHERE p_state = :state";
+                    $sql = "SELECT * FROM orders WHERE order_status = :state";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([
-                        ':state' => 0
+                        ':state' => 'Pending'
                     ]);
                     $count_order = $stmt->rowCount();
                 ?>
@@ -31,14 +31,14 @@
                         </h6>
 
                         <?php 
-                            $sql = "SELECT * FROM orders WHERE p_state = :state";
+                            $sql = "SELECT * FROM orders WHERE order_status = :state";
                             $stmt = $pdo->prepare($sql);
                             $stmt->execute([
-                                ':state' => 0
+                                ':state' => 'Pending'
                             ]);
                             while($com = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 $com_date = $com['order_date'];
-                                $com_detail = substr($com['p_status'],0, 35); ?>
+                                //$com_detail = substr($com['order_status'],0, 35); ?>
                                     <a class="dropdown-item dropdown-notifications-item" href="orders.php">
                                         <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
                                         <div class="dropdown-notifications-item-content">
@@ -47,7 +47,7 @@
                                                 <?php echo $com_date; ?>
                                             </div>
                                             <div class="dropdown-notifications-item-content-text">
-                                                You received an order from <?php echo $com_detail; ?>
+                                                You received an order.
                                             </div>
                                         </div>
                                     </a>

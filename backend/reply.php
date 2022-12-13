@@ -99,7 +99,7 @@ session_start();
                                     $user = $stmt->fetch(PDO::FETCH_ASSOC);
                                     $user_name = $user['first_name'];
                                 ?>
-                                <form action="reply.php?id=<?php echo $id; ?>" method="POST">
+                                <form action="reply.php?id=<?php echo $id; ?>" method="POST";>
                                     <div class="form-group">
                                         <label for="post-content">Message:</label>
                                         <textarea class="form-control" placeholder="Type here..." id="post-content" rows="9" readonly="true"><?php echo $ms_detail; ?></textarea>

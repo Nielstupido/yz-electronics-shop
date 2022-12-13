@@ -53,14 +53,14 @@
                                                 <th>Product Name</th>
                                                 <th>Quantity</th>
                                                 <th>TRX ID</th>
+                                                <th>Order Status</th>
                                                 <th>Payment Status</th>
-                                                <th>Delivery Status</th>
                                             </tr>
                                         </thead>
                                         <!--<tbody id="customer_order_list">-->
                                         <tbody>
                                         <?php 
-                                        $sql = "SELECT o.order_id, o.product_id, o.qty, o.trx_id, o.p_status, o.p_state, p.product_title, p.product_image FROM orders o JOIN products p ON o.product_id = p.product_id";
+                                        $sql = "SELECT o.order_id, o.product_id, o.qty, o.trx_id, o.order_status, o.payment_status, p.product_title, p.product_image FROM orders o JOIN products p ON o.product_id = p.product_id";
                                                 $stmt = $pdo->prepare($sql);
                                                 $stmt->execute();
                                                 while($order = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -69,8 +69,8 @@
                                                     $prod_name = $order['product_title'];
                                                     $qty = $order['qty'];
                                                     $trx_id = $order['trx_id']; 
-                                                    $payment_status = $order['p_status'];
-                                                    $delivery_status = $order['p_state']; ?>
+                                                    $order_status = $order['order_status'];
+                                                    $payment_status = $order['payment_status']; ?>
                                                         <tr>
                                                             <td><?php echo $order_id; ?></td>
                                                             <td>
@@ -82,41 +82,50 @@
                                                             <td><?php echo $qty; ?></td>
                                                             <td><?php echo $trx_id; ?></td>
                                                             <td>
-                                                                <div class="badge badge-success">
-                                                                    <?php echo $payment_status; ?>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <?php 
-                                                                    //Check if the button was clicked
-                                                                    //if (isset($_POST['submit_button'])) {
-                                                                      //Update the value of the status column
-                                                                      //$db->query("UPDATE orders SET p_status = 'Completed', p_state = 1");
-                                                                    
-                                                                        //Change the button to be non-clickable and display the text "complete"
-                                                                        //echo "<input type='button' value='Complete' disabled />";
-                                                                    //} else {
-                                                                        //Display the button
-                                                                        //echo "<form method='post'>
-                                                                        //<input type='submit' name='submit_button' value='Confirm' />
-                                                                        //</form>";
-                                                                    //}
-                                                                    ?>
+                                                                <form method="POST">
+                                                                    <input type="hidden" name="id" value="<?php echo $order_id; ?>" >
                                                                     <?php 
-                                                                        if(isset($_POST['confirm'])) {
-                                                                            $id = $_POST['id'];
-                                                                            $sql = "UPDATE orders SET p_status = 'Completed', p_state = 1 WHERE order_id = :id";
-                                                                            $stmt = $pdo->prepare($sql);
-                                                                            $stmt->execute([
-                                                                                ':id' => $id
-                                                                            ]);
-                                                                            echo '<button name="confirm" class="btn btn-success disabled">Completed</button>';
+                                                                        if ($order_status == "Pending") {
+                                                                            echo "<button name='pending' type='submit' class='btn-primary p-1' style='width: 100%'>Accept</button>";
+                                                                        } else if ($order_status == "Shipped Out") {
+                                                                            echo "<button name='shipped' type='submit' class='btn-warning p-1' style='width: 100%'>Product Delivered</button>";
+                                                                        } else if ($order_status == "Delivered") {
+                                                                            echo "<button name='delivered' type='submit' class='btn-success p-1' style='width: 100%' disabled>Completed</button>";
                                                                         }
                                                                     ?>
-                                                                    <form method="POST">
-                                                                        <input type="hidden" name="id" value="<?php echo $order_id; ?>" >
-                                                                        <button name="confirm" type="submit" class="btn btn-primary">Confirm</button>
-                                                                    </form>
+                                                                </form>
+
+                                                            <?php 
+                                                                if(isset($_POST['pending'])) {
+                                                                    $id = $_POST['id'];
+                                                                    $sql = "UPDATE orders SET order_status = 'Shipped Out' WHERE order_id = :id";
+                                                                    $stmt = $pdo->prepare($sql);
+                                                                    $stmt->execute([
+                                                                        ':id' => $id
+                                                                    ]);
+                                                                    echo "<meta http-equiv='refresh' content='0'>";
+                                                                } elseif(isset($_POST['shipped'])) {
+                                                                    $id = $_POST['id'];
+                                                                    $sql = "UPDATE orders SET order_status = 'Delivered' WHERE order_id = :id";
+                                                                    $stmt = $pdo->prepare($sql);
+                                                                    $stmt->execute([
+                                                                        ':id' => $id
+                                                                    ]);
+                                                                    echo "<meta http-equiv='refresh' content='0'>";
+                                                                }
+                                                            ?>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <?php
+                                                                    if ($payment_status == "Paid") {
+                                                                        $color = "green";
+                                                                    } elseif ($payment_status == "COD") {
+                                                                        $color = "blue";
+                                                                    } else {
+                                                                        $color = "gray";
+                                                                    }
+                                                                    echo "<p style='color: $color;'>$payment_status</p>";
+                                                                ?>
                                                             </td>
                                                         </tr> 
                                                 <?php }
