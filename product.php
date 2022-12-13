@@ -1,10 +1,7 @@
 <?php
-    require "config/constants.php";
+    require_once "includes/conn.php";
+    include "db.php";
     session_start();
-    if(!isset($_SESSION["product_id"]))
-    {
-        exit();
-    }
 ?>
 
 <!DOCTYPE html>
@@ -58,18 +55,6 @@
                         <!--<li class="breadcrumb-item"><a href="product.php">Products</a></li>-->
                         <li class="breadcrumb-item active" aria-current="page">Products</li>
                     </ol>
-
-                    <nav class="product-pager ml-auto" aria-label="Product">
-                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-
-                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                    </nav><!-- End .pager-nav -->
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
@@ -110,174 +95,85 @@
                                 }
                             }
                         }'>
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
+                    <?php 
+                        $sql = "SELECT * FROM products WHERE product_tag = :tag";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([
+                            ':tag' => 'Featured-ALL'
+                        ]);
+                        while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                            $product_id = $posts['product_id'];
+                            $product_title = $posts['product_title'];
+                            $product_price = $posts['product_price'];
+                            $product_images = $posts['product_image'];
+                            $product_category = $posts['product_cat'];
 
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
+                            $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
+                            $query = mysqli_query($con,$sql);
+                            $num_reviews = 0;
+                            $stars = 0;
+                            while($row=mysqli_fetch_array($query)){
+                                    $num_reviews++;
+                                    $stars += $row['stars_number'];
+                            }
 
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">NEC</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">NEC Intel Celeron<br>3855U</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                &#8369;9,500.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 4 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                            $cat_query = "SELECT * FROM categories WHERE 1";
+                            $run_cat_query = mysqli_query($con,$cat_query);
+                            while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                if($row_cat['cat_id'] == $product_category)
+                                {
+                                    $cat_name = $row_cat['cat_title'];
+                                    break;
+                                }
+                            }
+                
+                            $avg = $stars;
+                            if($num_reviews>1)
+                            {
+                                $avg = intval($stars/5);
+                            }
 
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-out">Out of Stock</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product5.jpg" alt="Product image" class="product-image">
-                                </a>
+                            echo "
+                                    <div class='product product-7 text-center'>
+                                        <figure class='product-media'>
+                                            <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                <img src='assets/images/products/$product_images' alt='Product image' class='product-image'>
+                                            </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
+                                            <div class='product-action'>
+                                                <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
+                                            </div>
+                                        </figure>
 
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
+                                        <div class='product-body'>
+                                            <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
+                                            <div class='product-price'>
+                                            &#8369;$product_price
+                                            </div>
+                                            <div class='ratings-container'>";
 
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Toshiba</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Toshiba Intel Corei3 8GB RAM/256GB SSD</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    <span class="out-price"> &#8369;11,500.00</span>
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 4 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                            for($i=0;$i<$avg;$i++)
+                            {
+                                echo '<span class="fa fa-star checked"></span>';
+                            }
+                    
+                            $unchecked = 5-$avg;
+                    
+                            for($i=0;$i<$unchecked;$i++)
+                            {
+                                echo '<span class="fa fa-star"></span>';
+                            }
+                                            echo "
+                                                <span class='ratings-text'>( $num_reviews Reviews )</span>
+                                            </div>
 
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product6.jpg" alt="Product image" class="product-image">
-                                </a>
+                                        </div>
+                                    </div>
+                            ";
+                        }
+                    ?>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Fujitso</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.php">Fujitso Intel Core i5 8GB RAM/240GB SSD</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                &#8369;20,000.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 5 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="product.php">
-                                    <img src="assets/images/products/product4.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">NEC</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.php">NEC Intel Core i5 4GB RAM/120 GB m.2 SSD</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                &#8369;9,500.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 10 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="product.php">
-                                    <img src="assets/images/products/product7.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">HP</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.php">HP Intel Corei5 8GB RAM/120GB SSD</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                &#8369;13,600.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .container -->
             </div><!-- End .page-content -->

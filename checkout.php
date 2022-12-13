@@ -85,8 +85,8 @@
 											</tbody>
 										</table><!-- End .table table-summary -->
 		                				<div class="accordion-summary" id="accordion-payment">
-
 											<div class="card">
+											<h4 class="summary-title">Choose Your Payment Method</h4>
 										        <div class="card-header" id="heading-4">
 										            <h2 class="card-title">
 														<input type="radio" name="myradiogroup" id="cod"><label for="myrad1">&nbsp;&nbsp;Cash on Delivery</label>

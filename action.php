@@ -437,10 +437,6 @@ if(isset($_POST["showProduct"])){
 						&#8369;'.$row[4].'
 						</div><!-- End .product-price -->
 
-						<div class="product-content">
-							<p>2nd hand Company-used Laptops. PRESENTABLE UNITS.</p>
-						</div><!-- End .product-content -->
-
 						<div class="details-filter-row details-row-size">
 							<label for="qty">Qty:</label>
 							<div class="product-details-quantity">
@@ -449,7 +445,7 @@ if(isset($_POST["showProduct"])){
 						</div><!-- End .details-filter-row -->
 
 						<div class="product-details-action">
-							<a href="#" pid="'.$_SESSION["product_id"].'" id="product" title="Add to cart" class="btn-product btn-cart"><span>add to cart</span></a>
+							<a href="#" pid="'.$_SESSION["product_id"].'" id="product" title="Add to cart" class="btn btn-primary">Add To Cart</a>
 						</div><!-- End .product-details-action -->
 
 						<div class="product-details-footer">
@@ -566,8 +562,11 @@ if(isset($_POST["gotoProduct"]))
 		
 
 		$p_id = $_POST["proId"];
+		$qty_prod = 1;
+		if(isset($_POST["qty"])){
+			$qty_prod = $_POST["qty"];
+		}
 		
-
 		if(isset($_SESSION["uid"])){
 
 		$user_id = $_SESSION["uid"];
@@ -585,7 +584,7 @@ if(isset($_POST["gotoProduct"]))
 		} else {
 			$sql = "INSERT INTO `cart`
 			(`p_id`, `ip_add`, `user_id`, `qty`) 
-			VALUES ('$p_id','$ip_add','$user_id','1')";
+			VALUES ('$p_id','$ip_add','$user_id','$qty_prod')";
 			if(mysqli_query($con,$sql)){
 				echo "
 					<div class='alert alert-success'>
@@ -608,7 +607,7 @@ if(isset($_POST["gotoProduct"]))
 			}
 			$sql = "INSERT INTO `cart`
 			(`p_id`, `ip_add`, `user_id`, `qty`) 
-			VALUES ('$p_id','$ip_add','-1','1')";
+			VALUES ('$p_id','$ip_add','-1','$qty_prod')";
 			if (mysqli_query($con,$sql)) {
 				echo "
 					<div class='alert alert-success'>
@@ -990,8 +989,8 @@ if(isset($_POST["checkOutCart"]))
 					<td>Free shipping</td>
 				</tr>
 				<tr class="summary-total">
-					<td>Total: ₱</td>
-					<td><input type="text" id="total_amount" name="total_amount" value="'.$_SESSION["totalCart"].'.00" readonly></td>
+					<td></td>
+					<td>Total: ₱ <input type="text" id="total_amount" name="total_amount" value="'.$_SESSION["totalCart"].'.00" readonly></td>
 				</tr><!-- End .summary-total -->
 			';
 	}

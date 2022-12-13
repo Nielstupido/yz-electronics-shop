@@ -252,7 +252,7 @@ session_start();
                                             </div>
                                     ";
                                 }
-                                ?>
+                            ?>
 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
