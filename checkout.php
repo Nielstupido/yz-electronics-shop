@@ -60,7 +60,7 @@
             	<div class="checkout">
 	                <div class="container">
 		                	<div class="row">
-		                		<div class="col-lg-9">
+		                		<div class="col-lg-4">
 									<div class="response">
 									</div>
 		                			<h2 class="checkout-title">Shipping Details</h2><!-- End .checkout-title -->
@@ -68,8 +68,8 @@
 									</div>
 									<a href="cart.php" class="btn btn-primary">Change Address</a>
 		                		</div><!-- End .col-lg-9 -->
-		                		<aside class="col-lg-3">
-		                			<div class="summary">
+		                		<aside class="col-lg-8">
+		                			<div class="summary"><!--summry here-->
 		                				<h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
 										<table class="table table-summary" style="width:100%">
 											<thead>
@@ -117,11 +117,10 @@
 										        </div>
 										    </div>-->
 										</div><!-- End .accordion -->
-
-		                				<button name="confirmOrder" id="confirmOrder" class="btn btn-outline-primary-2 btn-order btn-block confirmOrder">
-		                					<span class="btn-text">Place Order</span>
-		                					<span class="btn-hover-text">Proceed to Checkout</span>
-		                				</button>
+											<button name="confirmOrder" id="confirmOrder" class="btn btn-outline-primary-2 btn-order btn-block confirmOrder">
+												<span class="btn-text">Place Order</span>
+												<span class="btn-hover-text">Proceed to Checkout</span>
+											</button>
 		                			</div><!-- End .summary -->
 		                		</aside><!-- End .col-lg-3 -->
 		                	</div><!-- End .row -->
