@@ -401,11 +401,36 @@ if(isset($_POST["showProduct"])){
 					<div class="product-details">
 						<h1 class="product-title">'.$row[3].'</h1><!-- End .product-title -->
 
-						<div class="ratings-container">
-							<div class="ratings">
-								<div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-							</div><!-- End .ratings -->
-							<a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+						<div class="ratings-container">';
+
+						$sql = "SELECT * FROM reviews WHERE review_prod_id = '$_SESSION[product_id]'";
+						$query = mysqli_query($con,$sql);
+						$num_reviews = 0;
+						$stars = 0;
+						while($rowS=mysqli_fetch_array($query)){
+								$num_reviews++;
+								$stars += $rowS['stars_number'];
+						}
+					
+						$avg = $stars;
+						if($num_reviews>1)
+						{
+							$avg = intval($stars/5);
+						}
+
+						for($i=0;$i<$avg;$i++)
+						{
+							echo '<span class="fa fa-star checked"></span>';
+						}
+				
+						$unchecked = 5-$avg;
+				
+						for($i=0;$i<$unchecked;$i++)
+						{
+							echo '<span class="fa fa-star"></span>';
+						}
+							echo '
+							<a class="ratings-text" href="#product-review-link" id="review-link">( '.$num_reviews.' Reviews )</a>
 						</div><!-- End .rating-container -->
 
 						<div class="product-price">
@@ -910,10 +935,10 @@ function generateRandomString($length = 5) {
 
 if(isset($_POST["shippingAdd"]))
 {
-	$sql = "SELECT address1 FROM user_info WHERE user_id = '$_SESSION[uid]'";
+	$sql = "SELECT * FROM user_info WHERE user_id = '$_SESSION[uid]'";
 	$run_query = mysqli_query($con,$sql);
 	$result = mysqli_fetch_assoc($run_query);
-	echo $result["address1"]; 
+	echo $result["house_num_street"] . ', '. $result["brgy"] . ', '.$result["city_mun"]. ', '. $result["province"] . ' '.$result["zip_code"]; 
 }
 
 
