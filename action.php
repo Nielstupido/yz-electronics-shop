@@ -445,16 +445,11 @@ if(isset($_POST["showProduct"])){
 						</div><!-- End .details-filter-row -->
 
 						<div class="product-details-action">
-							<a href="#" pid="'.$_SESSION["product_id"].'" id="product" title="Add to cart" class="btn btn-primary">Add To Cart</a>
+							<a href="#" pid="'.$_SESSION["product_id"].'" id="product" title="Add to cart" class="btn-product btn-cart">Add To Cart</a>
 						</div><!-- End .product-details-action -->
 
 						<div class="product-details-footer">
-							<div class="product-cat">
-								<span>Category:</span>
-								<a href="#">NEC</a>,
-								<a href="#">Core i5</a>,
-								<a href="#">Students</a>
-							</div><!-- End .product-cat -->
+	
 
 							<div class="social-icons social-icons-sm">
 								<span class="social-label">Share:</span>
