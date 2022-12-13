@@ -81,7 +81,7 @@
                                 ':photo' => $user_photo,
                                 ':id' => $user_id
                             ]);
-                            header("Location: profile.php");
+                            echo "<meta http-equiv='refresh' content='0'>";
                         }
                     ?>
 

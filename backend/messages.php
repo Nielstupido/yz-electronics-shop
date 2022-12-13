@@ -81,7 +81,16 @@
                                                             <td><?php echo $ms_detail; ?></td>
                                                             <td><?php echo $ms_date; ?></td>
                                                             <td>
-                                                                <div class="badge badge-<?php echo $ms_status=="pending"?"warning":"success"; ?> p-1">
+                                                                <?php
+                                                                    if ($ms_status == "Processed") {
+                                                                        $color = "green";
+                                                                    } elseif ($ms_status == "Pending") {
+                                                                        $color = "yellow orange";
+                                                                    } else {
+                                                                        $color = "gray";
+                                                                    }
+                                                                ?>
+                                                                <div class="badge badge-<?php echo $color; ?> p-1">
                                                                     <?php echo $ms_status; ?>
                                                                 </div>
                                                             </td>
@@ -106,7 +115,7 @@
                                                                         $stmt->execute([
                                                                             ':id' => $id
                                                                         ]);
-                                                                        header("Location: messages.php");
+                                                                        echo "<meta http-equiv='refresh' content='0'>";
                                                                     }
                                                                 ?>
                                                                 <form action="messages.php" method="POST">

@@ -352,31 +352,47 @@ if(isset($_POST["showProduct"])){
 				<div class="col-md-6">
 					<div class="product-gallery product-gallery-vertical">
 						<div class="row">
-							<figure class="product-main-image">
-								<img id="product-zoom" src="assets/images/products/'.$row[7].'" data-zoom-image="assets/images/products/single/p1-big.jpg" alt="product image">
+							<img class="mySlides" src="assets/images/products/single/'.$row[8].'" style="width:75%;">
+							<img class="mySlides" src="assets/images/products/single/'.$row[9].'" style="width:75%;display:none">
+							<img class="mySlides" src="assets/images/products/single/'.$row[10].'" style="width:75%;display:none">
+							<img class="mySlides" src="assets/images/products/single/'.$row[11].'" style="width:75%;display:none">
 
-								<a href="#" id="btn-product-gallery" class="btn-product-gallery">
-									<i class="icon-arrows"></i>
-								</a>
-							</figure><!-- End .product-main-image -->
+							<div class="product-image-gallery">
+								<div class="product-gallery-item">
+									<img class="demo" src="assets/images/products/single/'.$row[8].'" style="width:100%;cursor:pointer" onclick="currentDiv(1)">
+								</div>
+								<div class="product-gallery-item">
+									<img class="demo" src="assets/images/products/single/'.$row[9].'" style="width:100%;cursor:pointer" onclick="currentDiv(2)">
+								</div>
+								<div class="product-gallery-item">
+									<img class="demo" src="assets/images/products/single/'.$row[10].'" style="width:100%;cursor:pointer" onclick="currentDiv(3)">
+								</div>
+								<div class="product-gallery-item">
+									<img class="demo" src="assets/images/products/single/'.$row[11].'" style="width:100%;cursor:pointer" onclick="currentDiv(4)">
+								</div>
+							</div>
 
-							<div id="product-zoom-gallery" class="product-image-gallery">
-								<a class="product-gallery-item active" href="#" data-image="assets/images/products/single/p1.jpg" data-zoom-image="assets/images/products/single/p1-big.jpg">
-									<img src="assets/images/products/single/p1-small.jpg" alt="product side">
-								</a>
+							<script>
+							function currentDiv(n) {
+							showDivs(slideIndex = n);
+							}
 
-								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p2.jpg" data-zoom-image="assets/images/products/single/p2-big.jpg">
-									<img src="assets/images/products/single/p2-small.jpg" alt="product cross">
-								</a>
-
-								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p3.jpg" data-zoom-image="assets/images/products/single/p3-big.jpg">
-									<img src="assets/images/products/single/p3-small.jpg" alt="product with model">
-								</a>
-
-								<a class="product-gallery-item" href="#" data-image="assets/images/products/single/p4.jpg" data-zoom-image="assets/images/products/single/p4-big.jpg">
-									<img src="assets/images/products/single/p4-small.jpg" alt="product back">
-								</a>
-							</div><!-- End .product-image-gallery -->
+							function showDivs(n) {
+							var i;
+							var x = document.getElementsByClassName("mySlides");
+							var dots = document.getElementsByClassName("demo");
+							if (n > x.length) {slideIndex = 1}
+							if (n < 1) {slideIndex = x.length}
+							for (i = 0; i < x.length; i++) {
+								x[i].style.display = "none";
+							}
+							for (i = 0; i < dots.length; i++) {
+								dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+							}
+							x[slideIndex-1].style.display = "block";
+							dots[slideIndex-1].className += " w3-opacity-off";
+							}
+							</script>
 						</div><!-- End .row -->
 					</div><!-- End .product-gallery -->
 				</div><!-- End .col-md-6 -->

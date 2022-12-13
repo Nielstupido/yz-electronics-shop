@@ -128,26 +128,6 @@
             <div class="header-bottom sticky-header">
                 <div class="container">
                     <div class="header-left">
-                        <div class="dropdown category-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
-                                Browse Categories <i class="icon-angle-down"></i>
-                            </a>
-
-                            <div class="dropdown-menu">
-                                <nav class="side-nav">
-                                    <ul class="menu-vertical sf-arrows">
-                                        <li class="item-lead"><a href="#">Promos</a></li>
-                                        <!--<li class="item-lead"><a href="#">Rental units/laptops</a></li>-->
-                                        <li><a href="category.php">NEC</a></li>
-                                        <li><a href="category.php">Toshiba</a></li>
-                                        <li><a href="category.php">HP</a></li>
-                                        <li><a href="category.php">Fujitso</a></li>
-                                        <li><a href="category.php">Core i5</a></li>
-                                        <li><a href="category.php">Celeron</a></li>
-                                    </ul><!-- End .menu-vertical -->
-                                </nav><!-- End .side-nav -->
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .category-dropdown -->
                     </div><!-- End .header-left -->
 
                     <div class="header-center d-flex justify-content-center align-items-center">
@@ -185,7 +165,7 @@
                     </div><!-- End .header-center -->
 
                     <div class="header-right">
-                        <i class="la la-lightbulb-o"></i><p>Warranty<span class="highlight">&nbsp;Up to 3 Months</span></p>
+                        <!--<i class="la la-lightbulb-o"></i><p>Warranty<span class="highlight">&nbsp;Up to 3 Months</span></p>-->
                     </div>
                 </div><!-- End .container -->
             </div><!-- End .header-bottom -->
