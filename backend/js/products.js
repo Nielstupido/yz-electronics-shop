@@ -79,16 +79,19 @@ $(document).ready(function(){
 				console.log(response);
 				var resp = $.parseJSON(response);
 				if (resp.status == 202) {
-					$("#add-product-form").trigger("reset");
-					$("#add_product_modal").modal('hide');
+					//$("#add-product-form").trigger("reset");
+					//$("#add_product_modal").modal('hide');
 					getProducts();
 					// window.location.href = "index.php";
 					//window.location = '../admin/classes/Products.php';
+					alert(resp.message);
+					//window.location.href = "products.php";
 				}else if(resp.status == 303){
 					// window.location.href = "products.php";
 					alert(resp.message);
 					
 				}
+				$("#add_product_modal").modal('hide');
 			}
 
 		});

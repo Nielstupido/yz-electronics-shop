@@ -88,13 +88,35 @@
                                                             </td>
                                                             <td>
                                                                 <?php 
-                                                                    if($delivery_status == 0) { ?>
-                                                                            <input type="hidden" name="id" value="<?php echo $order_id; ?>" >
-                                                                            <button name="response" type="submit" class="btn btn-primary btn-icon"><i data-feather="clipboard"></i></button>
-                                                                   <?php } else { ?>
-                                                                        <button title="Already responded!" class="btn btn-success btn-icon"><i data-feather="check"></i></button>
-                                                                   <?php }
-                                                                ?>
+                                                                    //Check if the button was clicked
+                                                                    //if (isset($_POST['submit_button'])) {
+                                                                      //Update the value of the status column
+                                                                      //$db->query("UPDATE orders SET p_status = 'Completed', p_state = 1");
+                                                                    
+                                                                        //Change the button to be non-clickable and display the text "complete"
+                                                                        //echo "<input type='button' value='Complete' disabled />";
+                                                                    //} else {
+                                                                        //Display the button
+                                                                        //echo "<form method='post'>
+                                                                        //<input type='submit' name='submit_button' value='Confirm' />
+                                                                        //</form>";
+                                                                    //}
+                                                                    ?>
+                                                                    <?php 
+                                                                        if(isset($_POST['confirm'])) {
+                                                                            $id = $_POST['id'];
+                                                                            $sql = "UPDATE orders SET p_status = 'Completed', p_state = 1 WHERE order_id = :id";
+                                                                            $stmt = $pdo->prepare($sql);
+                                                                            $stmt->execute([
+                                                                                ':id' => $id
+                                                                            ]);
+                                                                            echo '<button name="confirm" class="btn btn-success disabled">Completed</button>';
+                                                                        }
+                                                                    ?>
+                                                                    <form method="POST">
+                                                                        <input type="hidden" name="id" value="<?php echo $order_id; ?>" >
+                                                                        <button name="confirm" type="submit" class="btn btn-primary">Confirm</button>
+                                                                    </form>
                                                             </td>
                                                         </tr> 
                                                 <?php }
