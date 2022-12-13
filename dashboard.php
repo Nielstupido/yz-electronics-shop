@@ -173,7 +173,7 @@
 												<th>Order Qty</th>
 												<th>Order Image</th>
 												<th>Order Title</th>
-												<th>Order Total</th>
+												<th>Payment</th>
 												<th>Order Status</th>
 												</tr>
 											</thead>

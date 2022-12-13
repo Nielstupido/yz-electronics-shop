@@ -3,6 +3,8 @@ $(document).ready(function(){
 	brand();
 	product();
 	showProduct();
+	showCategories();
+	showBrands();
 	//net_total();
 
 	//cat() is a funtion fetching category record from database whenever page is load
@@ -53,6 +55,28 @@ $(document).ready(function(){
 	}
 
 
+	function showCategories(){
+		$.ajax({
+			url	:	"action.php",
+			method:	"POST",
+			data	:	{showCategories:1},
+			success	:	function(data){
+				$("#categories_filter").html(data);
+			}
+		})
+	}
+
+	function showBrands(){
+		$.ajax({
+			url	:	"action.php",
+			method:	"POST",
+			data	:	{showBrands:1},
+			success	:	function(data){
+				$("#brand_filter").html(data);
+			}
+		})
+	}
+
 	function showProduct(){
 		$.ajax({
 			url : "action.php",
@@ -66,6 +90,84 @@ $(document).ready(function(){
 	/*	when page is load successfully then there is a list of categories when user click on category we will get category id and 
 		according to id we will show products
 	*/
+
+	$("body").delegate(".cat_filter","click",function(event){
+		var id = $(this).attr('cat_id');
+		var id2 = 0;
+		var i = 0;
+		var checked = false;
+		$('.brand_filter').each(function(){
+			if(document.getElementsByClassName("brand_filter")[i].checked)
+			{
+				checked = true;
+				id2 = document.getElementsByClassName("brand_filter")[i].attr('brand_id');
+			}
+			i++;
+		})
+
+		if(checked)
+		{
+			$.ajax({
+				url	:	"action.php",
+				method	:	"POST",
+				data	:	{getProduct:1,prod_filter_brand_cat:1,cat_id:id,brand_id:id2},
+				success	:	function(data){
+					$("#get_product").html(data);
+				}
+			})
+		}
+		else
+		{
+			$.ajax({
+				url	:	"action.php",
+				method	:	"POST",
+				data	:	{getProduct:1,prod_filter_cat_only:1,cat_id:id},
+				success	:	function(data){
+					$("#get_product").html(data);
+				}
+			})
+		}
+	})
+
+	$("body").delegate(".brand_filter","click",function(event){
+		var id = $(this).attr('brand_id');
+		var id2 = 0;
+		var i = 0;
+		var checked = false;
+		$('.cat_filter').each(function(){
+			if(document.getElementsByClassName("cat_filter")[i].checked)
+			{
+				checked = true;
+				id2 = document.getElementsByClassName("cat_filter")[i].attr('cat_id');
+			}
+			i++;
+		})
+
+		if(checked)
+		{
+			$.ajax({
+				url	:	"action.php",
+				method	:	"POST",
+				data	:	{getProduct:1,prod_filter_brand_cat:1,brand_id:id,cat_id:id2},
+				success	:	function(data){
+					$("#get_product").html(data);
+				}
+			})
+		}
+		else
+		{
+			$.ajax({
+				url	:	"action.php",
+				method	:	"POST",
+				data	:	{getProduct:1,prod_filter_brand_only:1,brand_id:id},
+				success	:	function(data){
+					$("#get_product").html(data);
+				}
+			})
+		}
+	})
+
+
 	$("body").delegate(".category","click",function(event){
 		$("#get_product").html("<h3>Loading...</h3>");
 		event.preventDefault();
@@ -329,6 +431,17 @@ $(document).ready(function(){
 					url	:	"action.php",
 					method	:	"POST",
 					data	:	{finishCheckoutGcash:1, total_amount:amount},
+					success	:	function(data){
+						window.location.href = data;
+					}
+				})
+			}
+			else
+			{
+				$.ajax({
+					url	:	"action.php",
+					method	:	"POST",
+					data	:	{finishCheckoutCOD:1, total_amount:amount},
 					success	:	function(data){
 						window.location.href = data;
 					}

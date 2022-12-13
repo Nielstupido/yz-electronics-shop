@@ -198,6 +198,16 @@ session_start();
                                             $num_reviews++;
                                             $stars += $row['stars_number'];
                                     }
+
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
                         
                                     $avg = $stars;
                                     if($num_reviews>1)
@@ -214,14 +224,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -289,7 +295,7 @@ session_start();
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
-
+                                    $product_category = $posts['product_cat'];
 
                                     $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                                     $query = mysqli_query($con,$sql);
@@ -299,13 +305,23 @@ session_start();
                                             $num_reviews++;
                                             $stars += $row['stars_number'];
                                     }
+
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
                         
                                     $avg = $stars;
                                     if($num_reviews>1)
                                     {
                                         $avg = intval($stars/5);
                                     }
-                                    
+
                                     echo "
                                             <div class='product product-2 just-action-icons-sm'>
                                                 <figure class='product-media'>
@@ -315,14 +331,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -391,6 +403,7 @@ session_start();
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
+                                    $product_category = $posts['product_cat'];
 
                                     $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                                     $query = mysqli_query($con,$sql);
@@ -400,13 +413,23 @@ session_start();
                                             $num_reviews++;
                                             $stars += $row['stars_number'];
                                     }
+
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
                         
                                     $avg = $stars;
                                     if($num_reviews>1)
                                     {
                                         $avg = intval($stars/5);
                                     }
-                                    
+
                                     echo "
                                             <div class='product product-2 just-action-icons-sm'>
                                                 <figure class='product-media'>
@@ -416,14 +439,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -491,6 +510,7 @@ session_start();
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
+                                    $product_category = $posts['product_cat'];
 
                                     $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                                     $query = mysqli_query($con,$sql);
@@ -501,12 +521,22 @@ session_start();
                                             $stars += $row['stars_number'];
                                     }
                         
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
+                        
                                     $avg = $stars;
                                     if($num_reviews>1)
                                     {
                                         $avg = intval($stars/5);
                                     }
-                                    
+
                                     echo "
                                             <div class='product product-2 just-action-icons-sm'>
                                                 <figure class='product-media'>
@@ -516,14 +546,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -591,6 +617,7 @@ session_start();
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
+                                    $product_category = $posts['product_cat'];
 
                                     $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                                     $query = mysqli_query($con,$sql);
@@ -601,12 +628,22 @@ session_start();
                                             $stars += $row['stars_number'];
                                     }
                         
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
+                        
                                     $avg = $stars;
                                     if($num_reviews>1)
                                     {
                                         $avg = intval($stars/5);
                                     }
-                                    
+
                                     echo "
                                             <div class='product product-2 just-action-icons-sm'>
                                                 <figure class='product-media'>
@@ -616,14 +653,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -691,6 +724,7 @@ session_start();
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
+                                    $product_category = $posts['product_cat'];
 
                                     $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                                     $query = mysqli_query($con,$sql);
@@ -701,12 +735,22 @@ session_start();
                                             $stars += $row['stars_number'];
                                     }
                         
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
+                        
                                     $avg = $stars;
                                     if($num_reviews>1)
                                     {
                                         $avg = intval($stars/5);
                                     }
-                                    
+
                                     echo "
                                             <div class='product product-2 just-action-icons-sm'>
                                                 <figure class='product-media'>
@@ -716,14 +760,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -790,6 +830,7 @@ session_start();
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
+                                    $product_category = $posts['product_cat'];
 
                                     $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                                     $query = mysqli_query($con,$sql);
@@ -800,12 +841,22 @@ session_start();
                                             $stars += $row['stars_number'];
                                     }
                         
+                                    $cat_query = "SELECT * FROM categories WHERE 1";
+                                    $run_cat_query = mysqli_query($con,$cat_query);
+                                    while($row_cat = mysqli_fetch_array($run_cat_query)){
+                                        if($row_cat['cat_id'] == $product_category)
+                                        {
+                                            $cat_name = $row_cat['cat_title'];
+                                            break;
+                                        }
+                                    }
+                        
                                     $avg = $stars;
                                     if($num_reviews>1)
                                     {
                                         $avg = intval($stars/5);
                                     }
-                                    
+
                                     echo "
                                             <div class='product product-2 just-action-icons-sm'>
                                                 <figure class='product-media'>
@@ -815,14 +866,10 @@ session_start();
 
                                                     <div class='product-action'>
                                                         <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                                        <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                                     </div>
                                                 </figure>
 
                                                 <div class='product-body'>
-                                                    <div class='product-cat'>
-                                                        <a href='#'>Celeron</a>
-                                                    </div>
                                                     <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                                     <div class='product-price'>
                                                     &#8369;$product_price
@@ -890,6 +937,7 @@ session_start();
                        $product_price = $posts['product_price'];
                        $product_images = $posts['product_image'];
                        $product_brand = $posts['product_brand'];
+                       $product_category = $posts['product_cat'];
 
                         $sql = "SELECT * FROM reviews WHERE review_prod_id = '$product_id'";
                         $query = mysqli_query($con,$sql);
@@ -899,7 +947,17 @@ session_start();
                                 $num_reviews++;
                                 $stars += $row['stars_number'];
                         }
-            
+
+                        $cat_query = "SELECT * FROM categories WHERE 1";
+                        $run_cat_query = mysqli_query($con,$cat_query);
+                        while($row_cat = mysqli_fetch_array($run_cat_query)){
+                            if($row_cat['cat_id'] == $product_category)
+                            {
+                                $cat_name = $row_cat['cat_title'];
+                                break;
+                            }
+                        }
+
                         $avg = $stars;
                         if($num_reviews>1)
                         {
@@ -916,14 +974,10 @@ session_start();
 
                                         <div class='product-action'>
                                             <a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-                                            <a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
                                         </div>
                                     </figure>
 
                                     <div class='product-body'>
-                                        <div class='product-cat'>
-                                            <a href='#'>Celeron</a>
-                                        </div>
                                         <h3 class='product-title'><a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title</a></h3>
                                         <div class='product-price'>
                                         &#8369;$product_price

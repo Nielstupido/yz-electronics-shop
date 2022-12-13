@@ -63,13 +63,76 @@ if(isset($_POST["page"])){
 	}
 }
 
+// if(isset($_POST["prod_filter_brand_only"]))
+// {
+// 	$_SESSION["prod_filter_brand_only"] = true;
+// 	$_SESSION["brand_id"] = $_POST["brand_id"];
+// 	if(isset($_SESSION['prod_filter_brand_cat']))
+// 	{
+// 		unset($_SESSION['prod_filter_brand_cat']);
+// 	}
+
+// 	if(isset($_SESSION['prod_filter_cat_only']))
+// 	{
+// 		unset($_SESSION['prod_filter_cat_only']);
+// 	}
+// }
+
+// if(isset($_POST["prod_filter_cat_only"]))
+// {
+// 	$_SESSION["prod_filter_cat_only"] = true;
+// 	$_SESSION["cat_id"] = $_POST["cat_id"];
+// 	if(isset($_SESSION['prod_filter_brand_cat']))
+// 	{
+// 		unset($_SESSION['prod_filter_brand_cat']);
+// 	}
+
+// 	if(isset($_SESSION['prod_filter_brand_only']))
+// 	{
+// 		unset($_SESSION['prod_filter_brand_only']);
+// 	}
+// }
+
+// if(isset($_POST["prod_filter_brand_cat"]))
+// {
+// 	$_SESSION["prod_filter_brand_cat"] = true;
+// 	$_SESSION["cat_id"] = $_POST["cat_id"];
+// 	$_SESSION["brand_id"] = $_POST["brand_id"];
+// 	if(isset($_SESSION['prod_filter_brand_only']))
+// 	{
+// 		unset($_SESSION['prod_filter_brand_only']);
+// 	}
+
+// 	if(isset($_SESSION['prod_filter_cat_only']))
+// 	{
+// 		unset($_SESSION['prod_filter_cat_only']);
+// 	}
+// }
+
 
 if(isset($_POST["getProduct"])){
-
 
 	if(isset($_SESSION['searchEntry']))
 	{
 		$product_query = "SELECT * FROM products WHERE product_title LIKE '%$_SESSION[searchEntry]%' OR product_title LIKE '%$_SESSION[searchEntry]%'";
+		$run_query = mysqli_query($con,$product_query);
+		$count = mysqli_num_rows($run_query);
+	}
+	else if(isset($_POST["prod_filter_brand_only"]))
+	{
+		$product_query = "SELECT * FROM products WHERE product_brand = '$_POST[brand_id]'";
+		$run_query = mysqli_query($con,$product_query);
+		$count = mysqli_num_rows($run_query);
+	}
+	else if(isset($_POST["prod_filter_cat_only"]))
+	{
+		$product_query = "SELECT * FROM products WHERE product_cat = '$_POST[cat_id]'";
+		$run_query = mysqli_query($con,$product_query);
+		$count = mysqli_num_rows($run_query);
+	}
+	else if(isset($_POST["prod_filter_brand_cat"]))
+	{
+		$product_query = "SELECT * FROM products WHERE product_cat = '$_POST[cat_id]' AND product_brand = '$_POST[brand_id]'";
 		$run_query = mysqli_query($con,$product_query);
 		$count = mysqli_num_rows($run_query);
 	}
@@ -93,13 +156,26 @@ if(isset($_POST["getProduct"])){
 		$product_query = "SELECT * FROM products WHERE product_title LIKE '%$_SESSION[searchEntry]%' OR product_title LIKE '%$_SESSION[searchEntry]%' LIMIT $start,$limit";
 		unset($_SESSION['searchEntry']);
 	}
+	else if(isset($_POST["prod_filter_brand_only"]))
+	{
+		$product_query = "SELECT * FROM products WHERE product_brand = '$_POST[brand_id]' LIMIT $start,$limit";
+	}
+	else if(isset($_POST["prod_filter_cat_only"]))
+	{
+		$product_query = "SELECT * FROM products WHERE product_cat = '$_POST[cat_id]' LIMIT $start,$limit";
+	}
+	else if(isset($_POST["prod_filter_brand_cat"]))
+	{
+		$product_query = "SELECT * FROM products WHERE product_cat = '$_POST[cat_id]' AND product_brand = '$_POST[brand_id]' LIMIT $start,$limit";
+	}
 	else
 	{
 		$product_query = "SELECT * FROM products LIMIT $start,$limit";
 	}
-	
+
 	$run_query = mysqli_query($con,$product_query);
 	$numOfShowing = 0;
+	$cat_name = null;
 	
 	if(mysqli_num_rows($run_query) > 0){
 		while($row = mysqli_fetch_array($run_query)){
@@ -127,6 +203,20 @@ if(isset($_POST["getProduct"])){
 				$avg = intval($stars/5);
 			}
 
+			$cat_query = "SELECT * FROM categories WHERE 1";
+			$run_cat_query = mysqli_query($con,$cat_query);
+			while($row_cat = mysqli_fetch_array($run_cat_query)){
+				if($row_cat['cat_id'] == $pro_cat)
+				{
+					$cat_name = $row_cat['cat_title'];
+					break;
+				}
+			}
+
+			// <div class='product-cat'>
+			// $cat_name
+			// </div>
+
 			echo "
 				<div class='col-6 col-md-4 col-lg-4 col-xl-3'>
 					<div class='product product-2 just-action-icons-sm'>
@@ -137,14 +227,11 @@ if(isset($_POST["getProduct"])){
 
 							<div class='product-action'>
 								<a href='#' pid='$pro_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>
-								<a href='quickView.php' class='btn-product btn-quickview' title='Quick view'><span>quick view</span></a>
 							</div>
 						</figure>
 
 						<div class='product-body'>
-							<div class='product-cat'>
-								<a href='#'>Celeron</a>
-							</div>
+
 							<h3 class='product-title'><a href='#' pid='$pro_id' id='show_product' title='Show product'>$pro_title</a></h3>
 							<div class='product-price'>
 							&#8369;$pro_price
@@ -180,6 +267,7 @@ if(isset($_POST["getProduct"])){
 	$_SESSION['productCount'] = $count;
 	$_SESSION['showingProduct'] = $numOfShowing;
 }
+
 
 if(isset($_POST["getShowingProd"])){
 	echo '<div class="toolbox-info">
@@ -745,7 +833,7 @@ if (isset($_POST["finishCheckoutGcash"])) {
 	$client = new \GuzzleHttp\Client();
 
 	$response = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
-	  'body' => '{"data":{"attributes":{"amount":'.$amount.',"redirect":{"success":"http://localhost/yz-electronics-shop/success.php","failed":"http://localhost/yz-electronics-shop/fail.php"},"type":"gcash","currency":"PHP"}}}',
+	  'body' => '{"data":{"attributes":{"amount":'.$amount.',"redirect":{"success":"http://localhost/yz-electronics-shop/success.php","failed":"http://localhost/yz-electronics-shop/checkout.php"},"type":"gcash","currency":"PHP"}}}',
 	  'headers' => [
 		'accept' => 'application/json',
 		'authorization' => 'Basic cGtfdGVzdF92Q1VQZWpuNnZ1WnRMS0ROeUNOTEN2SGI6c2tfdGVzdF9HZXhWZjdXMVlzZkdvODVmTkVBRXhMU0g=',
@@ -754,9 +842,33 @@ if (isset($_POST["finishCheckoutGcash"])) {
 	]);
 	$data = json_decode($response->getBody(),true);
 	$_SESSION["tx"] = $data['data']['id'];
+	$_SESSION["payment_method"] = "paid";
 	$key_value = $data['data']['attributes']['redirect']['checkout_url'];
 	//header("Refresh:2; url=".$key_value);
 	echo $key_value;
+}
+
+if (isset($_POST["finishCheckoutCOD"])) {
+	$amount = (int)$_POST["total_amount"];
+
+	$trxID = strval(time()) . generateRandomString();
+	$_SESSION["tx"] = $trxID;
+
+	$amount = number_format($amount);
+
+	$_SESSION["payment_method"] = strval($amount).'.00';
+	
+	echo 'http://localhost/yz-electronics-shop/success.php';
+}
+
+function generateRandomString($length = 5) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
 }
 
 
@@ -827,17 +939,18 @@ if(isset($_POST["checkOutCart"]))
 
 if(isset($_POST["showOrders"]))
 {
-    $sql = "SELECT o.order_id, o.product_id, o.qty, o.trx_id, o.p_status, p.product_title, p.product_image, p.product_price FROM orders o JOIN products p ON o.product_id = p.product_id WHERE user_id = '$_SESSION[uid]'";
+    $sql = "SELECT o.order_id, o.product_id, o.qty, o.trx_id, o.order_status, o.payment_status, p.product_title, p.product_image, p.product_price FROM orders o JOIN products p ON o.product_id = p.product_id WHERE user_id = '$_SESSION[uid]'";
 	$query = mysqli_query($con,$sql);
 	if (mysqli_num_rows($query) > 0) {
 		# code...
 		while ($row=mysqli_fetch_array($query)) {
 			$order_id[] = $row["order_id"];
 			$prod_price[] = $row["product_price"];
+			$prod_payment[] = $row["payment_status"];
 			$product_id[] = $row["product_id"];
 			$product_title[] = $row["product_title"];
 			$product_image[] = $row["product_image"];
-			$status[] = $row["p_status"];
+			$status[] = $row["order_status"];
 			$qty[] = $row["qty"];
 		}
 
@@ -854,8 +967,15 @@ if(isset($_POST["showOrders"]))
 							</a>
 						</figure>
 					</td>
-					<td>'.$product_title[$i].'</td>
-					<td>₱'.$total.'.00</td>';
+					<td>'.$product_title[$i].'</td>';
+					if($prod_payment[$i]=="paid")
+					{
+						echo '<td>'.$prod_payment[$i].'</td>';
+					}
+					else
+					{
+						echo '<td>₱'.$prod_payment[$i].'</td>';
+					}
 
 			if($status[$i]=="Delivered")
 			{
@@ -893,7 +1013,7 @@ if(isset($_POST["submitRev"]))
 	$user_id = $_SESSION["uid"];
 	$user_name = $_SESSION["name"];
 
-	$sql = "UPDATE orders SET p_status = 'Completed' WHERE order_id = '$orderID'";
+	$sql = "UPDATE orders SET order_status = 'Completed' WHERE order_id = '$orderID'";
 
 	$result = mysqli_query($con,$sql);
 
@@ -907,6 +1027,41 @@ if(isset($_POST["submitRev"]))
 if(isset($_POST["searchProd"]))
 {
 	$_SESSION['searchEntry'] = $_POST["searchKey"];
+}
+
+
+if(isset($_POST["showCategories"]))
+{
+	$cat_query = "SELECT * FROM categories WHERE 1";
+	$run_cat_query = mysqli_query($con,$cat_query);
+	$i = 1;
+	while($row_cat = mysqli_fetch_array($run_cat_query)){
+		echo '
+		<div class="filter-item">
+			<div class="custom-control custom-checkbox">
+				<input type="radio" class="custom-control-input cat_filter" id="cat-'.$i.'" cat_id="'.$row_cat['cat_id'].'" name="filter-search1">
+				<label class="custom-control-label" for="cat-'.$i.'">'.$row_cat['cat_title'].'</label>
+			</div>
+		</div>';
+		$i++;
+	}
+}
+
+if(isset($_POST["showBrands"]))
+{
+	$cat_query = "SELECT * FROM brands WHERE 1";
+	$run_cat_query = mysqli_query($con,$cat_query);
+	$i = 1;
+	while($row_cat = mysqli_fetch_array($run_cat_query)){
+		echo '
+			<div class="filter-item" >
+				<div class="custom-control custom-checkbox">
+					<input type="radio" class="custom-control-input brand_filter" id="brand-'.$i.'" brand_id="'.$row_cat['brand_id'].'" name="filter-search2">
+					<label class="custom-control-label" for="brand-'.$i.'">'.$row_cat['brand_title'].'</label>
+				</div>
+			</div>';
+		$i++;
+	}
 }
 
 

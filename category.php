@@ -145,55 +145,13 @@
 
 									<div class="collapse show" id="widget-1">
 										<div class="widget-body">
-											<div class="filter-items filter-items-count">
-												<div class="filter-item">
+											<div class="filter-items filter-items-count" id="categories_filter">
+												<!-- <div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-1">
 														<label class="custom-control-label" for="cat-1">Promo</label>
-													</div><!-- End .custom-checkbox -->
-													<span class="item-count">3</span>
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-2">
-														<label class="custom-control-label" for="cat-2">Rental Units</label>
-													</div><!-- End .custom-checkbox -->
-													<span class="item-count">0</span>
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-3">
-														<label class="custom-control-label" for="cat-3">Intel Core</label>
-													</div><!-- End .custom-checkbox -->
-													<span class="item-count">4</span>
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-4">
-														<label class="custom-control-label" for="cat-4">Intel Celeron</label>
-													</div><!-- End .custom-checkbox -->
-													<span class="item-count">2</span>
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-5">
-														<label class="custom-control-label" for="cat-5">For students</label>
-													</div><!-- End .custom-checkbox -->
-													<span class="item-count">2</span>
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="cat-6">
-														<label class="custom-control-label" for="cat-6">For workers</label>
-													</div><!-- End .custom-checkbox -->
-													<span class="item-count">1</span>
-												</div><!-- End .filter-item -->
-
+													</div>
+												</div> -->
 											</div><!-- End .filter-items -->
 										</div><!-- End .widget-body -->
 									</div><!-- End .collapse -->
@@ -208,57 +166,16 @@
 
 									<div class="collapse show" id="widget-4">
 										<div class="widget-body">
-											<div class="filter-items">
-												<div class="filter-item">
+											<div class="filter-items" id="brand_filter">
+												<!-- 
+												<div class="filter-item" >
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="brand-1">
 														<label class="custom-control-label" for="brand-1">NEC</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="brand-2">
-														<label class="custom-control-label" for="brand-2">Toshiba</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="brand-3">
-														<label class="custom-control-label" for="brand-3">HP</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="brand-4">
-														<label class="custom-control-label" for="brand-4">Fujitso</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
+													</div>
+												</div> -->
 
 											</div><!-- End .filter-items -->
-										</div><!-- End .widget-body -->
-									</div><!-- End .collapse -->
-        						</div><!-- End .widget -->
-
-        						<div class="widget widget-collapsible">
-    								<h3 class="widget-title">
-									    <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
-									        Price
-									    </a>
-									</h3><!-- End .widget-title -->
-
-									<div class="collapse show" id="widget-5">
-										<div class="widget-body">
-                                            <div class="filter-price">
-                                                <div class="filter-price-text">
-                                                    Price Range:
-                                                    <span id="filter-price-range"></span>
-                                                </div><!-- End .filter-price-text -->
-
-                                                <div id="price-slider"></div><!-- End #price-slider -->
-                                            </div><!-- End .filter-price -->
 										</div><!-- End .widget-body -->
 									</div><!-- End .collapse -->
         						</div><!-- End .widget -->
