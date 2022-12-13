@@ -1,30 +1,26 @@
 <?php
+
+//connection to database
+require_once "includes/conn.php";
+
+//session
 require "config/constants.php";
 session_start();
-if(isset($_SESSION["uid"])){
-    header("location:profile.php");
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- molla/index-4.html  22 Nov 2019 09:53:08 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>YZ Electronics - Albay Laptops</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Molla - Bootstrap eCommerce Template | YZ Electronics">
-    <meta name="author" content="p-themes">
+    <meta name="keywords" content="YZ Electronics">
+    <meta name="description" content="YZ Electronics">
+    <meta name="author" content="marifebanares-gairuslegaspi">
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="180x180" href="assets/images/logo/yz-logo.ico">
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
-    <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
     <!-- Plugins CSS File -->
@@ -36,15 +32,21 @@ if(isset($_SESSION["uid"])){
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/skins/skin-demo-4.css">
     <link rel="stylesheet" href="assets/css/demos/demo-4.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Bootstrap 5-->
     <!--<link rel="stylesheet" href="assets/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="assets/bootstrap-5.0.2-dist/css/bootstrap.min.css">-->
+    <style>
+    .checked {
+    color: orange;
+    }
+    </style>
 </head>
 
 <body>
     <!--menu-->
     <div class="menu1">
-    <?php include 'header.php';?>
+        <?php include 'includes/header.php';?>
     </div>
     <!-- End of menu-->
 
@@ -77,7 +79,7 @@ if(isset($_SESSION["uid"])){
                                     </div><!-- End .intro-price -->
 
                                     <a href="category.php" class="btn btn-primary btn-round">
-                                        <span>Shop More</span>
+                                        <span>Shop Now!</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
                                 </div><!-- End .col-lg-11 offset-lg-1 -->
@@ -100,7 +102,7 @@ if(isset($_SESSION["uid"])){
                                     </div><!-- End .intro-price -->
 
                                     <a href="category.php" class="btn btn-primary btn-round">
-                                        <span>Shop More</span>
+                                        <span>Shop Now!</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
                                 </div><!-- End .col-md-6 offset-md-6 -->
@@ -135,6 +137,9 @@ if(isset($_SESSION["uid"])){
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="new-phones-link" data-toggle="tab" href="#new-phones-tab" role="tab" aria-controls="new-phones-tab" aria-selected="false">HP</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="new-phones-link" data-toggle="tab" href="#new-laptops-tab" role="tab" aria-controls="new-laptops-tab" aria-selected="false">Fujitso</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="new-watches-link" data-toggle="tab" href="#new-watches-tab" role="tab" aria-controls="new-watches-tab" aria-selected="false">Core</a>
@@ -172,214 +177,62 @@ if(isset($_SESSION["uid"])){
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                    </a>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_tag = :tag";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':tag' => 'Featured-ALL'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_category = $posts['product_cat'];?>
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "
+                                                <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                                    <img src='$product_images' alt='Product image' class='product-image'>
+                                                </a>";
+                                                ?>
+                                            </a>
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Celeron</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 3855U</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                            <div class="product-action">
+                                                <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
 
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product2.jpg" alt="Product image" class="product-image">
-                                    </a>
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><?php echo"<a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title";?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">HP Intel Corei5 5300U 8GB RAM/120GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;13,600.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 6 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Celeron</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 4GB RAM/250 GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,800.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <!--<span class="product-label label-circle label-sale">Sale</span>-->
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Corei5 4GB RAM/120GB m.2 SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        &#8369;9,500.00
-                                        <!--<span class="new-price">&#8369;9,500.00</span>-->
-                                        <!--<span class="old-price">Was $41.67</span>-->
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 10 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product6.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Fujitso Intel Corei5 8GB RAM/240GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;20,000.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 5 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <!--<span class="product-label label-circle label-top">Top</span>-->
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product5.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Toshiba Intel Corei3 8GB RAM/256GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;11,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
+
                     <div class="tab-pane p-0 fade" id="new-tv-tab" role="tabpanel" aria-labelledby="new-tv-link">
                         <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                             data-owl-options='{
@@ -405,110 +258,58 @@ if(isset($_SESSION["uid"])){
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                    </a>
+                            
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_brand = :brand";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':brand' => '1'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_brand = $posts['product_brand'];?>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                            </a>
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 3855U</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
 
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 4GB RAM/250 GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,800.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Corei5 4GB RAM/120GB m.2 SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 10 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
+
                     <div class="tab-pane p-0 fade" id="new-computers-tab" role="tabpanel" aria-labelledby="new-computers-link">
                         <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                             data-owl-options='{
@@ -534,42 +335,58 @@ if(isset($_SESSION["uid"])){
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product5.jpg" alt="Product image" class="product-image">
-                                    </a>
+                            
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_brand = :brand";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':brand' => '2'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_brand = $posts['product_brand'];?>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                            </a>
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Toshiba</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Toshiba Intel Corei3 8GB RAM/256GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;11,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
+
                     <div class="tab-pane p-0 fade" id="new-phones-tab" role="tabpanel" aria-labelledby="new-phones-link">
                         <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                             data-owl-options='{
@@ -595,41 +412,135 @@ if(isset($_SESSION["uid"])){
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product2.jpg" alt="Product image" class="product-image">
-                                    </a>
+                            
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_brand = :brand";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':brand' => '3'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_brand = $posts['product_brand'];?>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                            </a>
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">HP</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">HP Intel Corei5 5300U 8GB RAM/120GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;13,600.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 6 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
+
+                    <div class="tab-pane p-0 fade" id="new-laptops-tab" role="tabpanel" aria-labelledby="new-laptops-link">
+                        <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                            data-owl-options='{
+                                "nav": true, 
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1200": {
+                                        "items":5
+                                    }
+                                }
+                            }'>
+                            
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_brand = :brand";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':brand' => '4'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_brand = $posts['product_brand'];?>
+
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                            </a>
+
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
+
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
+
+                        </div><!-- End .owl-carousel -->
+                    </div><!-- .End .tab-pane -->
+
                     <div class="tab-pane p-0 fade" id="new-watches-tab" role="tabpanel" aria-labelledby="new-watches-link">
                         <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                             data-owl-options='{
@@ -656,341 +567,53 @@ if(isset($_SESSION["uid"])){
                                 }
                             }'>
                             
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_cat = :category";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':category' => '2'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_brand = $posts['product_brand'];?>
 
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                    </a>
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                            </a>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Celeron</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 3855U</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product2.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">HP Intel Corei5 5300U 8GB RAM/120GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;13,600.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 6 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Celeron</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 4GB RAM/250 GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,800.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <!--<span class="product-label label-circle label-sale">Sale</span>-->
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Corei5 4GB RAM/120GB m.2 SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        &#8369;9,500.00
-                                        <!--<span class="new-price">&#8369;9,500.00</span>-->
-                                        <!--<span class="old-price">Was $41.67</span>-->
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 10 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product6.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Intel Corei5 8GB RAM/240GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;20,000.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 5 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product5.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Core</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Toshiba Intel Corei3 8GB RAM/256GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;11,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .owl-carousel -->
-                    </div><!-- .End .tab-pane -->
-                    <div class="tab-pane p-0 fade" id="new-tv-tab" role="tabpanel" aria-labelledby="new-tv-link">
-                        <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                            data-owl-options='{
-                                "nav": true, 
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1200": {
-                                        "items":5
-                                    }
-                                }
-                            }'>
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 3855U</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 4GB RAM/250 GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,800.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Corei5 4GB RAM/120GB m.2 SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 10 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
@@ -1020,333 +643,64 @@ if(isset($_SESSION["uid"])){
                                     }
                                 }
                             }'>
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                    </a>
+                            <?php 
+                                $sql = "SELECT * FROM products WHERE product_cat = :category";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([
+                                    ':category' => '3'
+                                ]);
+                                while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_title = $posts['product_title'];
+                                    $product_price = $posts['product_price'];
+                                    $product_images = 'assets/images/products/'.$posts['product_image'];
+                                    $product_brand = $posts['product_brand'];?>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                    <div class="product product-2">
+                                        <figure class="product-media">
+                                            <!--<span class="product-label label-circle label-top">Top</span>-->
+                                            <a href="product.php">
+                                                <?php echo "<img src='$product_images' alt='Product image' class='product-image'>" ?>
+                                            </a>
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                            <!--<div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                            </div>--><!-- End .product-action -->
 
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 3855U</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
 
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 4GB RAM/250 GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,800.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><?php echo $product_category; ?></a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="product.php"><?php echo $product_title; ?></a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                            &#8369;<?php echo $product_price; ?>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( 4 Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                <?php } 
+                                ?>
 
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
 
             <div class="mb-6"></div><!-- End .mb-6 -->
 
-            <div class="container">
-                <div class="cta cta-border mb-5" style="background-image: url(assets/images/demos/demo-4/bg-4.jpg);">
-                    <img src="assets/images/demos/demo-4/laptop.png" alt="camera" class="cta-img">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="cta-content">
-                                <div class="cta-text text-right text-white">
-                                    <p>Need a laptop? <br><strong>YZ Electronics is here to serve you.</strong></p>
-                                </div><!-- End .cta-text -->
-                                <a href="category.php" class="btn btn-primary btn-round"><span>Get yours now for only &#8369; 8,500</span><i class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .cta-content -->
-                        </div><!-- End .col-md-12 -->
-                    </div><!-- End .row -->
-                </div><!-- End .cta -->
-            </div><!-- End .container -->
-
-
-                                <div class="tab-pane p-0 fade" id="trending-best-tab" role="tabpanel" aria-labelledby="trending-best-link">
-                                    <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                                        data-owl-options='{
-                                            "nav": true, 
-                                            "dots": false,
-                                            "margin": 20,
-                                            "loop": false,
-                                            "responsive": {
-                                                "0": {
-                                                    "items":2
-                                                },
-                                                "480": {
-                                                    "items":2
-                                                },
-                                                "768": {
-                                                    "items":3
-                                                },
-                                                "992": {
-                                                    "items":4
-                                                }
-                                            }
-                                        }'>
-                                        <div class="product product-2">
-                                            <figure class="product-media">
-                                                <span class="product-label label-circle label-new">New</span>
-                                                <a href="product.php">
-                                                    <img src="assets/images/demos/demo-4/products/product-3.jpg" alt="Product image" class="product-image">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                                </div><!-- End .product-action -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">Tablets</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="product.php">Apple - 11 Inch iPad Pro  with Wi-Fi 256GB </a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    $899.99
-                                                </div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( 4 Reviews )</span>
-                                                </div><!-- End .rating-container -->
-
-                                                <div class="product-nav product-nav-dots">
-                                                    <a href="#" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
-                                                    <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                                                    <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                                </div><!-- End .product-nav -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-2">
-                                            <figure class="product-media">
-                                                <a href="product.php">
-                                                    <img src="assets/images/demos/demo-4/products/product-2.jpg" alt="Product image" class="product-image">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                                </div><!-- End .product-action -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">Audio</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="product.php">Bose - SoundLink Bluetooth Speaker</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    $79.99
-                                                </div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( 6 Reviews )</span>
-                                                </div><!-- End .rating-container -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-2">
-                                            <figure class="product-media">
-                                                <span class="product-label label-circle label-top">Top</span>
-                                                <span class="product-label label-circle label-sale">Sale</span>
-                                                <a href="product.php">
-                                                    <img src="assets/images/demos/demo-4/products/product-4.jpg" alt="Product image" class="product-image">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                                </div><!-- End .product-action -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">Cell Phone</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="product.php">Google - Pixel 3 XL  128GB</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    <span class="new-price">$35.41</span>
-                                                    <span class="old-price">Was $41.67</span>
-                                                </div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( 10 Reviews )</span>
-                                                </div><!-- End .rating-container -->
-
-                                                <div class="product-nav product-nav-dots">
-                                                    <a href="#" class="active" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
-                                                    <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                                                    <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                                </div><!-- End .product-nav -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-2">
-                                            <figure class="product-media">
-                                                <span class="product-label label-circle label-top">Top</span>
-                                                <a href="product.php">
-                                                    <img src="assets/images/demos/demo-4/products/product-5.jpg" alt="Product image" class="product-image">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                                </div><!-- End .product-action -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">TV & Home Theater</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="product.php">Samsung - 55" Class  LED 2160p Smart</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    $899.99
-                                                </div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( 5 Reviews )</span>
-                                                </div><!-- End .rating-container -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-2">
-                                            <figure class="product-media">
-                                                <span class="product-label label-circle label-top">Top</span>
-                                                <a href="product.php">
-                                                    <img src="assets/images/demos/demo-4/products/product-1.jpg" alt="Product image" class="product-image">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                                </div><!-- End .product-action -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">Laptops</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="product.php">MacBook Pro 13" Display, i5</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    $1,199.99
-                                                </div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( 4 Reviews )</span>
-                                                </div><!-- End .rating-container -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-                                    </div><!-- End .owl-carousel -->
-                                </div><!-- .End .tab-pane -->
-                                <div class="tab-pane p-0 fade" id="trending-sale-tab" role="tabpanel" aria-labelledby="trending-sale-link">
-                                    <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                                        data-owl-options='{
-                                            "nav": true, 
-                                            "dots": false,
-                                            "margin": 20,
-                                            "loop": false,
-                                            "responsive": {
-                                                "0": {
-                                                    "items":2
-                                                },
-                                                "480": {
-                                                    "items":2
-                                                },
-                                                "768": {
-                                                    "items":3
-                                                },
-                                                "992": {
-                                                    "items":4
-                                                }
-                                            }
-                                        }'>
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-                                    </div><!-- End .owl-carousel -->
-                                </div><!-- .End .tab-pane -->
-                            </div><!-- End .tab-content -->
-                        </div><!-- End .col-xl-4-5col -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .bg-light pt-5 pb-6 -->
+            <div class="page-header text-center" style="background-image: url('assets/images/demos/demo-4/bg-7.jpg')">
+        		<div class="container">
+        			<h1 class="page-title"><p class="text-white" style="font-size: 18px;">Need a laptop? <br><strong>YZ Electronics is here to serve you.</strong></p></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
 
             <div class="mb-5"></div><!-- End .mb-5 -->
 
@@ -1358,37 +712,55 @@ if(isset($_SESSION["uid"])){
                     </div><!-- End .heading-left -->
 
                    <div class="heading-right">
-                        <a href="#" class="title-link">View All Recommendations <i class="icon-long-arrow-right"></i></a>
+                        <a href="category.php" class="title-link">View All Recommendations <i class="icon-long-arrow-right"></i></a>
                    </div><!-- End .heading-right -->
                 </div><!-- End .heading -->
 
                 <div class="products">
-                    <div class="row justify-content-center">
+                <div class="row justify-content-center">
+
+                <?php 
+                   $sql = "SELECT * FROM products WHERE product_tag2 = :tag";
+                   $stmt = $pdo->prepare($sql);
+                   $stmt->execute([
+                       ':tag' => 'Recommended'
+                   ]);
+                   while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        $product_id = $posts['product_id'];
+                       $product_title = $posts['product_title'];
+                       $product_price = $posts['product_price'];
+                       $product_images = 'assets/images/products/'.$posts['product_image'];
+                       $product_brand = $posts['product_brand'];?>
+
                         <div class="col-6 col-md-4 col-lg-3">
                             <div class="product product-2">
                                 <figure class="product-media">
-                                    <span class="product-label label-circle label-sale">Sale</span>
+                                    <!--<span class="product-label label-circle label-top">Top</span>-->
                                     <a href="product.php">
-                                        <img src="assets/images/products/product6.jpg" alt="Product image" class="product-image">
+                                        <?php echo "
+                                        <a href='#' pid='$product_id' id='show_product' title='Show product'>
+                                            <img src='$product_images' alt='Product image' class='product-image'>
+                                        </a>";
+                                        ?>
                                     </a>
 
-                                    <div class="product-action-vertical">
+                                    <!--<div class="product-action-vertical">
                                         <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
+                                    </div>--><!-- End .product-action -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                        <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
                                         <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="#">Fujitso</a>
+                                        <a href="#"><?php echo $product_category; ?></a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Fujitso Intel Corei5 8GB RAM/240GB SSD</a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><?php echo"<a href='#' pid='$product_id' id='show_product' title='Show product'>$product_title";?></a></h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        &#8369;20,000.00
+                                    &#8369;<?php echo $product_price; ?>
                                         <!--<span class="new-price">$279.99</span>
                                         <span class="old-price">Was $349.99</span>-->
                                     </div><!-- End .product-price -->
@@ -1401,260 +773,7 @@ if(isset($_SESSION["uid"])){
                                 </div><!-- End .product-body -->
                             </div><!-- End .product -->
                         </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product4.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Corei5 4GB RAM/120GB m.2 SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 10 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-new">New</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product1.jpg" alt="Product image" class="product-image">
-                                        <!--<img src="assets/images/demos/demo-4/products/product-12-2.jpg" alt="Product image" class="product-image-hover">-->
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.php" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 3855U 4GB DDR3/500 GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;9,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product5.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Toshiba</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Toshiba Intel Corei3 8GB RAM/256GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="out-price">&#8369;11,500.00</span>
-                                        <span class="out-text">Out Of Stock</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product2.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">HP</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">HP Intel Corei5 5300U 8GB RAM/120GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;13,600.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 6 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product3.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">NEC</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">NEC Intel Celeron 4GB RAM/250GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,800.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-sale">Sale</span>
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product7.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">HP</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">HP Intel Corei5 8GB RAM/120GB SSD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        &#8369;13,600.00
-                                        <!--<span class="new-price">$99.99</span>
-                                        <span class="old-price">Was $129.99</span>-->
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product product-2">
-                                <figure class="product-media">
-                                    <a href="product.php">
-                                        <img src="assets/images/products/product8.jpg" alt="Product image" class="product-image">
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                                    </div><!-- End .product-action -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <div class="product-cat">
-                                        <a href="#">Fujitso</a>
-                                    </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.php">Fujitsu Intel Celeron 4GB RAM/250GB HDD</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                    &#8369;5,500.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                         <?php }?>
                     </div><!-- End .row -->
                 </div><!-- End .products -->
             </div><!-- End .container -->
@@ -1665,87 +784,33 @@ if(isset($_SESSION["uid"])){
                 <hr class="mb-0">
             </div><!-- End .container -->
             <!--------------------------------------------------------->
+
+            <!--<div>
+                <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FYzElectronics%2Fvideos%2F787974805820191%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>-->
             
-            <!-----------------Additional Info------------------------>
-            <div class="icon-boxes-container bg-transparent">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-rocket"></i>
-                                </span>
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
-                                    <p>Orders $50 or more</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-rotate-left"></i>
-                                </span>
-
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Free Returns</h3><!-- End .icon-box-title -->
-                                    <p>Within 30 days</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-info-circle"></i>
-                                </span>
-
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Get 20% Off 1 Item</h3><!-- End .icon-box-title -->
-                                    <p>when you sign up</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-life-ring"></i>
-                                </span>
-
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">We Support</h3><!-- End .icon-box-title -->
-                                    <p>24/7 amazing services</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .icon-boxes-container -->
         </main><!-- End .main -->
         <!--------------------------------------------->
 
     <!--Footer-->
     <div class="footer">
-    <?php include 'footer.php';?>
+        <?php include 'includes/footer.php';?>
     </div>
     <!------------------------------------------------------------------->
     
     <!-------- Mobile Menu ------->
     <div class="mobile-menu">
-        <?php include 'mobile-nav.php';?>
+        <?php include 'includes/mobile-nav.php';?>
     </div>
     <!----------------------------------------------------------->
 
-    
-    
     <!-- Plugins JS File -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.hoverIntent.min.js"></script>
     <script src="assets/js/jquery.waypoints.min.js"></script>
     <script src="assets/js/superfish.min.js"></script>
+    <script src="assets/js/automatic-slider.js"></script>
     <script src="assets/js/owl.carousel.min.js"></script>
     <script src="assets/js/bootstrap-input-spinner.js"></script>
     <script src="assets/js/jquery.plugin.min.js"></script>
@@ -1755,7 +820,4 @@ if(isset($_SESSION["uid"])){
     <script src="assets/js/main.js"></script>
     <script src="assets/js/demos/demo-4.js"></script>
 </body>
-
-
-<!-- molla/index-4.html  22 Nov 2019 09:54:18 GMT -->
 </html>

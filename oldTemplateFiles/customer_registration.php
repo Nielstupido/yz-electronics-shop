@@ -101,8 +101,8 @@ if (isset($_GET["register"])) {
 							</div>
 						</div>
 						
-					</div>
 					</form>
+					</div>
 					<div class="panel-footer"></div>
 				</div>
 			</div>
