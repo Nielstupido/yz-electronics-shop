@@ -16,7 +16,7 @@ class Customers
 	}
 
 	public function getCustomers(){
-		$query = $this->con->query("SELECT `user_id`, `first_name`, `last_name`, `email`, `mobile`, `address1`, `address2` FROM `user_info`");
+		$query = $this->con->query("SELECT `user_id`, `first_name`, `last_name`, `email`, `mobile`, `brgy` FROM `user_info`");
 		$ar = [];
 		if (@$query->num_rows > 0) {
 			while ($row = $query->fetch_assoc()) {

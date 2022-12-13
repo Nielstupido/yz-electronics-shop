@@ -23,7 +23,7 @@ $(document).ready(function(){
 												'<td>'+value.first_name+' '+value.last_name+'</td>'+
 												'<td>'+value.email+'</td>'+
 												'<td>'+value.mobile+'</td>'+
-												'<td>'+value.address1+'<br>'+value.address2+'</td>'+
+												'<td>'+value.brgy+'</td>'+
 									       '</tr>';
 
 					});
