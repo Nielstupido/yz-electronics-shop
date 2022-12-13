@@ -1,12 +1,10 @@
 <?php
-	require_once "includes/conn.php";
-
-	include "db.php";
-
     session_start();
 	if(!isset($_SESSION["uid"])){
 		header("location:index.php");
 	}
+	require_once "includes/conn.php";
+	include "db.php";
 
 	$sql = "SELECT * FROM user_info WHERE user_id = '$_SESSION[uid]'";
 	$query = mysqli_query($con,$sql);
@@ -30,7 +28,7 @@
 <head>
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name=";viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>YZ Electronics - Albay Laptops</title>
     <meta name="keywords" content="YZ Electronics">
     <meta name="description" content="YZ Electronics">
@@ -127,10 +125,7 @@
 								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
-									</li>
-									<li class="nav-item">
-								        <a class="nav-link" id="tab-message-link" data-toggle="tab" href="#tab-message" role="tab" aria-controls="tab-message" aria-selected="false">Messages</a>
-									</li>
+								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link" href="logout.php">Sign Out</a>
 								    </li>
@@ -157,7 +152,7 @@
 										}
 									?>
 								    
-								    	<p>Hi, <strong><?php echo $_SESSION["name"]; ?></strong>
+								    	<p>Hi, <strong><?php echo $userName. ' ' .$userLname; ?></strong>
 								    	<br>
 								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
 								    </div><!-- .End .tab-pane -->
@@ -189,7 +184,7 @@
 												<th>Order Qty</th>
 												<th>Order Image</th>
 												<th>Order Title</th>
-												<th>Payment</th>
+												<th>Order Total</th>
 												<th>Order Status</th>
 												</tr>
 											</thead>
@@ -202,69 +197,69 @@
 
 								    </div><!-- .End .tab-pane -->
 
+										<?php 
 
-									<?php 
-										if(isset($_COOKIE['uid'])) {
-											$userId = base64_decode($_COOKIE['uid']);
-										} else if(isset($_SESSION['uid'])) {
-											$userId = $_SESSION['uid'];
-										} else {
-											$userId = -1;
-										}
-										$sql = "SELECT * FROM user_info WHERE user_id = :user_id";
-										$stmt = $pdo->prepare($sql);
-										$stmt->execute([
-											':user_id' => $userId
-										]);
-										$user = $stmt->fetch(PDO::FETCH_ASSOC);
-										$user_fname = $user['first_name'];
-										$user_lname = $user['last_name'];
-										$user_email = $user['email'];
-										$user_password = md5($user['password']);
-										$user_no = $user['mobile'];
-										$user_address1 = $user['house_num_street'];
-										$user_address2 = $user['brgy'];
-										$user_city_mun = $user['city_mun'];
-										$user_prov = $user['province'];
-										$user_zip_code = $user['zip_code'];
+										    if(isset($_COOKIE['uid'])) {
+										        $userId = base64_decode($_COOKIE['uid']);
+										    } else if(isset($_SESSION['uid'])) {
+										        $userId = $_SESSION['uid'];
+										    } else {
+										        $userId = -1;
+										    }
+										    $sql = "SELECT * FROM user_info WHERE user_id = :user_id";
+										    $stmt = $pdo->prepare($sql);
+										    $stmt->execute([
+										        ':user_id' => $userId
+										    ]);
+										    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+										    $user_fname = $user['first_name'];
+										    $user_lname = $user['last_name'];
+										    $user_email = $user['email'];
+										    $user_password = md5($user['password']);
+										    $user_no = $user['mobile'];
+											$user_address1 = $user['house_num_street'];
+											$user_address2 = $user['brgy'];
+											$user_city_mun = $user['city_mun'];
+											$user_prov = $user['province'];
+											$user_zip_code = $user['zip_code'];
 										?>
 
 										<?php 
-										if(isset($_POST['submit'])) {
-											$user_fname = $_POST['user-fname'];
-											$user_lname = $_POST['user-lname'];
-											$user_email = $_POST['user-email'];
-											$user_password = md5($_POST['user-pass']);
-											$user_no = $_POST['user-number'];
-											$user_address1 = $_POST['house-num-street'];
-											$user_address2 = $_POST['user-brgy'];
-											$user_city_mun = $_POST['city-mun'];
-											$user_prov = $_POST['user-prov'];
-											$user_zip_code = $_POST['user-zip-code'];
+										    if(isset($_POST['submit'])) {
+										        $user_fname = $_POST['user-fname'];
+										        $user_lname = $_POST['user-lname'];
+										        $user_email = $_POST['user-email'];
+										        $user_password = md5($_POST['user-pass']);
+										        $user_no = $_POST['user-number'];
+										        $user_address1 = $_POST['house-num-street'];
+										        $user_address2 = $_POST['user-brgy'];
+										        $user_city_mun = $_POST['city-mun'];
+										        $user_prov = $_POST['user-prov'];
+										        $user_zip_code = $_POST['user-zip-code'];
 
-											$sql = "UPDATE user_info SET first_name='$user_fname', last_name='$user_lname', email='$user_email', password='$user_password', mobile='$user_no', house_num_street='$user_address1', brgy='$user_address2', city_mun='$user_city_mun', province='$user_prov', zip_code='$user_zip_code'
-												WHERE user_id = '$_SESSION[uid]'";
+												$sql = "UPDATE user_info SET first_name='$user_fname', last_name='$user_lname', email='$user_email', password='$user_password', mobile='$user_no', house_num_street='$user_address1', brgy='$user_address2', city_mun='$user_city_mun', province='$user_prov', zip_code='$user_zip_code'
+													WHERE user_id = '$_SESSION[uid]'";
 
-											if(mysqli_query($con,$sql))
-											{
-												//$userName = $user_fname;
-												echo "<meta http-equiv='refresh' content='0'>";
-												// header("Location: dashboard.php");
-											}
+												if(mysqli_query($con,$sql))
+												{
+													//$userName = $user_fname;
+													 echo "<meta http-equiv='refresh' content='0'>";
+													// header("Location: dashboard.php");
+												}
 
-											// $sql = "UPDATE user_info SET first_name = :user_fname, last_name = :user_lname, email = :user_email, address1 = :user_address1,
-											// address2 = :address1 WHERE user_id =:user_id";
-											// $stmt = $pdo->prepare($sql);
-											// $stmt->execute([
-											//     ':first_name' => $user_fname,
-											//     ':last_name' => $user_lname,
-											//     ':email' => $user_email,
-											//     ':address1' => $user_address1,
-											//     ':address1' => $address1,
-											//     ':user_id' => $userId
-											// ]);
-										}
-									?>
+										        // $sql = "UPDATE user_info SET first_name = :user_fname, last_name = :user_lname, email = :user_email, address1 = :user_address1,
+										        // address2 = :address1 WHERE user_id =:user_id";
+										        // $stmt = $pdo->prepare($sql);
+										        // $stmt->execute([
+										        //     ':first_name' => $user_fname,
+										        //     ':last_name' => $user_lname,
+										        //     ':email' => $user_email,
+										        //     ':address1' => $user_address1,
+										        //     ':address1' => $address1,
+										        //     ':user_id' => $userId
+										        // ]);
+										    }
+										?>
 
 								    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
 								    	<p>The following addresses will be used on the checkout page by default.</p>
@@ -274,106 +269,61 @@
 								    			<div class="card card-dashboard">
 								    				<div class="card-body">
 								    					<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
-								    						<?php echo $concatAdd1; ?>,  <?php echo $concatAdd2; ?><br></p>
+								    						<p><b>Full Name</b>:  <?php echo $userName; ?> <?php echo $userLname; ?><br>
+								    						   <b>Email</b>:  <?php echo $userMail; ?><br>
+								    						   <b>Contact Number</b>:  <?php echo $userNo; ?><br>
+								    						   <b>Address</b>:  <?php echo $concatAdd1; ?>,  <?php echo $concatAdd2; ?><br></p>
 								    				</div><!-- End .card-body -->
 								    			</div><!-- End .card-dashboard -->
 								    		</div><!-- End .col-lg-6 -->
 
-											<div class="col-lg-12">
-												<div class="card card-dashboard">
-													<div class="card-body">
-														<h3 class="card-title">Edit Your Address Here</h3>
+								    <div class="col-lg-12">
+								    	<div class="card card-dashboard">
+								    	<div class="card-body">
+								    		<h3 class="card-title">Edit Your Address Here</h3>
 
-														<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">			
-														<div class="row">
-															<div class="col-sm-6">
-																<label>House No. / Street*</label>
-																<input type="text" name="house-num-street" id="house-num-street" value="<?php echo $user_address1; ?>" class="form-control">
-															</div>
-												
-															<div class="col-sm-6">
-																<label>Barangay *</label>
-																<input type="text" name="user-brgy" id="user-brgy" value="<?php echo $user_address2; ?>" class="form-control">
-															</div>
+								    		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">			
+											<div class="row">
+		        								<div class="col-sm-6">
+		        									<label>House No. / Street*</label>
+		        									<input type="text" name="house-num-street" id="house-num-street" value="<?php echo $user_address1; ?>" class="form-control">
+		        								</div>
+		        							
+		        								<div class="col-sm-6">
+		        									<label>Barangay *</label>
+		        									<input type="text" name="user-brgy" id="user-brgy" value="<?php echo $user_address2; ?>" class="form-control">
+		        								</div>
 
-															<div class="col-sm-5">
-																<label>City / Municipality *</label>
-																<input type="text" name="city-mun" id="city-mun" value="<?php echo $user_city_mun; ?>" class="form-control">
-															</div>
+		        								<div class="col-sm-5">
+		        									<label>City / Municipality *</label>
+		        									<input type="text" name="city-mun" id="city-mun" value="<?php echo $user_city_mun; ?>" class="form-control">
+		        								</div>
 
-															<div class="col-sm-4">
-																<label>Province *</label>
-																<input type="text" name="user-prov" id="user-prov" value="<?php echo $user_prov; ?>" class="form-control">
-															</div>
+		        								<div class="col-sm-4">
+		        									<label>Province *</label>
+		        									<input type="text" name="user-prov" id="user-prov" value="<?php echo $user_prov; ?>" class="form-control">
+		        								</div>
 
-															<div class="col-sm-3">
-																<label>Zip Code *</label>
-																<input type="text" name="user-zip-code" id="user-zip-code" value="<?php echo $user_zip_code; ?>" class="form-control">
-															</div>		        		
+		        								<div class="col-sm-3">
+		        									<label>Zip Code *</label>
+		        									<input type="text" name="user-zip-code" id="user-zip-code" value="<?php echo $user_zip_code; ?>" class="form-control">
+		        								</div>		        		
 
-														</div>
-													</div>
-												</div>
+								    		</div>
+								    	</div>
+								    		</div>
 
-												<button type="submit" name="submit" class="btn btn-outline-primary-2">
-													<span>SAVE CHANGES</span>
-													<i class="icon-long-arrow-right"></i>
-												</button>
+								    		<button type="submit" name="submit" class="btn btn-outline-primary-2">
+			                					<span>SAVE CHANGES</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
 
-								    		</div><!-- End .row -->
+								    </div><!-- End .row -->
 								    	</div><!-- .End .tab-pane -->
 									</div>
 
-									<div class="tab-pane fade" id="tab-message" role="tabpanel" aria-labelledby="tab-message-link">
-								    	<p>Hi, <strong><?php echo $_SESSION["name"]; ?></strong>
-								    	<br>
-								    	You can view your sent messages and replies here.
-                                        <?php
 
-											if(isset($_COOKIE['uid']) || isset($_COOKIE['_uiid_']) || isset($_SESSION['uid'])) { 
-												if(isset($_COOKIE['uid'])) {
-													$user_id = base64_decode($_COOKIE['uid']);
-												} else if(isset($_SESSION['uid'])) {
-													$user_id = $_SESSION['uid'];
-												} else {
-													$user_id = -1;
-												}
-												$sql = "SELECT * FROM user_info WHERE user_id = :id";
-												$stmt = $pdo->prepare($sql);
-												$stmt->execute([
-													':id' => $user_id
-												]);
-												$user = $stmt->fetch(PDO::FETCH_ASSOC);
-												$user_name = $user['first_name'];
-												$user_email = $user['email'];
-											}
-                                        ?>
-										<table class="table table-bordered table-hover mt-5" id="dataTable" width="100%" cellspacing="0">
-											<thead>
-												<tr >
-													<th class="p-4">Your messages:</th>
-													<th class="p-4">Answers:</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php 
-													$sql1 = "SELECT * FROM messages WHERE ms_useremail = :email";
-													$stmt1 = $pdo->prepare($sql1);
-													$stmt1->execute([
-														':email' => $user_email
-													]);
-													while($ms = $stmt1->fetch(PDO::FETCH_ASSOC)) {
-														$ms_detail = $ms['ms_detail'];
-														$reply = $ms['reply']; ?>
-														<tr>
-														<td class="p-4"><?php echo $ms_detail; ?></td>
-														<td class="p-4"><?php echo $reply; ?></td>
-														</tr>
-													<?php }                                                  
-												?>
-											</tbody>
-                                    	</table>
-								    </div><!-- .End .tab-pane -->
+
 
 								    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
 								    	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -393,7 +343,7 @@
 		        							<input type="email" name="user-email" id="user-email" value="<?php echo $user_email; ?>" class="form-control">
 
 		        							<label>Change Password *</label>
-		        							<input type="password" name="user-pass" id="user-pass" value="<?php echo '*'; ?>" class="form-control">
+		        							<input type="password" name="user-pass" id="user-pass" value="<?php echo $user_password; ?>" class="form-control">
 
 		        							<label>Contact Number*</label>
 		        							<input type="text" name="user-number" id="user-number" value="<?php echo $user_no; ?>" class="form-control">
@@ -404,7 +354,6 @@
 			                				</button>
 			                			</form>
 								    </div><!-- .End .tab-pane -->
-									
 								</div>
 	                		</div><!-- End .col-lg-9 -->
 	                	</div><!-- End .row -->

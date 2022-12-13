@@ -98,31 +98,15 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <label for="address1">House No. / Street</label>
-                                                <input type="text" id="house_num_street" name="house_num_street"class="form-control" required>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label for="address1">Barangay</label>
-                                                <input type="text" id="brgy" name="brgy"class="form-control" required>
+                                            <div class="col-md-12">
+                                                <label for="address1">Address 1</label>
+                                                <input type="text" id="address1" name="address1"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="address1">City / Municipality</label>
-                                                <input type="text" id="city_mun" name="city_mun"class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label for="address2">Province</label>
-                                                <input type="text" id="province" name="province"class="form-control" required>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label for="address2">Zip Code</label>
-                                                <input type="text" id="zip_code" name="zip_code"class="form-control" required>
+                                                <label for="address2">Address 2</label>
+                                                <input type="text" id="address2" name="address2"class="form-control" required>
                                             </div>
                                         </div>
                                         <p><br/></p>
