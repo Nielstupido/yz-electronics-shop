@@ -37,21 +37,22 @@
                                     </div>
                                     <form onsubmit="return false" id="login">
                                         <div class="form-group">
-                                            <label for="email">Email</label>
+                                            <label for="email" class="text-dark">Email</label>
 							                <input type="email" class="form-control" name="email" id="email" required/>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
-                                            <label for="email">Password</label>
+                                            <label for="email" class="text-dark">Password</label>
 							                <input type="password" class="form-control" name="password" id="password" required/>
                                         </div><!-- End .form-group -->
 
-                                        <div class="form-footer">
-                                            <button type="submit" class="btn btn-outline-primary-2" Value="Login">
+                                        <div class="m-5"></div>
+
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-primary p-3" Value="Login">
                                                 <span>LOG IN</span>
-                                                <i class="icon-long-arrow-right"></i>
                                             </button>
-                                        </div><!-- End .form-footer -->
+                                        </div>
                                     </form>
                                 </div><!-- .End .tab-pane -->
                                 <div class="row">
@@ -65,55 +66,54 @@
                                     <form id="signup_form" onsubmit="return false">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label for="f_name">First Name</label>
+                                                <label for="f_name" class="text-dark">First Name</label>
                                                 <input type="text" id="f_name" name="f_name" class="form-control" required>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="f_name">Last Name</label>
+                                                <label for="f_name" class="text-dark">Last Name</label>
                                                 <input type="text" id="l_name" name="l_name"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="email">Email</label>
+                                                <label for="email" class="text-dark">Email</label>
                                                 <input type="text" id="email" name="email"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="password">Password</label>
+                                                <label for="password" class="text-dark">Password</label>
                                                 <input type="password" id="password" name="password"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="repassword">Confirm Password</label>
+                                                <label for="repassword" class="text-dark">Confirm Password</label>
                                                 <input type="password" id="repassword" name="repassword"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="mobile">Contact Number</label>
+                                                <label for="mobile" class="text-dark">Contact Number</label>
                                                 <input type="text" id="mobile" name="mobile"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="address1">Address 1</label>
+                                                <label for="address1" class="text-dark">Address 1</label>
                                                 <input type="text" id="address1" name="address1"class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label for="address2">Address 2</label>
+                                                <label for="address2" class="text-dark">Address 2</label>
                                                 <input type="text" id="address2" name="address2"class="form-control" required>
                                             </div>
                                         </div>
                                         <p><br/></p>
-                                        <div class="form-footer">
-                                            <button name="signup_button" value="Sign Up" type="submit" class="btn btn-outline-primary-2">
+                                        <div class="d-flex justify-content-center">
+                                            <button name="signup_button" value="Sign Up" type="submit" class="btn btn-primary p-3">
                                                 <span>SIGN UP</span>
-                                                <i class="icon-long-arrow-right"></i>
                                             </button>
                                         </div><!-- End .form-footer -->
                                     </form>

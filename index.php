@@ -115,16 +115,15 @@ session_start();
             </div><!-- End .intro-slider-container -->
 
             <div class="container">
-                <h2 class="title text-center mb-4">Explore Popular Categories</h2><!-- End .title text-center -->
-            <div class="mb-4"></div><!-- End .mb-4 -->
+                <h2 class="title text-center my-4">Explore Popular Categories</h2><!-- End .title text-center -->
+            <div class="mb-5"></div><!-- End .mb-4 -->
+            <div class="mt-5">
 
             <div class="container new-arrivals">
-                <div class="heading heading-flex mb-3">
-                    <div class="heading-left">
-                        <h2 class="title">Featured</h2><!-- End .title -->
-                    </div><!-- End .heading-left -->
+                <div>
+                <!--<div class="heading heading-flex mb-3">-->
 
-                   <div class="heading-right">
+                   <div class="d-flex justify-content-center py-5">
                         <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="new-all-link" data-toggle="tab" href="#new-all-tab" role="tab" aria-controls="new-all-tab" aria-selected="true">All</a>
@@ -207,7 +206,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -284,7 +282,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -361,7 +358,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -438,7 +434,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -515,7 +510,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -592,7 +586,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -668,7 +661,6 @@ session_start();
 
                                             <div class="product-action">
                                                 <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -750,7 +742,6 @@ session_start();
 
                                     <div class="product-action">
                                         <?php echo "<a href='#' pid='$product_id' id='product' title='Add to cart' class='btn-product btn-cart'><span>add to cart</span></a>" ?>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 

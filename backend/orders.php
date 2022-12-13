@@ -119,12 +119,11 @@
                                                                 <?php
                                                                     if ($payment_status == "Paid") {
                                                                         $color = "green";
-                                                                    } elseif ($payment_status == "COD") {
-                                                                        $color = "blue";
+                                                                        echo "<p style='color: $color;'>$payment_status</p>";
                                                                     } else {
-                                                                        $color = "gray";
+                                                                        $color = "blue";
+                                                                        echo "<p style='color: $color;'>CDO</p>";
                                                                     }
-                                                                    echo "<p style='color: $color;'>$payment_status</p>";
                                                                 ?>
                                                             </td>
                                                         </tr> 
