@@ -1,5 +1,14 @@
 <!-- Sign in / Register Modal -->
-<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="js/jquery2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -19,100 +28,95 @@
                             </ul>
                             <div class="tab-content" id="tab-content-5">
                                 <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                    <form action="#">
+                                    <div class="row">
+                                        <div class="col-md-2"><br></div>
+                                        <div class="col-md-8" id="e_msg">
+                                            <!--Alert from signup form-->
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                    <form onsubmit="return false" id="login">
                                         <div class="form-group">
-                                            <label for="singin-email">Username or email address*</label>
-                                            <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                            <label for="email" class="text-dark">Email</label>
+							                <input type="email" class="form-control" name="email" id="email" required/>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
-                                            <label for="singin-password">Password *</label>
-                                            <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                            <label for="email" class="text-dark">Password</label>
+							                <input type="password" class="form-control" name="password" id="password" required/>
                                         </div><!-- End .form-group -->
 
-                                        <div class="form-footer">
-                                            <button type="submit" class="btn btn-outline-primary-2">
+                                        <div class="m-5"></div>
+
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-primary p-3" Value="Login">
                                                 <span>LOG IN</span>
-                                                <i class="icon-long-arrow-right"></i>
                                             </button>
-
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                                <label class="custom-control-label" for="signin-remember">Remember Me</label>
-                                            </div><!-- End .custom-checkbox -->
-
-                                            <a href="#" class="forgot-link">Forgot Your Password?</a>
-                                        </div><!-- End .form-footer -->
+                                        </div>
                                     </form>
-                                    <div class="form-choice">
+                                </div><!-- .End .tab-pane -->
+                                <div class="row">
+                                    <div class="col-md-2"><br></div>
+                                    <div class="col-md-8" id="signup_msg">
+                                        <!--Alert from signup form-->
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                                    <form id="signup_form" onsubmit="return false">
                                         <div class="row">
-                                            <div class="col-sm-12">
-                                                <a href="admin/index.php" class="btn btn-login btn-g">
-                                                    Login as Admin
-                                                </a>
+                                            <div class="col-md-6">
+                                                <label for="f_name" class="text-dark">First Name</label>
+                                                <input type="text" id="f_name" name="f_name" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="f_name" class="text-dark">Last Name</label>
+                                                <input type="text" id="l_name" name="l_name"class="form-control" required>
                                             </div>
                                         </div>
-                                    </div>
-                                    <br>
-                                    <div class="form-choice">
-                                        <p class="text-center">or sign in with</p>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login btn-g">
-                                                    <i class="icon-google"></i>
-                                                    Login With Google
-                                                </a>
-                                            </div><!-- End .col-6 -->
-                                            <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login btn-f">
-                                                    <i class="icon-facebook-f"></i>
-                                                    Login With Facebook
-                                                </a>
-                                            </div><!-- End .col-6 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .form-choice -->
-                                </div><!-- .End .tab-pane -->
-                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                    <form action="#">
-                                        <div class="form-group">
-                                            <label for="register-email">Your email address *</label>
-                                            <input type="email" class="form-control" id="register-email" name="register-email" required>
-                                        </div><!-- End .form-group -->
-
-                                        <div class="form-group">
-                                            <label for="register-password">Password *</label>
-                                            <input type="password" class="form-control" id="register-password" name="register-password" required>
-                                        </div><!-- End .form-group -->
-
-                                        <div class="form-footer">
-                                            <button type="submit" class="btn btn-outline-primary-2">
+                                            <div class="col-md-12">
+                                                <label for="email" class="text-dark">Email</label>
+                                                <input type="text" id="email" name="email"class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="password" class="text-dark">Password</label>
+                                                <input type="password" id="password" name="password"class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="repassword" class="text-dark">Confirm Password</label>
+                                                <input type="password" id="repassword" name="repassword"class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="mobile" class="text-dark">Contact Number</label>
+                                                <input type="text" id="mobile" name="mobile"class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="address1" class="text-dark">Address 1</label>
+                                                <input type="text" id="address1" name="address1"class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="address2" class="text-dark">Address 2</label>
+                                                <input type="text" id="address2" name="address2"class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <p><br/></p>
+                                        <div class="d-flex justify-content-center">
+                                            <button name="signup_button" value="Sign Up" type="submit" class="btn btn-primary p-3">
                                                 <span>SIGN UP</span>
-                                                <i class="icon-long-arrow-right"></i>
                                             </button>
-
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
-                                                <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
-                                            </div><!-- End .custom-checkbox -->
                                         </div><!-- End .form-footer -->
                                     </form>
-                                    <div class="form-choice">
-                                        <p class="text-center">or sign in with</p>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login btn-g">
-                                                    <i class="icon-google"></i>
-                                                    Login With Google
-                                                </a>
-                                            </div><!-- End .col-6 -->
-                                            <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login  btn-f">
-                                                    <i class="icon-facebook-f"></i>
-                                                    Login With Facebook
-                                                </a>
-                                            </div><!-- End .col-6 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .form-choice -->
                                 </div><!-- .End .tab-pane -->
                             </div><!-- End .tab-content -->
                         </div><!-- End .form-tab -->
@@ -121,3 +125,6 @@
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
+
+    </body>
+</html>
