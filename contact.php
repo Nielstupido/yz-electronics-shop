@@ -1,27 +1,25 @@
+<?php
+//session
+require "config/constants.php";
+session_start();
+
+require "includes/conn.php";
+include 'signin-up-modal.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- molla/contact.html  22 Nov 2019 10:04:01 GMT -->
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>YZ Electronics - Albay Laptops</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Molla - Bootstrap eCommerce Template | YZ Electronics">
-    <meta name="author" content="p-themes">
+    <meta name="keywords" content="YZ Electronics">
+    <meta name="description" content="YZ Electronics">
+    <meta name="author" content="marifebanares-gairuslegaspi">
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="180x180" href="assets/images/logo/yz-logo.ico">
-    <!--<link rel="icon" type="image/png" sizes="32x32" href="assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons/favicon-16x16.png">-->
-    <!--<link rel="manifest" href="assets/images/icons/site.html">
-    <link rel="mask-icon" href="assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="assets/images/icons/favicon.ico">-->
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
-    <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
     <!-- Plugins CSS File -->
@@ -35,12 +33,15 @@
     <link rel="stylesheet" href="assets/css/demos/demo-4.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <script src="https://kit.fontawesome.com/e5c2e63fe0.js" crossorigin="anonymous"></script>
+    <!--Bootstrap 5-->
+    <!--<link rel="stylesheet" href="assets/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/bootstrap-5.0.2-dist/css/bootstrap.min.css">-->
 </head>
 
 <body>
     <!--menu-->
     <div class="menu1">
-        <?php include 'header.php';?>
+        <?php include 'includes/header.php';?>
     </div>
     <!-- End of menu-->
 
@@ -142,40 +143,94 @@
                                 <div class="col-lg-6">
                             <h2 class="title mb-1">Got Any Questions?</h2><!-- End .title mb-2 -->
                             <p class="mb-2">Use the form below to get in touch with the sales team.</p>
+                            
+                            <?php 
+                                if(isset($_COOKIE['uid']) || isset($_COOKIE['_uiid_']) || isset($_SESSION['uid'])) { ?>
+                                <form action="contact.php" method="POST">
+                                    <?php 
+                                        if(isset($_COOKIE['uid'])) {
+                                            $user_id = base64_decode($_COOKIE['uid']);
+                                        } else if(isset($_SESSION['uid'])) {
+                                            $user_id = $_SESSION['uid'];
+                                        } else {
+                                            $user_id = -1;
+                                        }
+                                        $sql = "SELECT * FROM user_info WHERE user_id = :id";
+                                        $stmt = $pdo->prepare($sql);
+                                        $stmt->execute([
+                                            ':id' => $user_id
+                                        ]);
+                                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                                        $user_name = $user['first_name'];
+                                        $user_email = $user['email'];
 
-                            <form action="#" class="contact-form mb-3">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label for="cname" class="sr-only">Name</label>
-                                        <input type="text" class="form-control" id="cname" placeholder="Name *" required>
+                                        if(isset($_POST['send'])) {
+                                            $message = trim($_POST['message']);
+                                            $sql = "INSERT INTO messages SET ms_username = :username, ms_useremail = :email, ms_detail = :detail, ms_date = :date";
+                                            $stmt = $pdo->prepare($sql);
+                                            $stmt->execute([
+                                                ':username' => $user_name,
+                                                ':email' => $user_email,
+                                                ':detail' => $message,
+                                                ':date' => date("M n, Y") . ' at ' . date("h:i A")
+                                            ]);
+                                            echo "<p class='p-4 alert alert-success'>Message has been send successfully!</p><br>";
+                                        }
+                                    ?>
+                            <div class="contact-form mb-3">
+                                <div class="form-row">
+                                    <div class="form group col-sm-6">
+                                        <label for="inputName" class="text-dark">First Name</label>
+                                        <input value="<?php echo $user_name; ?>" readonly="true" class="form-control" id="inputName" type="text" placeholder="Name" />
                                     </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6">
-                                        <label for="cemail" class="sr-only">Email</label>
-                                        <input type="email" class="form-control" id="cemail" placeholder="Email *" required>
+                                    <div class="form group col-sm-6">
+                                        <label for="inputEmail" class="text-dark">Email</label>
+                                        <input value="<?php echo $user_email; ?>" readonly="true" class="form-control" id="inputEmail" type="email" placeholder="name@gmail.com" />
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label for="cphone" class="sr-only">Phone</label>
-                                        <input type="tel" class="form-control" id="cphone" placeholder="Phone">
-                                    </div><!-- End .col-sm-6 -->
-
-                                    <div class="col-sm-6">
-                                        <label for="csubject" class="sr-only">Subject</label>
-                                        <input type="text" class="form-control" id="csubject" placeholder="Subject">
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
-
-                                <label for="cmessage" class="sr-only">Message</label>
-                                <textarea class="form-control" cols="30" rows="4" id="cmessage" required placeholder="Message *"></textarea>
-
-                                <button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
-                                    <span>SUBMIT</span>
-                                    <i class="icon-long-arrow-right"></i>
-                                </button>
+                                <div class="form group">
+                                    <label for="inputMessage" class="sr-only">Message</label>
+                                    <textarea class="form-control" name="message" cols="30" rows="4" id="inputMessage" placeholder="Enter your message..."></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <!--<input type="submit" value="SUBMIT" class="btn btn-outline-primary-2 btn-minwidth-sm">-->
+                                    <button name="send" class="btn btn-primary btn-marketing mt-2" type="submit">Submit</button>
+                                </div>
                             </form><!-- End .contact-form -->
+                            <!--<table class="table table-bordered table-hover mt-5" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Your messages:</th>
+                                                <th>Answers:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>-->
+                                            <?php 
+                                                /*$sql1 = "SELECT * FROM messages WHERE ms_useremail = :email";
+                                                $stmt1 = $pdo->prepare($sql1);
+                                                $stmt1->execute([
+                                                    ':email' => $user_email
+                                                ]);
+                                                while($ms = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+                                                    $ms_detail = $ms['ms_detail'];
+                                                    $reply = $ms['reply']; ?>
+                                                    <tr>
+                                                      <td><?php echo $ms_detail; ?></td>
+                                                      <td><?php echo $reply; ?></td>
+                                                  </tr>
+                                                <?php }*/                                                  
+                                            ?>
+                                        <!--</tbody>
+                                    </table>-->
+
+
+                               <?php } else { ?>
+                                    <a href="signin-up-modal.php">Log in to contact us!</a>
+                               <?php }
+                            ?>
+
                         </div><!-- End .col-lg-6 -->
 	                		</div><!-- End .col-lg-6 -->
 	                	</div><!-- End .row -->
@@ -189,12 +244,12 @@
 
         <!--Footer-->
     <div class="footer">
-        <?php include 'footer.php';?>
+        <?php include 'includes/footer.php';?>
     </div>
 
     <!-------- Mobile Menu ------->
     <div class="mobile-menu">
-        <?php include 'mobile-nav.php';?>
+        <?php include 'includes/mobile-nav.php';?>
     </div>
     <!----------------------------------------------------------->
 
