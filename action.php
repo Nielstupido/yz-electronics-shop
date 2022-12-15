@@ -897,7 +897,7 @@ if (isset($_POST["finishCheckoutGcash"])) {
 	]);
 	$data = json_decode($response->getBody(),true);
 	$_SESSION["tx"] = $data['data']['id'];
-	$_SESSION["payment_method"] = "paid";
+	$_SESSION["payment_method"] = "Paid";
 	$key_value = $data['data']['attributes']['redirect']['checkout_url'];
 	//header("Refresh:2; url=".$key_value);
 	echo $key_value;
@@ -1068,7 +1068,7 @@ if(isset($_POST["submitRev"]))
 	$user_id = $_SESSION["uid"];
 	$user_name = $_SESSION["name"];
 
-	$sql = "UPDATE orders SET order_status = 'Completed' WHERE order_id = '$orderID'";
+	$sql = "UPDATE orders SET order_status = 'Delivered' WHERE order_id = '$orderID'";
 
 	$result = mysqli_query($con,$sql);
 
