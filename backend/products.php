@@ -149,15 +149,8 @@
                                     <div class="form-group">
                                         <label>Product Image <small>(format: jpg, jpeg, png)</small></label>
                                         <input type="file" name="product_image" class="form-control">
-                                        <img src="../product_images/1.0x0.jpg" class="img-fluid" width="50">
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Sub Images <small>(format: jpg, jpeg, png) *Limit to 4</small></label>
-                                        <input type="file" name="e_product_image" class="form-control" id="files" name="files" multiple>
-                                    </div>
-`                               </div>
                                 <input type="hidden" name="add_product" value="1">
                                 <div class="col-12">
                                     <button type="button" class="btn btn-primary add-product">Add</button>
