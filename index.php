@@ -290,6 +290,7 @@ session_start();
                                     ':brand' => '1'
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
@@ -399,6 +400,7 @@ session_start();
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
                                     $product_title = $posts['product_title'];
+                                    $product_id = $posts['product_id'];
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
                                     $product_brand = $posts['product_brand'];
@@ -505,6 +507,7 @@ session_start();
                                     ':brand' => '3'
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
@@ -612,6 +615,7 @@ session_start();
                                     ':brand' => '4'
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
@@ -719,6 +723,7 @@ session_start();
                                     ':category' => '2'
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
@@ -825,6 +830,7 @@ session_start();
                                     ':category' => '3'
                                 ]);
                                 while($posts = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                    $product_id = $posts['product_id'];
                                     $product_title = $posts['product_title'];
                                     $product_price = $posts['product_price'];
                                     $product_images = $posts['product_image'];
