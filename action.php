@@ -913,7 +913,7 @@ if (isset($_POST["finishCheckoutCOD"])) {
 
 	$_SESSION["payment_method"] = strval($amount).'.00';
 	
-	echo 'http://localhost/yz-electronics-shop/success.php';
+	echo 'success.php';
 }
 
 function generateRandomString($length = 5) {
@@ -1023,7 +1023,7 @@ if(isset($_POST["showOrders"]))
 						</figure>
 					</td>
 					<td>'.$product_title[$i].'</td>';
-					if($prod_payment[$i]=="paid")
+					if($prod_payment[$i]=="Paid")
 					{
 						echo '<td>'.$prod_payment[$i].'</td>';
 					}
